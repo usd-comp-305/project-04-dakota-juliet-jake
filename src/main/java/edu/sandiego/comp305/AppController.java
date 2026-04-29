@@ -8,7 +8,7 @@ public class AppController {
     private ServicerView servicerView;
     private ServiceList serviceList;
 
-    public AppController(Customer customer, Servicer servicer,
+    public AppController(Customer customer, ServicerAccount servicer,
                          CustomerView customerView, ServicerView servicerView,
                          ServiceList serviceList) {
         this.customer = customer;
@@ -18,7 +18,7 @@ public class AppController {
         this.serviceList = serviceList;
     }
 
-    public void handleServiceSelection(Service service, Servicer servicer) {
+    public void handleServiceSelection(Service service, ServicerAccount servicer) {
     }
 
     public void handleSearch(Service service, double maxPrice) {
@@ -27,7 +27,7 @@ public class AppController {
     public void handlePayment(Payment payment) {
     }
 
-    public void handlePostListing(Servicer servicer) {
+    public void handlePostListing(ServicerAccount servicer) {
     }
 
     public void handleJoinQueue(Service service) {
