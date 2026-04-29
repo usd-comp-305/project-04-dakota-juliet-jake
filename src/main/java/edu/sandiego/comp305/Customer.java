@@ -1,13 +1,15 @@
 package edu.sandiego.comp305;
 
+import java.util.List;
+
 public abstract class Customer extends Profile {
     private String address;
-    private List<Servicer> observers;
+    private List<ServicerAccount> observers;
     private String selectedService;
 
-    public void registerObserver(Servicer servicer){};
+    public void registerObserver(ServicerAccount servicer){};
 
-    public void removeObserver(Servicer servicer){};
+    public void removeObserver(ServicerAccount servicer){};
 
     public void notifyObservers(){};
 
