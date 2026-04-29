@@ -1,6 +1,6 @@
 package edu.sandiego.comp305;
 
-public class NailTech {
+public class NailTech extends ServicerAccount {
 
     public NailTech(){
 

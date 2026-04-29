@@ -1,6 +1,6 @@
 package edu.sandiego.comp305;
 
-public class Barber extends Servicer{
+public class Barber extends ServicerAccount{
 
     public Barber(){
 

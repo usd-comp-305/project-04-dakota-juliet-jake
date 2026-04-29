@@ -1,5 +1,7 @@
 package edu.sandiego.comp305;
 
+import java.util.List;
+
 public class ServiceList {
     List<Listing> listings;
 
@@ -7,11 +9,11 @@ public class ServiceList {
         return listings;
     }
 
-    List<Listing> filterByService(String service){
+    List<Listing> filterByService(final String service){
         return listings;
     }
 
-    List<Listing> filterByPrice(String service, double maxPrice){
+    List<Listing> filterByPrice(final String service, final double maxPrice){
         return listings;
     }
 }
