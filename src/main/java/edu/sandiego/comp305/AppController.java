@@ -3,7 +3,7 @@ package edu.sandiego.comp305;
 public class AppController {
 
     private Customer customer;
-    private Servicer servicer;
+    private ServicerAccount servicer;
     private CustomerView customerView;
     private ServicerView servicerView;
     private ServiceList serviceList;
@@ -18,10 +18,10 @@ public class AppController {
         this.serviceList = serviceList;
     }
 
-    public void handleServiceSelection(String service, Servicer servicer) {
+    public void handleServiceSelection(Service service, Servicer servicer) {
     }
 
-    public void handleSearch(String service, double maxPrice) {
+    public void handleSearch(Service service, double maxPrice) {
     }
 
     public void handlePayment(Payment payment) {
@@ -30,6 +30,6 @@ public class AppController {
     public void handlePostListing(Servicer servicer) {
     }
 
-    public void handleJoinQueue(String service) {
+    public void handleJoinQueue(Service service) {
     }
 }
