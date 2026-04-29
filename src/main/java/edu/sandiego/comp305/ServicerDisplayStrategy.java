@@ -6,6 +6,7 @@ import java.util.List;
 public class ServicerDisplayStrategy implements DisplayStrategy {
 
     private List<Service> offeredServices;
+
     private List<Service> scheduledServices;
 
     public ServicerDisplayStrategy() {
@@ -17,9 +18,9 @@ public class ServicerDisplayStrategy implements DisplayStrategy {
     public void display() {
     }
 
-    public void setOfferedServices(List<Service> services) {
+    public void setOfferedServices(final List<Service> services) {
     }
 
-    public void setScheduledServices(List<Service> services) {
+    public void setScheduledServices(final List<Service> services) {
     }
 }

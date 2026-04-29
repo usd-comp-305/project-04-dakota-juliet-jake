@@ -1,25 +1,34 @@
 package edu.sandiego.comp305;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public abstract class Customer extends Profile {
     private String address;
+
     private List<ServicerAccount> observers;
+
     private String selectedService;
 
-    public void registerObserver(ServicerAccount servicer){};
+    public void registerObserver(final ServicerAccount servicer){}
 
-    public void removeObserver(ServicerAccount servicer){};
+    public void removeObserver(final ServicerAccount servicer){}
 
-    public void notifyObservers(){};
+    public void notifyObservers(){}
 
-    void selectService(String service){};
+    void selectService(final String service){}
 
-    void pay(Payment payment){};
+    void pay(final Payment payment){}
 
-    List<Listing> searchByPrice(String service, double maxPrice){};
+    List<Listing> searchByPrice(final String service,
+                                final double maxPrice){
+        return new ArrayList<>();
+    }
 
-    void joinQueue(String service){};
+    void joinQueue(final String service){}
 
-    List<Listing> searchByProvider(String providerName, String service){};
+    List<Listing> searchByProvider(final String providerName,
+                                   final String service){
+        return new ArrayList<>();
+    }
 }

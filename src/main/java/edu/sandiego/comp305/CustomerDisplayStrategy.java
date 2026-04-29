@@ -6,6 +6,7 @@ import java.util.List;
 public class CustomerDisplayStrategy implements DisplayStrategy {
 
     private List<Service> filteredServices;
+
     private List<ServicerAccount> filteredServicers;
 
     public CustomerDisplayStrategy() {
@@ -17,6 +18,7 @@ public class CustomerDisplayStrategy implements DisplayStrategy {
     public void display() {
     }
 
-    public void setFilteredResults(List<Service> services, List<ServicerAccount> servicers) {
+    public void setFilteredResults(final List<Service> services,
+                                   final List<ServicerAccount> servicers) {
     }
 }

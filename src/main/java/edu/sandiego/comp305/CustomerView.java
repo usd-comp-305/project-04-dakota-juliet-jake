@@ -1,26 +1,25 @@
 package edu.sandiego.comp305;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerView {
 
     private DisplayStrategy strategy;
 
-    public CustomerView(DisplayStrategy strategy) {
+    public CustomerView(final DisplayStrategy strategy) {
         this.strategy = strategy;
     }
 
-    public void setStrategy(DisplayStrategy strategy) {
+    public void setStrategy(final DisplayStrategy strategy) {
         this.strategy = strategy;
     }
 
     public void render() {
     }
 
-    public void showServiceList(List<Listing> listings) {
+    public void showServiceList(final List<Listing> listings) {
     }
 
-    public void showSearchResults(List<Listing> results) {
+    public void showSearchResults(final List<Listing> results) {
     }
 }
