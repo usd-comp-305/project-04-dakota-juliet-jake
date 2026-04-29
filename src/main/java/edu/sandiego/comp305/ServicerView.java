@@ -24,6 +24,6 @@ public class ServicerView {
     public void showSchedule(String schedule) {
     }
 
-    public void showNotification(String customerName, String address, String service) {
+    public void showNotification(String customerName, String address, Service service) {
     }
 }
