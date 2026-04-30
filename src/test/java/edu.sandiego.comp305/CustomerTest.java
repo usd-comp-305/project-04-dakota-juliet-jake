@@ -16,6 +16,15 @@ class CustomerTest {
     }
 
     @Test
+    void cantRegisterSameObserverMoreThanOnce() {
+        final Customer stdCustomer = new StandardCustomer("123 address st");
+        final ServicerAccount mockServicer = mock(ServicerAccount.class);
+        stdCustomer.registerObserver(mockServicer);
+        stdCustomer.registerObserver(mockServicer);
+        assertEquals(1, stdCustomer.servicerObservers.size());
+    }
+
+    @Test
     void removeObserverRemovesObserverFromList() {
         final Customer stdCustomer = new StandardCustomer("123 address st");
         final ServicerAccount mockServicer = mock(ServicerAccount.class);

@@ -11,7 +11,9 @@ public abstract class Customer extends Profile {
     String selectedService;
 
     public void registerObserver(final ServicerAccount servicer){
-        servicerObservers.add(servicer);
+        if (!servicerObservers.contains(servicer)) {
+            servicerObservers.add(servicer);
+        }
     }
 
     public void removeObserver(final ServicerAccount servicer){
