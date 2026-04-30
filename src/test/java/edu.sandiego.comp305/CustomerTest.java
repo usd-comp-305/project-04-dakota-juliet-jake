@@ -34,6 +34,16 @@ class CustomerTest {
     }
 
     @Test
+    void removeNonexistentObserverDoesntWork() {
+        final Customer stdCustomer = new StandardCustomer("123 address st");
+        final ServicerAccount mockServicer = mock(ServicerAccount.class);
+        final ServicerAccount diffMockServicer = mock(ServicerAccount.class);
+        stdCustomer.registerObserver(mockServicer);
+        stdCustomer.removeObserver(diffMockServicer);
+        assertEquals(1, stdCustomer.servicerObservers.size());
+    }
+
+    @Test
     void notifyObservers() {
     }
 
