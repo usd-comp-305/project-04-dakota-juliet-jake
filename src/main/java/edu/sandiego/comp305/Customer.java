@@ -15,12 +15,14 @@ public abstract class Customer extends Profile {
     }
 
     public void removeObserver(final ServicerAccount servicer){
-
+        servicerObservers.remove(servicer);
     }
 
     public void notifyObservers(final String customerName, final String address,
                                 final Service service){
-
+        for (ServicerAccount servicer : servicerObservers) {
+            servicer.update(customerName, address, service);
+        }
     }
 
     void selectService(final String service){}

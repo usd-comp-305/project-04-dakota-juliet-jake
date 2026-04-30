@@ -16,7 +16,12 @@ class CustomerTest {
     }
 
     @Test
-    void removeObserver() {
+    void removeObserverRemovesObserverFromList() {
+        final Customer stdCustomer = new StandardCustomer("123 address st");
+        final ServicerAccount mockServicer = mock(ServicerAccount.class);
+        stdCustomer.registerObserver(mockServicer);
+        stdCustomer.removeObserver(mockServicer);
+        assertEquals(0, stdCustomer.servicerObservers.size());
     }
 
     @Test
