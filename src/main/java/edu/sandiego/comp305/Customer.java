@@ -4,17 +4,24 @@ import java.util.List;
 import java.util.ArrayList;
 
 public abstract class Customer extends Profile {
-    private String address;
+    String address;
 
-    private List<ServicerAccount> observers;
+    List<ServicerAccount> servicerObservers;
 
-    private String selectedService;
+    String selectedService;
 
-    public void registerObserver(final ServicerAccount servicer){}
+    public void registerObserver(final ServicerAccount servicer){
+        servicerObservers.add(servicer);
+    }
 
-    public void removeObserver(final ServicerAccount servicer){}
+    public void removeObserver(final ServicerAccount servicer){
 
-    public void notifyObservers(){}
+    }
+
+    public void notifyObservers(final String customerName, final String address,
+                                final Service service){
+
+    }
 
     void selectService(final String service){}
 
