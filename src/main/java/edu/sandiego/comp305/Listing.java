@@ -13,7 +13,7 @@ public class Listing {
                    final ArrayList<Service> services,
                    final String availability) {
         this.providerName = providerName;
-        this.servicesOffered = services;
+        this.servicesOffered = new ArrayList<>(services);
         this.availability = availability;
     }
 
@@ -34,7 +34,8 @@ public class Listing {
     }
 
     public ArrayList<Service> getServicesOffered(){
-        return servicesOffered;
+
+        return  new ArrayList<>(servicesOffered);
     }
 
     public String getAvailability() {

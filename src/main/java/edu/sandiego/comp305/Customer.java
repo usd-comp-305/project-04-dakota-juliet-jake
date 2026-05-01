@@ -4,11 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 public abstract class Customer extends Profile {
-    private String address;
-
-    private List<ServicerAccount> observers;
-
-    private String selectedService;
 
     public void registerObserver(final ServicerAccount servicer){}
 
