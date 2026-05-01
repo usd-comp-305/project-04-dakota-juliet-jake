@@ -35,4 +35,26 @@ public class CustomerDisplayStrategyTest {
         strategy.display();
         Mockito.verify(mockService).getName();
     }
+
+    @Test
+    public void testGetFilteredServices() {
+        CustomerDisplayStrategy strategy = new CustomerDisplayStrategy();
+        Service mockService = Mockito.mock(Service.class);
+        List<Service> services = new ArrayList<>();
+        services.add(mockService);
+        List<ServicerAccount> servicers = new ArrayList<>();
+        strategy.setFilteredResults(services, servicers);
+        assertEquals(1, strategy.getFilteredServices().size());
+    }
+
+    @Test
+    public void testGetFilteredServicers() {
+        CustomerDisplayStrategy strategy = new CustomerDisplayStrategy();
+        ServicerAccount mockServicer = Mockito.mock(ServicerAccount.class);
+        List<Service> services = new ArrayList<>();
+        List<ServicerAccount> servicers = new ArrayList<>();
+        servicers.add(mockServicer);
+        strategy.setFilteredResults(services, servicers);
+        assertEquals(1, strategy.getFilteredServicers().size());
+    }
 }
