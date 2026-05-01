@@ -46,7 +46,15 @@ class CustomerTest {
     }
 
     @Test
-    void notifyObservers() {
+    void testNotifyObserversSendsCorrectData() {
+        final Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");        ServicerAccount mockServicer = mock(ServicerAccount.class);
+        Service mockService = mock(Service.class);
+        stdCustomer.registerObserver(mockServicer);
+
+        stdCustomer.notifyObservers("Alice", "456 Ave", mockService);
+
+        // Verify the observer received exactly what the customer sent
+        verify(mockServicer).update("Alice", "456 Ave", mockService);
     }
 
     @Test
@@ -65,6 +73,7 @@ class CustomerTest {
 
     @Test
     void pay() {
+
     }
 
     @Test

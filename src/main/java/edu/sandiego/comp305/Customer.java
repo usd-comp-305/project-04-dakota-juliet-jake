@@ -31,6 +31,7 @@ public abstract class Customer extends Profile {
         Listing chosenService = listings.getListing(index);
 
         chosenService.getSelectedBy(this);
+
     }
 
     void pay(final Payment payment){}
@@ -45,5 +46,9 @@ public abstract class Customer extends Profile {
     List<Listing> searchByProvider(final String providerName,
                                    final String service){
         return new ArrayList<>();
+    }
+
+    String getSelectedService() {
+        return this.selectedService;
     }
 }
