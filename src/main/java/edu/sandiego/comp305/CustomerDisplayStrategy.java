@@ -26,16 +26,18 @@ public class CustomerDisplayStrategy implements DisplayStrategy {
 
 
     public List<Service> getFilteredServices() {
-        return filteredServices;
+
+        return new ArrayList<>(filteredServices);
     }
 
     public List<ServicerAccount> getFilteredServicers() {
-        return filteredServicers;
+
+        return new ArrayList<>(filteredServicers);
     }
 
     public void setFilteredResults(final List<Service> services,
                                    final List<ServicerAccount> servicers) {
-        this.filteredServices = services;
-        this.filteredServicers = servicers;
+        this.filteredServices = new ArrayList<>(services);
+        this.filteredServicers = new ArrayList<>(servicers);
     }
 }
