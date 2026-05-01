@@ -5,5 +5,5 @@ public class Payment {
 
     PaymentType paymentType;
 
-    public boolean processPayment() {return true;}
+    public boolean processPayment(PaymentType paymentType) {return true;}
 }

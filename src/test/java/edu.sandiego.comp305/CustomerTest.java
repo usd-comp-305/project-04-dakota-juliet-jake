@@ -72,8 +72,15 @@ class CustomerTest {
     }
 
     @Test
-    void pay() {
+    void payCallsProcessPayment() {
+        Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
 
+        Payment mockPayment = mock(Payment.class);
+        when(mockPayment.processPayment(PaymentType.VENMO)).thenReturn(true);
+
+        stdCustomer.pay(mockPayment, PaymentType.VENMO);
+
+        verify(mockPayment, times(1)).processPayment(PaymentType.VENMO);
     }
 
     @Test

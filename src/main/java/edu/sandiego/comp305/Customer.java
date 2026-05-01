@@ -34,7 +34,9 @@ public abstract class Customer extends Profile {
 
     }
 
-    void pay(final Payment payment){}
+    void pay(final Payment payment, PaymentType paymentType){
+        payment.processPayment(paymentType);
+    }
 
     List<Listing> searchByPrice(final String service,
                                 final double maxPrice){
