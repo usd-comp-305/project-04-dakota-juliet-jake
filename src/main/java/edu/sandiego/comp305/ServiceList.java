@@ -5,8 +5,8 @@ import java.util.List;
 public class ServiceList {
     List<Listing> listings;
 
-    List<Listing> getListing(){
-        return listings;
+    Listing getListing(int index){
+        return listings.get(index);
     }
 
     List<Listing> filterByService(final String service){

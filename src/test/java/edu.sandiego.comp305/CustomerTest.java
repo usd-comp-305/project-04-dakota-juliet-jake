@@ -2,6 +2,8 @@ package edu.sandiego.comp305;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -9,7 +11,7 @@ class CustomerTest {
 
     @Test
     void registerObserverAddsObserverToList() {
-        final Customer stdCustomer = new StandardCustomer("123 address st");
+        final Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
         final ServicerAccount mockServicer = mock(ServicerAccount.class);
         stdCustomer.registerObserver(mockServicer);
         assertEquals(1, stdCustomer.servicerObservers.size());
@@ -17,7 +19,7 @@ class CustomerTest {
 
     @Test
     void cantRegisterSameObserverMoreThanOnce() {
-        final Customer stdCustomer = new StandardCustomer("123 address st");
+        final Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
         final ServicerAccount mockServicer = mock(ServicerAccount.class);
         stdCustomer.registerObserver(mockServicer);
         stdCustomer.registerObserver(mockServicer);
@@ -26,7 +28,7 @@ class CustomerTest {
 
     @Test
     void removeObserverRemovesObserverFromList() {
-        final Customer stdCustomer = new StandardCustomer("123 address st");
+        final Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
         final ServicerAccount mockServicer = mock(ServicerAccount.class);
         stdCustomer.registerObserver(mockServicer);
         stdCustomer.removeObserver(mockServicer);
@@ -35,7 +37,7 @@ class CustomerTest {
 
     @Test
     void removeNonexistentObserverDoesntWork() {
-        final Customer stdCustomer = new StandardCustomer("123 address st");
+        final Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
         final ServicerAccount mockServicer = mock(ServicerAccount.class);
         final ServicerAccount diffMockServicer = mock(ServicerAccount.class);
         stdCustomer.registerObserver(mockServicer);
@@ -48,7 +50,17 @@ class CustomerTest {
     }
 
     @Test
-    void selectService() {
+    void selectServiceCallsGetListingAndGetSelectedBy() {
+        Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
+
+        ServiceList mockServiceList = mock(ServiceList.class);
+        Listing mockListing = mock(Listing.class);
+
+        when(mockServiceList.getListing(0)).thenReturn(mockListing);
+
+        stdCustomer.selectService(mockServiceList, 0);
+
+        verify(mockListing, times(1)).getSelectedBy(stdCustomer);
     }
 
     @Test

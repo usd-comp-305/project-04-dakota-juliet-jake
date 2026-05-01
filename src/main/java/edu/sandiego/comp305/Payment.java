@@ -4,4 +4,6 @@ public class Payment {
     double amount;
 
     PaymentType paymentType;
+
+    public boolean processPayment() {return true;}
 }

@@ -27,7 +27,11 @@ public abstract class Customer extends Profile {
         }
     }
 
-    void selectService(final String service){}
+    void selectService(final ServiceList listings, int index){
+        Listing chosenService = listings.getListing(index);
+
+        chosenService.getSelectedBy(this);
+    }
 
     void pay(final Payment payment){}
 
