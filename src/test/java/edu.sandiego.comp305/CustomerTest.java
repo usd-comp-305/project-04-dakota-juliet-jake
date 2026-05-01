@@ -53,7 +53,6 @@ class CustomerTest {
 
         stdCustomer.notifyObservers("Alice", "456 Ave", mockService);
 
-        // Verify the observer received exactly what the customer sent
         verify(mockServicer).update("Alice", "456 Ave", mockService);
     }
 
@@ -76,7 +75,6 @@ class CustomerTest {
         Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
 
         Payment mockPayment = mock(Payment.class);
-        when(mockPayment.processPayment(PaymentType.VENMO)).thenReturn(true);
 
         stdCustomer.pay(mockPayment, PaymentType.VENMO);
 
@@ -84,7 +82,17 @@ class CustomerTest {
     }
 
     @Test
-    void searchByPrice() {
+    void searchByPriceCallsFilterByPriceAndReturnsList() {
+        Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
+
+        ArrayList<Listing> fakeListings;
+        fakeListings.add()
+        ServiceList mockServiceList = mock(ServiceList.class);
+        when(mockServiceList.filterByPrice(50.0)).thenReturn()
+
+        stdCustomer.searchByPrice(mockServiceList, "Barber", 50.0);
+
+        verify()
     }
 
     @Test

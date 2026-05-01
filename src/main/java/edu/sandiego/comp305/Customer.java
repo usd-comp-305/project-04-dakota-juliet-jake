@@ -38,9 +38,9 @@ public abstract class Customer extends Profile {
         payment.processPayment(paymentType);
     }
 
-    List<Listing> searchByPrice(final String service,
+    List<Listing> searchByPrice(final ServiceList listings,
                                 final double maxPrice){
-        return new ArrayList<>();
+        return listings.filterByPrice(maxPrice);
     }
 
     void joinQueue(final String service){}

@@ -13,7 +13,7 @@ public class ServiceList {
         return listings;
     }
 
-    List<Listing> filterByPrice(final String service, final double maxPrice){
+    List<Listing> filterByPrice(final double maxPrice){
         return listings;
     }
 }
