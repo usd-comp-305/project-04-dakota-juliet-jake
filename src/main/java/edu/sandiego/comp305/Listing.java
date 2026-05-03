@@ -10,14 +10,18 @@ public class Listing {
 
     private String availability;
 
+    private String generalServiceType;
+
     List<ServicerAccount> servicerObservers;
 
     public Listing(final String providerName,
+                   final String generalServiceType,
                    final ArrayList<Service> services,
                    final String availability) {
         this.providerName = providerName;
         this.servicesOffered = services;
         this.availability = availability;
+        this.generalServiceType = generalServiceType;
     }
 
     public void registerObserver(final ServicerAccount servicer){
@@ -59,9 +63,13 @@ public class Listing {
         return servicesOffered;
     }
 
-    public String getServiceName() { return "";}
+    public String getGeneralServiceType() { return generalServiceType;}
 
     public String getAvailability() {
         return availability;
+    }
+
+    public boolean isAvailable() {
+        return true;
     }
 }

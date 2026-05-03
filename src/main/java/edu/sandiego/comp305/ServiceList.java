@@ -5,6 +5,10 @@ import java.util.List;
 public class ServiceList {
     List<Listing> listings;
 
+    ServiceList(final List<Listing> listings) {
+        this.listings = listings;
+    }
+
     Listing getListing(int index){
         return listings.get(index);
     }
