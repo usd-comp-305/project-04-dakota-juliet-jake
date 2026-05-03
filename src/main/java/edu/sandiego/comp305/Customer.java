@@ -9,7 +9,7 @@ public abstract class Customer extends Profile {
 
     String selectedService;
 
-    void selectService(final ServiceList listings, int index){
+    void selectListing(final ServiceList listings, int index){
         Listing chosenService = listings.getListing(index);
 
         chosenService.getSelectedBy(this);

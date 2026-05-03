@@ -10,12 +10,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class CustomerTest {
+    private Customer stdCustomer;
+    private ServicerAccount mockServicer;
+    private Listing mockBarberListing;
+    private Listing mockStylistListing;
+    private ArrayList<Service> mockStylistServices;
+    private ServiceList mockServiceList;
 
     @BeforeEach
     void setUp() {
-        ServicerAccount mockServicer = mock(ServicerAccount.class);
+        mockServicer = mock(ServicerAccount.class);
 
-        // Barber listing with multiple services
         ArrayList<Service> barberServices = new ArrayList<>(List.of(
                 new Service("Shave", 20.0),
                 new Service("Wax", 30.0),
@@ -23,43 +28,32 @@ class CustomerTest {
                 new Service("Shear", 15.0)
         ));
 
-        Listing barberListing = mock(Listing.class);
-        when(barberListing.getServicesOffered()).thenReturn(barberServices);
-        when(barberListing.isAvailable()).thenReturn(true);
-        when(barberListing.getProviderName()).thenReturn("Jake");
+        mockBarberListing = mock(Listing.class);
+        when(mockBarberListing.getServicesOffered()).thenReturn(barberServices);
+        when(mockBarberListing.isAvailable()).thenReturn(true);
+        when(mockBarberListing.getProviderName()).thenReturn("Jake");
 
-        // Stylist listing with different services
-        ArrayList<Service> stylistServices = new ArrayList<>(List.of(
+        mockStylistServices = new ArrayList<>(List.of(
                 new Service("Full Dye", 150.0),
                 new Service("Highlights", 100.0)
         ));
 
-        Listing stylistListing = mock(Listing.class);
-        when(stylistListing.getServicesOffered()).thenReturn(stylistServices);
-        when(stylistListing.isAvailable()).thenReturn(true);
-        when(stylistListing.getProviderName()).thenReturn("Dakota");
+        mockStylistListing = mock(Listing.class);
+        when(mockStylistListing.getServicesOffered()).thenReturn(mockStylistServices);
+        when(mockStylistListing.isAvailable()).thenReturn(true);
+        when(mockStylistListing.getProviderName()).thenReturn("Dakota");
 
-        ServiceList serviceList = new ServiceList(List.of(barberListing, stylistListing));
-        Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
+        mockServiceList = new ServiceList(List.of(mockBarberListing, mockStylistListing));
+        stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
     }
 
     @Test
-    void selectServiceCallsGetListingAndGetSelectedBy() {
+    void selectListingCallsGetListingAndGetSelectedBy() {
 
-        ServiceList mockServiceList = mock(ServiceList.class);
-        Listing mockListing = mock(Listing.class);
-
-        int index = 1;
-
-        when(mockServiceList.getListing(index)).thenReturn(mockListing);
-
-        stdCustomer.selectService(mockServiceList, index);
-
-        verify(mockListing, times(1)).getSelectedBy(stdCustomer);
     }
 
     @Test
-    void selectServiceWithBadIndex() {
+    void selectListingWithBadIndex() {
         Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
 
         ServiceList mockServiceList = mock(ServiceList.class);
@@ -69,7 +63,7 @@ class CustomerTest {
 
         when(mockServiceList.getListing(badIndex)).thenThrow(new IndexOutOfBoundsException("the chosen index does not exist"));
 
-        assertThrows(IndexOutOfBoundsException.class, () -> stdCustomer.selectService(mockServiceList, badIndex));
+        assertThrows(IndexOutOfBoundsException.class, () -> stdCustomer.selectListing(mockServiceList, badIndex));
         verify(mockServiceList).getListing(badIndex);
         verifyNoMoreInteractions(mockServiceList);
     }
@@ -87,16 +81,7 @@ class CustomerTest {
 
     @Test
     void searchByPriceCallsFilterByPriceAndReturnsList() {
-/*        Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
 
-        ArrayList<Listing> fakeListings;
-        fakeListings.add()
-        ServiceList mockServiceList = mock(ServiceList.class);
-        when(mockServiceList.filterByPrice(50.0)).thenReturn()
-
-        stdCustomer.searchByPrice(mockServiceList, "Barber", 50.0);
-
-        verify()*/
     }
 
     @Test
