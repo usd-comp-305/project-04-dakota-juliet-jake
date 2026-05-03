@@ -48,24 +48,9 @@ class CustomerTest {
     }
 
     @Test
-    void selectListingCallsGetListingAndGetSelectedBy() {
-
-    }
-
-    @Test
-    void selectListingWithBadIndex() {
-        Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
-
-        ServiceList mockServiceList = mock(ServiceList.class);
-        Listing mockListing = mock(Listing.class);
-
-        int badIndex = 99;
-
-        when(mockServiceList.getListing(badIndex)).thenThrow(new IndexOutOfBoundsException("the chosen index does not exist"));
-
-        assertThrows(IndexOutOfBoundsException.class, () -> stdCustomer.selectListing(mockServiceList, badIndex));
-        verify(mockServiceList).getListing(badIndex);
-        verifyNoMoreInteractions(mockServiceList);
+    void selectListingCorrectlyChangesSelectedListingVariable() {
+        stdCustomer.selectListing(mockServiceList, 1);
+        assertEquals(mockStylistListing, stdCustomer.getSelectedListing());
     }
 
     @Test

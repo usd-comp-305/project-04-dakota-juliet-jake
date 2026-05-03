@@ -6,14 +6,13 @@ import java.util.ArrayList;
 public abstract class Customer extends Profile {
     String address;
 
-
-    String selectedService;
+    Listing selectedListing;
 
     void selectListing(final ServiceList listings, int index){
         Listing chosenService = listings.getListing(index);
 
         chosenService.getSelectedBy(this);
-
+        selectedListing = chosenService;
     }
 
     void pay(final Payment payment, PaymentType paymentType){
@@ -32,7 +31,7 @@ public abstract class Customer extends Profile {
         return new ArrayList<>();
     }
 
-    String getSelectedService() {
-        return this.selectedService;
+    Listing getSelectedListing() {
+        return this.selectedListing;
     }
 }
