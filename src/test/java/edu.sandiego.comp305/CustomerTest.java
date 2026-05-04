@@ -84,6 +84,14 @@ class CustomerTest {
     }
 
     @Test
+    void searchByServiceReturnsEmptyListWhenNoMatches() {
+        List<Listing> filteredList = stdCustomer.searchByService(mockServiceList, "Nail Tech");
+        List<Listing> expectedFilteredList = List.of();
+
+        assertEquals(expectedFilteredList, filteredList);
+    }
+
+    @Test
     void payCallsProcessPayment() {
         Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
 
