@@ -12,6 +12,10 @@ public class ServicerDisplayStrategy implements DisplayStrategy {
     public void display() {
     }
 
+    public List<Service> getOfferedServices() {
+        return null;
+    }
+
     public void setOfferedServices(final List<Service> services) {
     }
 
