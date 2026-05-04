@@ -207,9 +207,19 @@ class CustomerTest {
 
     @Test
     void cancelCallMakesSelectedListingNull() {
+        final int index = 1;
+        customer.selectListing(mockServiceList, index);
+
         customer.cancelCall();
+
         assertThrows(IllegalStateException.class, () ->
                 customer.getSelectedListing());
+    }
+
+    @Test
+    void cancelCallOnNoSelectionThrowsException() {
+        assertThrows(IllegalStateException.class, () ->
+                customer.cancelCall());
     }
 
 }

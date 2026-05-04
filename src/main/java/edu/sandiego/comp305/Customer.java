@@ -7,7 +7,7 @@ public class Customer extends Profile {
 
     protected Listing selectedListing;
 
-    Customer(final String name, final String username,
+    protected Customer(final String name, final String username,
                      final String password, final String address) {
         super(name, username, password);
         this.address = address;
@@ -52,6 +52,9 @@ public class Customer extends Profile {
 
     @Override
     public void cancelCall() {
+        if (this.selectedListing == null) {
+            throw new IllegalStateException("No active listing to cancel");
+        }
         this.selectedListing = null;
     }
 }
