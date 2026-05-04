@@ -153,4 +153,9 @@ class CustomerTest {
         assertTrue(stdCustomer.pay(35.0, mockPayment, mockService));
     }
 
+    @Test
+    void getSelectedListingThrowsExceptionIfNull() {
+        assertThrows(IllegalStateException.class, () -> stdCustomer.getSelectedListing());
+    }
+
 }

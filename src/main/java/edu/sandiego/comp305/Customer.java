@@ -3,23 +3,23 @@ package edu.sandiego.comp305;
 import java.util.List;
 
 public abstract class Customer extends Profile {
-    String address;
+    protected String address;
 
-    Listing selectedListing;
+    protected Listing selectedListing;
 
-    void selectListing(final ServiceList listings, int index) {
+    protected void selectListing(final ServiceList listings, int index) {
         Listing chosenService = listings.getListing(index);
 
         chosenService.getSelectedBy(this);
         selectedListing = chosenService;
     }
 
-    List<Listing> searchByPrice(final ServiceList listings,
+    protected List<Listing> searchByPrice(final ServiceList listings,
                                 final double maxPrice){
         return listings.filterByPrice(maxPrice);
     }
 
-    List<Listing> searchByService(final ServiceList listings,
+    protected List<Listing> searchByService(final ServiceList listings,
                                   final String serviceName){
         return listings.filterByService(serviceName);
     }
@@ -31,7 +31,10 @@ public abstract class Customer extends Profile {
         return false;
     }
 
-    Listing getSelectedListing() {
+    protected Listing getSelectedListing() {
+        if (this.selectedListing == null) {
+            throw new IllegalStateException("No listing has been selected");
+        }
         return this.selectedListing;
     }
 }
