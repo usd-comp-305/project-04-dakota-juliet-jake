@@ -1,20 +1,11 @@
 package edu.sandiego.comp305;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 public class ProfileTest {
 
-    //need a concrete subclass to test everything
-    static class TestProfile extends Profile {
-        public TestProfile(){
-            super();
-        }
-    }
-
+    //initialize profiler for testing
     Profile profile = new TestProfile();
 
     @Test
@@ -36,7 +27,8 @@ public class ProfileTest {
 
     @Test
     public void setUsernameNullTest(){
-        assertThrows(IllegalArgumentException.class, () -> profile.setUsername(""));
+        assertThrows(IllegalArgumentException.class,
+                () -> profile.setUsername(""));
     }
 
     @Test
@@ -47,27 +39,32 @@ public class ProfileTest {
 
     @Test
     public void setPasswordNullTest(){
-        assertThrows(IllegalArgumentException.class, () -> profile.setPassword(""));
+        assertThrows(IllegalArgumentException.class,
+                () -> profile.setPassword(""));
     }
 
     @Test
     public void setPasswordNoUppercaseTest(){
-        assertThrows(IllegalArgumentException.class, () -> profile.setPassword("passw0rd!"));
+        assertThrows(IllegalArgumentException.class,
+                () -> profile.setPassword("passw0rd!"));
     }
 
     @Test
     public void setPasswordNoLowercaseTest(){
-        assertThrows(IllegalArgumentException.class, () -> profile.setPassword("PASSW0RD!"));
+        assertThrows(IllegalArgumentException.class,
+                () -> profile.setPassword("PASSW0RD!"));
     }
 
     @Test
     public void setPasswordNoNumberTest(){
-        assertThrows(IllegalArgumentException.class, () -> profile.setPassword("Password!"));
+        assertThrows(IllegalArgumentException.class,
+                () -> profile.setPassword("Password!"));
     }
 
     @Test
     public void setPasswordNoSpecialCharacterTest(){
-        assertThrows(IllegalArgumentException.class, () -> profile.setPassword("Passw0rd"));
+        assertThrows(IllegalArgumentException.class,
+                () -> profile.setPassword("Passw0rd"));
     }
 
     @Test
@@ -79,6 +76,14 @@ public class ProfileTest {
 
     @Test
     public void adjustRatingFailedTest(){
-        assertThrows(IllegalArgumentException.class, () -> profile.adjustRating(6.0));
+        assertThrows(IllegalArgumentException.class,
+                () -> profile.adjustRating(6.0));
+    }
+
+    //need a concrete subclass to test everything
+    static class TestProfile extends Profile {
+        public TestProfile(){
+            super();
+        }
     }
 }
