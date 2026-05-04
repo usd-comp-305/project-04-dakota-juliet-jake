@@ -26,9 +26,9 @@ public abstract class Customer extends Profile {
 
     void joinQueue(final String service){}
 
-    List<Listing> searchByProvider(final String providerName,
-                                   final String service){
-        return new ArrayList<>();
+    List<Listing> searchByService(final ServiceList listings,
+                                  final String serviceName){
+        return listings.filterByService(serviceName);
     }
 
     Listing getSelectedListing() {

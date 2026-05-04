@@ -46,8 +46,9 @@ class CustomerTest {
         when(mockServiceList.getListing(0)).thenReturn(mockBarberListing);
         when(mockServiceList.getListing(1)).thenReturn(mockStylistListing);
         when(mockServiceList.getList()).thenReturn(new ArrayList<>(List.of(mockBarberListing, mockStylistListing)));
+        when(mockServiceList.filterByService("Barber")).thenReturn(List.of(mockBarberListing));
+        when(mockServiceList.filterByService("Nail Tech")).thenReturn(List.of());
 
-        mockServiceList = new ServiceList(List.of(mockBarberListing, mockStylistListing));
         stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
     }
 
@@ -67,12 +68,19 @@ class CustomerTest {
 
     @Test
     void selectListingWithBadIndexThrowsException() {
-        ServiceList mockServiceList = mock(ServiceList.class);
         int badIndex = 20;
 
         when(mockServiceList.getListing(badIndex)).thenThrow(new IndexOutOfBoundsException("No Such Index Found"));
         assertThrows(IndexOutOfBoundsException.class, () -> stdCustomer.selectListing(mockServiceList, badIndex));
         verify(mockServiceList, times(1)).getListing(badIndex);
+    }
+
+    @Test
+    void searchByServiceReturnsFilteredList() {
+        List<Listing> filteredList = stdCustomer.searchByService(mockServiceList, "Barber");
+        List<Listing> expectedFilteredList = List.of(mockBarberListing);
+
+        assertEquals(expectedFilteredList, filteredList);
     }
 
     @Test
