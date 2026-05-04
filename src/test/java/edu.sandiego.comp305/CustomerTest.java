@@ -121,6 +121,11 @@ class CustomerTest {
         assertTrue(stdCustomer.pay(50.0, mockPayment, service));
     }
 
+    @Test
+    void payReturnsFalseOnFailedPaymentMethod() {
+        Service service = new Service("Shave", 50.0);
+        assertFalse(stdCustomer.pay(100.0, mockPayment, service));
+    }
 
     @Test
     void joinQueue() {
