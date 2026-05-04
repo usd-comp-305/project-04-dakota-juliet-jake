@@ -49,9 +49,9 @@ public abstract class Profile {
 
     }
 
-    private boolean validPassword(String password){
+    private boolean validPassword(final String password){
 
-        boolean valid;
+        final boolean valid;
         if (password.isEmpty()){
             valid = false;
             throw new IllegalArgumentException("No password entered");
