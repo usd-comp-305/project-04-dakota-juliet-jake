@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ProfileTest {
 
-    //initialize profiler for testing
     Profile profile = new TestProfile();
 
     @Test
@@ -80,7 +79,6 @@ public class ProfileTest {
                 () -> profile.adjustRating(6.0));
     }
 
-    //need a concrete subclass to test everything
     static class TestProfile extends Profile {
         public TestProfile(){
             super();
