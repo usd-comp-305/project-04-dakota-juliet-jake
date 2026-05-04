@@ -19,43 +19,53 @@ public abstract class Profile {
         this.ratingCount = 0;
     }
 
-    public void setName(String name){
+    public void setName(final String name){
         //check if given name is empty
-        if (name.isEmpty()) throw new IllegalArgumentException("No name entered");
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("No name entered");
+        }
         this.name = name;
     }
 
-    public void setUsername(String username){
+    public void setUsername(final String username){
         //check if given username is empty
-        if (username.isEmpty()) throw new IllegalArgumentException("No username entered");
+        if (username.isEmpty()){
+            throw new IllegalArgumentException("No username entered");
+        }
         this.username = username;
     }
 
-    public void setPassword(String password){
+    public void setPassword(final String password){
 
         //check if given password is empty
-        if (password.isEmpty()) throw new IllegalArgumentException("No password entered");
+        if (password.isEmpty()){
+            throw new IllegalArgumentException("No password entered");
+        }
 
-        //password must contain 1 uppercase, 1 lowercase, 1 number, 1 special character
-        if (!password.matches(".*[A-Z].*")){
-            throw new IllegalArgumentException("Password must contain 1 uppercase");
+        //password must contain 1 uppercase, lowercase,
+        //number, special character
+        if (!password.matches(".*[A-Z].*")) {
+            throw new IllegalArgumentException("Password must contain " +
+                    "1 uppercase");
+        } else if (!password.matches(".*[a-z].*")) {
+            throw new IllegalArgumentException("Password must contain " +
+                    "1 lowercase");
+        } else if (!password.matches(".*[0-9].*")) {
+            throw new IllegalArgumentException("Password must contain " +
+                    "1 number");
+        } else if (!password.matches(".*[!@#$%^&*].*")) {
+            throw new IllegalArgumentException("Password must contain " +
+                    "1 special character");
+        } else {
+            this.password = password;
         }
-        else if (!password.matches(".*[a-z].*")){
-            throw new IllegalArgumentException("Password must contain 1 lowercase");
-        }
-        else if (!password.matches(".*[0-9].*")){
-            throw new IllegalArgumentException("Password must contain 1 number");
-        }
-        else if (!password.matches(".*[!@#$%^&*].*")){
-            throw new IllegalArgumentException("Password must contain 1 special character");
-        }
-        else this.password = password;
     }
 
-    public void adjustRating(double newRating){
+    public void adjustRating(final double newRating){
         //check if legal rating
         if (newRating < 0.0 || newRating > 5.0){
-            throw new IllegalArgumentException("Rating must be between 0 and 5");
+            throw new IllegalArgumentException("Rating must be " +
+                    "between 0 and 5");
         }
 
         this.ratingTotal += newRating;
