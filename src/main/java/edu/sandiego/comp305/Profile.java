@@ -20,17 +20,21 @@ public abstract class Profile {
     }
 
     public void setName(String name){
+        //check if given name is empty
+        if (name.isEmpty()) throw new IllegalArgumentException("No name entered");
         this.name = name;
     }
 
     public void setUsername(String username){
+        //check if given username is empty
+        if (username.isEmpty()) throw new IllegalArgumentException("No username entered");
         this.username = username;
     }
 
     public void setPassword(String password){
 
         //check if given password is empty
-        if (password == null) throw new IllegalArgumentException("No password entered");
+        if (password.isEmpty()) throw new IllegalArgumentException("No password entered");
 
         //password must contain 1 uppercase, 1 lowercase, 1 number, 1 special character
         if (!password.matches(".*[A-Z].*")){

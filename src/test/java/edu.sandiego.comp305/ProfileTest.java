@@ -24,9 +24,19 @@ public class ProfileTest {
     }
 
     @Test
+    public void setNameNullTest(){
+        assertThrows(IllegalArgumentException.class, () -> profile.setName(""));
+    }
+
+    @Test
     public void setUsernameTest(){
         profile.setUsername("ldemman");
         assertEquals("ldemman", profile.getUsername());
+    }
+
+    @Test
+    public void setUsernameNullTest(){
+        assertThrows(IllegalArgumentException.class, () -> profile.setUsername(""));
     }
 
     @Test
