@@ -1,29 +1,60 @@
 package edu.sandiego.comp305;
 
 import java.util.List;
-import java.util.ArrayList;
 
-public abstract class Customer extends Profile {
+public class Customer extends Profile {
+    protected String address;
 
-    public void registerObserver(final ServicerAccount servicer){}
+    protected Listing selectedListing;
 
-    public void removeObserver(final ServicerAccount servicer){}
-
-    public void notifyObservers(){}
-
-    void selectService(final String service){}
-
-    void pay(final Payment payment){}
-
-    List<Listing> searchByPrice(final String service,
-                                final double maxPrice){
-        return new ArrayList<>();
+    public Customer(final String name, final String username,
+                     final String password, final String address) {
+        super(name, username, password);
+        this.address = address;
     }
 
-    void joinQueue(final String service){}
+    protected void selectListing(final ServiceList listings, final int index) {
+        final Listing chosenListing = listings.getListing(index);
 
-    List<Listing> searchByProvider(final String providerName,
-                                   final String service){
-        return new ArrayList<>();
+        chosenListing.getSelectedBy(this);
+        selectedListing = chosenListing;
+    }
+
+    protected List<Listing> searchByPrice(final ServiceList listings,
+                                          final double maxPrice){
+        return listings.filterByPrice(maxPrice);
+    }
+
+    protected List<Listing> searchByService(final ServiceList listings,
+                                            final String serviceName){
+        return listings.filterByService(serviceName);
+    }
+
+    public boolean pay(final double amount,
+                       final PaymentMethod paymentMethod,
+                       final Service service){
+        if (amount >= service.getPrice()) {
+            return paymentMethod.processPayment(amount);
+        }
+        return false;
+    }
+
+    protected Listing getSelectedListing() {
+        if (this.selectedListing == null) {
+            throw new IllegalStateException("No listing has been selected");
+        }
+        return this.selectedListing;
+    }
+
+    protected String getAddress() {
+        return this.address;
+    }
+
+    @Override
+    public void cancelCall() {
+        if (this.selectedListing == null) {
+            throw new IllegalStateException("No active listing to cancel");
+        }
+        this.selectedListing = null;
     }
 }
