@@ -15,6 +15,16 @@ public class Listing {
 
     private String generalServiceType;
 
+    public Listing(final String providerName,
+                   final String availability,
+                   final String generalServiceType,
+                   final ArrayList<Service> servicesOffered) {
+        this.providerName = providerName;
+        this.availability = availability;
+        this.generalServiceType = generalServiceType;
+        this.servicesOffered = servicesOffered;
+    }
+
     public void registerObserver(final ServicerAccount servicer){
         if (!servicerObservers.contains(servicer)) {
             servicerObservers.add(servicer);
