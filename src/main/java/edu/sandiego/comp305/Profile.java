@@ -1,13 +1,13 @@
 package edu.sandiego.comp305;
 
 public abstract class Profile {
-    String username;
+    protected String username;
 
-    String password;
+    protected String password;
 
-    String name;
+    protected String name;
 
-    double rating;
+    protected double rating;
 
     public void cancelCall(){}
 }

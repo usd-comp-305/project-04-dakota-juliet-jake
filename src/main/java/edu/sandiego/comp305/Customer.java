@@ -2,10 +2,20 @@ package edu.sandiego.comp305;
 
 import java.util.List;
 
-public abstract class Customer extends Profile {
+public class Customer extends Profile {
     protected String address;
 
     protected Listing selectedListing;
+
+    Customer(final String address, final String username,
+                     final String password, final String name) {
+        this.address = address;
+        this.selectedListing = null;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.rating = 5.0;
+    }
 
     protected void selectListing(final ServiceList listings, final int index) {
         final Listing chosenService = listings.getListing(index);
@@ -38,5 +48,9 @@ public abstract class Customer extends Profile {
             throw new IllegalStateException("No listing has been selected");
         }
         return this.selectedListing;
+    }
+
+    protected String getAddress() {
+        return this.address;
     }
 }

@@ -14,16 +14,6 @@ public class Listing {
 
     private String generalServiceType;
 
-    public Listing(final String providerName,
-                   final String generalServiceType,
-                   final ArrayList<Service> services,
-                   final String availability) {
-        this.providerName = providerName;
-        this.servicesOffered = services;
-        this.availability = availability;
-        this.generalServiceType = generalServiceType;
-    }
-
     public void registerObserver(final ServicerAccount servicer){
         if (!servicerObservers.contains(servicer)) {
             servicerObservers.add(servicer);
@@ -60,7 +50,7 @@ public class Listing {
     }
 
     public ArrayList<Service> getServicesOffered() {
-        return servicesOffered;
+        return new ArrayList<>(servicesOffered);
     }
 
     public String getGeneralServiceType() {

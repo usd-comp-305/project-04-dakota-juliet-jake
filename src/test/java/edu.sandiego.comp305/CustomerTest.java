@@ -10,9 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class CustomerTest {
-    private Customer stdCustomer;
-
-    private ServicerAccount mockServicer;
+    private Customer customer;
 
     private Listing mockBarberListing;
 
@@ -24,10 +22,7 @@ class CustomerTest {
 
     private Service mockService;
 
-    @BeforeEach
-    void setUp() {
-        mockServicer = mock(ServicerAccount.class);
-
+    Listing createMockBarberListing() {
         final ArrayList<Service> barberServices = new ArrayList<>(List.of(
                 new Service("Shave", 20.0),
                 new Service("Wax", 30.0),
@@ -40,6 +35,10 @@ class CustomerTest {
         when(mockBarberListing.isAvailable()).thenReturn(true);
         when(mockBarberListing.getProviderName()).thenReturn("Jake");
 
+        return mockBarberListing;
+    }
+
+    Listing createMockStylistListing() {
         final ArrayList<Service> stylistServices = new ArrayList<>(List.of(
                 new Service("Full Dye", 150.0),
                 new Service("Highlights", 100.0)
@@ -51,6 +50,10 @@ class CustomerTest {
         when(mockStylistListing.isAvailable()).thenReturn(true);
         when(mockStylistListing.getProviderName()).thenReturn("Dakota");
 
+        return mockStylistListing;
+    }
+
+    ServiceList createMockServiceList() {
         mockServiceList = mock(ServiceList.class);
         when(mockServiceList.getListing(0)).thenReturn(mockBarberListing);
         when(mockServiceList.getListing(1)).thenReturn(mockStylistListing);
@@ -65,26 +68,49 @@ class CustomerTest {
         when(mockServiceList.filterByPrice(1.0))
                 .thenReturn(List.of());
 
-        mockPayment = mock(CreditCardPayment.class);
+        return mockServiceList;
+    }
 
-        mockService = mock(Service.class);
+    PaymentMethod createMockPayment() {
+        return mock(CreditCardPayment.class);
+    }
 
-        stdCustomer = new StandardCustomer("123 address st", "user123",
+    Service createMockService() {
+        return mock(Service.class);
+    }
+
+    Customer createCustomer() {
+        return new Customer("123 address st", "user123",
                 "safePass1!", "Jake");
+    }
+
+    @BeforeEach
+    void setUp() {
+        mockBarberListing = createMockBarberListing();
+
+        mockStylistListing = createMockStylistListing();
+
+        mockServiceList = createMockServiceList();
+
+        mockPayment = createMockPayment();
+
+        mockService = createMockService();
+
+        customer = createCustomer();
     }
 
     @Test
     void selectListingCorrectlyChangesSelectedListingVariable() {
         final int index = 1;
-        stdCustomer.selectListing(mockServiceList, index);
-        assertEquals(mockStylistListing, stdCustomer.getSelectedListing());
+        customer.selectListing(mockServiceList, index);
+        assertEquals(mockStylistListing, customer.getSelectedListing());
     }
 
     @Test
     void selectListingCorrectlyCallsGetSelectedByInListing() {
         final int index = 1;
-        stdCustomer.selectListing(mockServiceList, index);
-        verify(mockStylistListing, times(1)).getSelectedBy(stdCustomer);
+        customer.selectListing(mockServiceList, index);
+        verify(mockStylistListing, times(1)).getSelectedBy(customer);
     }
 
     @Test
@@ -94,7 +120,7 @@ class CustomerTest {
         when(mockServiceList.getListing(badIndex)).thenThrow(
                 new IndexOutOfBoundsException("No Such Index Found"));
         assertThrows(IndexOutOfBoundsException.class, () ->
-                stdCustomer.selectListing(mockServiceList, badIndex));
+                customer.selectListing(mockServiceList, badIndex));
         verify(mockServiceList, times(1))
                 .getListing(badIndex);
     }
@@ -102,7 +128,7 @@ class CustomerTest {
     @Test
     void searchByServiceReturnsCorrectFilteredList() {
         final List<Listing> filteredList =
-                stdCustomer.searchByService(mockServiceList, "Barber");
+                customer.searchByService(mockServiceList, "Barber");
         final List<Listing> expectedFilteredList = List.of(mockBarberListing);
 
         assertEquals(expectedFilteredList, filteredList);
@@ -111,7 +137,7 @@ class CustomerTest {
     @Test
     void searchByServiceReturnsEmptyListWhenNoMatches() {
         final List<Listing> filteredList =
-                stdCustomer.searchByService(mockServiceList, "Nail Tech");
+                customer.searchByService(mockServiceList, "Nail Tech");
         final List<Listing> expectedFilteredList = List.of();
 
         assertEquals(expectedFilteredList, filteredList);
@@ -120,7 +146,7 @@ class CustomerTest {
     @Test
     void searchByPriceReturnsCorrectFilteredList() {
         final List<Listing> filteredList =
-                stdCustomer.searchByPrice(mockServiceList, 50.0);
+                customer.searchByPrice(mockServiceList, 50.0);
         final List<Listing> expectedFilteredList = List.of(mockBarberListing);
 
         assertEquals(expectedFilteredList, filteredList);
@@ -129,7 +155,7 @@ class CustomerTest {
     @Test
     void searchByPriceReturnsEmptyListWhenNoMatches() {
         final List<Listing> filteredList =
-                stdCustomer.searchByService(mockServiceList, "Nail Tech");
+                customer.searchByService(mockServiceList, "Nail Tech");
         final List<Listing> expectedFilteredList = List.of();
 
         assertEquals(expectedFilteredList, filteredList);
@@ -139,14 +165,14 @@ class CustomerTest {
     void payReturnsTrueOnSuccessfulPaymentMethod() {
         when(mockPayment.processPayment(50.0)).thenReturn(true);
 
-        assertTrue(stdCustomer.pay(50.0, mockPayment, mockService));
+        assertTrue(customer.pay(50.0, mockPayment, mockService));
     }
 
     @Test
     void payReturnsFalseOnFailedPaymentMethod() {
         when(mockPayment.processPayment(100.0)).thenReturn(false);
 
-        assertFalse(stdCustomer.pay(100.0, mockPayment, mockService));
+        assertFalse(customer.pay(100.0, mockPayment, mockService));
     }
 
     @Test
@@ -154,7 +180,7 @@ class CustomerTest {
         when(mockPayment.processPayment(70.0)).thenReturn(true);
         when(mockService.getPrice()).thenReturn(35.0);
 
-        assertTrue(stdCustomer.pay(70.0, mockPayment, mockService));
+        assertTrue(customer.pay(70.0, mockPayment, mockService));
     }
 
     @Test
@@ -162,7 +188,7 @@ class CustomerTest {
         when(mockPayment.processPayment(20.0)).thenReturn(true);
         when(mockService.getPrice()).thenReturn(35.0);
 
-        assertFalse(stdCustomer.pay(20.0, mockPayment, mockService));
+        assertFalse(customer.pay(20.0, mockPayment, mockService));
     }
 
     @Test
@@ -170,13 +196,13 @@ class CustomerTest {
         when(mockPayment.processPayment(35.0)).thenReturn(true);
         when(mockService.getPrice()).thenReturn(35.0);
 
-        assertTrue(stdCustomer.pay(35.0, mockPayment, mockService));
+        assertTrue(customer.pay(35.0, mockPayment, mockService));
     }
 
     @Test
     void getSelectedListingThrowsExceptionIfNull() {
         assertThrows(IllegalStateException.class, () ->
-                stdCustomer.getSelectedListing());
+                customer.getSelectedListing());
     }
 
 }
