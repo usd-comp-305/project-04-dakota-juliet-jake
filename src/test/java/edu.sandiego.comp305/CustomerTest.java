@@ -80,8 +80,8 @@ class CustomerTest {
     }
 
     Customer createCustomer() {
-        return new Customer("123 address st", "user123",
-                "safePass1!", "Jake");
+        return new Customer("Jake", "user123",
+                "safePass1!","123 address st");
     }
 
     @BeforeEach

@@ -4,14 +4,7 @@ import java.util.List;
 
 public class CustomerView {
 
-    private DisplayStrategy strategy;
-
-    public CustomerView(final DisplayStrategy strategy) {
-        this.strategy = strategy;
-    }
-
     public void setStrategy(final DisplayStrategy strategy) {
-        this.strategy = strategy;
     }
 
     public void render() {

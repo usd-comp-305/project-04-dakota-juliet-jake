@@ -7,14 +7,10 @@ public class Customer extends Profile {
 
     protected Listing selectedListing;
 
-    Customer(final String address, final String username,
-                     final String password, final String name) {
+    Customer(final String name, final String username,
+                     final String password, final String address) {
+        super(name, username, password);
         this.address = address;
-        this.selectedListing = null;
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.rating = 5.0;
     }
 
     protected void selectListing(final ServiceList listings, final int index) {
