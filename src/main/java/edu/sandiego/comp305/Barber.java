@@ -2,8 +2,10 @@ package edu.sandiego.comp305;
 
 public class Barber extends ServicerAccount{
 
-    public Barber(){
-
+    public Barber(final String name,
+                  final String username,
+                  final String password){
+        super(name, username, password);
     }
 
     public void shave(){

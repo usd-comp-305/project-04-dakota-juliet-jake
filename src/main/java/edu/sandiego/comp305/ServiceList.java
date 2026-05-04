@@ -5,7 +5,15 @@ import java.util.List;
 public class ServiceList {
     List<Listing> listings;
 
-    List<Listing> getListing(){
+    ServiceList(final List<Listing> listings) {
+        this.listings = listings;
+    }
+
+    Listing getListing(final int index){
+        return listings.get(index);
+    }
+
+    List<Listing> getList(){
         return listings;
     }
 
@@ -13,7 +21,7 @@ public class ServiceList {
         return listings;
     }
 
-    List<Listing> filterByPrice(final String service, final double maxPrice){
+    List<Listing> filterByPrice(final double maxPrice){
         return listings;
     }
 }

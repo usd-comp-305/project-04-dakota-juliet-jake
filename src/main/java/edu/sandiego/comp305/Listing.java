@@ -4,23 +4,16 @@ package edu.sandiego.comp305;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Listing {
+    List<ServicerAccount> servicerObservers;
+
     private String providerName;
 
     private ArrayList<Service> servicesOffered;
 
     private String availability;
 
-    List<ServicerAccount> servicerObservers;
-
-    public Listing(final String providerName,
-                   final ArrayList<Service> services,
-                   final String availability) {
-        this.providerName = providerName;
-        this.servicesOffered = services;
-        this.availability = availability;
-    }
+    private String generalServiceType;
 
     public void registerObserver(final ServicerAccount servicer){
         if (!servicerObservers.contains(servicer)) {
@@ -39,6 +32,8 @@ public class Listing {
         }
     }
 
+    public void getSelectedBy(final Customer customer) {}
+
     public void setProviderName(final String name){
 
     }
@@ -55,11 +50,19 @@ public class Listing {
         return providerName;
     }
 
-    public ArrayList<Service> getServicesOffered(){
-        return servicesOffered;
+    public ArrayList<Service> getServicesOffered() {
+        return new ArrayList<>(servicesOffered);
+    }
+
+    public String getGeneralServiceType() {
+        return generalServiceType;
     }
 
     public String getAvailability() {
         return availability;
+    }
+
+    public boolean isAvailable() {
+        return true;
     }
 }
