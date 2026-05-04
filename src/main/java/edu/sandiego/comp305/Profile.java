@@ -60,11 +60,11 @@ public abstract class Profile {
     }
 
     public String getName(){
-        return null;
+        return this.name;
     }
 
     public String getUsername(){
-        return null;
+        return this.username;
     }
 
     public String getPassword(){

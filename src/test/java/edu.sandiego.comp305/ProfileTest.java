@@ -36,8 +36,28 @@ public class ProfileTest {
     }
 
     @Test
-    public void setPasswordFailTest(){
-        assertThrows(IllegalArgumentException.class, () -> profile.setPassword("password"));
+    public void setPasswordNullTest(){
+        assertThrows(IllegalArgumentException.class, () -> profile.setPassword(""));
+    }
+
+    @Test
+    public void setPasswordNoUppercaseTest(){
+        assertThrows(IllegalArgumentException.class, () -> profile.setPassword("passw0rd!"));
+    }
+
+    @Test
+    public void setPasswordNoLowercaseTest(){
+        assertThrows(IllegalArgumentException.class, () -> profile.setPassword("PASSW0RD!"));
+    }
+
+    @Test
+    public void setPasswordNoNumberTest(){
+        assertThrows(IllegalArgumentException.class, () -> profile.setPassword("Password!"));
+    }
+
+    @Test
+    public void setPasswordNoSpecialCharacterTest(){
+        assertThrows(IllegalArgumentException.class, () -> profile.setPassword("Passw0rd"));
     }
 
     @Test
