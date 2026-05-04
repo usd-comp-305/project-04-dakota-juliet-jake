@@ -15,20 +15,20 @@ public abstract class Customer extends Profile {
         selectedListing = chosenService;
     }
 
-    void pay(final Payment payment, PaymentType paymentType){
-        payment.processPayment(paymentType);
-    }
-
     List<Listing> searchByPrice(final ServiceList listings,
                                 final double maxPrice){
         return listings.filterByPrice(maxPrice);
     }
 
-    void joinQueue(final String service){}
-
     List<Listing> searchByService(final ServiceList listings,
                                   final String serviceName){
         return listings.filterByService(serviceName);
+    }
+
+    void joinQueue(final String service){}
+
+    void pay(final Payment payment, PaymentType paymentType){
+        payment.processPayment(paymentType);
     }
 
     Listing getSelectedListing() {

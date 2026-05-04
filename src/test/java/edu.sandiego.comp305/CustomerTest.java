@@ -48,6 +48,8 @@ class CustomerTest {
         when(mockServiceList.getList()).thenReturn(new ArrayList<>(List.of(mockBarberListing, mockStylistListing)));
         when(mockServiceList.filterByService("Barber")).thenReturn(List.of(mockBarberListing));
         when(mockServiceList.filterByService("Nail Tech")).thenReturn(List.of());
+        when(mockServiceList.filterByPrice(50.0)).thenReturn(List.of(mockBarberListing));
+        when(mockServiceList.filterByPrice(1.0)).thenReturn(List.of());
 
         stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
     }
@@ -76,7 +78,7 @@ class CustomerTest {
     }
 
     @Test
-    void searchByServiceReturnsFilteredList() {
+    void searchByServiceReturnsCorrectFilteredList() {
         List<Listing> filteredList = stdCustomer.searchByService(mockServiceList, "Barber");
         List<Listing> expectedFilteredList = List.of(mockBarberListing);
 
@@ -85,6 +87,22 @@ class CustomerTest {
 
     @Test
     void searchByServiceReturnsEmptyListWhenNoMatches() {
+        List<Listing> filteredList = stdCustomer.searchByService(mockServiceList, "Nail Tech");
+        List<Listing> expectedFilteredList = List.of();
+
+        assertEquals(expectedFilteredList, filteredList);
+    }
+
+    @Test
+    void searchByPriceReturnsCorrectFilteredList() {
+        List<Listing> filteredList = stdCustomer.searchByPrice(mockServiceList, 50.0);
+        List<Listing> expectedFilteredList = List.of(mockBarberListing);
+
+        assertEquals(expectedFilteredList, filteredList);
+    }
+
+    @Test
+    void searchByPriceReturnsEmptyListWhenNoMatches() {
         List<Listing> filteredList = stdCustomer.searchByService(mockServiceList, "Nail Tech");
         List<Listing> expectedFilteredList = List.of();
 
