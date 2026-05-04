@@ -1,23 +1,6 @@
 package edu.sandiego.comp305;
 
 public abstract class Profile {
-    private String name;
-
-    private String username;
-
-    private String password;
-
-    private double ratingTotal;
-
-    private int ratingCount;
-
-    Profile(final String name, final String username, final String password) {
-        this.name = name;
-        this.username = username;
-        this.password = password;
-        this.ratingTotal = 5.0;
-        this.ratingCount = 0;
-    }
 
     private String name;
 
@@ -31,7 +14,16 @@ public abstract class Profile {
 
     private int ratingCount;
 
-    Profile(){
+    protected Profile(){
+        this.ratingTotal = 0;
+        this.ratingCount = 0;
+    }
+
+    public Profile(final String name, final String username, final String password){
+        setName(name);
+        setUsername(username);
+        setPassword(password);
+
         this.ratingTotal = 0;
         this.ratingCount = 0;
     }
@@ -54,45 +46,32 @@ public abstract class Profile {
 
     public void setPassword(final String password){
 
-        try{
-            //password must contain 1 uppercase, lowercase,
-            //number, special character
-            if (validPassword(password)){
-                this.password = password;
-            }
-        } catch (Error e){
-            System.out.println("Error: Password could not be set");
+        //password must contain 1 uppercase, lowercase,
+        //number, special character
+        if (validPassword(password)){
+            this.password = password;
         }
-
     }
 
     private boolean validPassword(final String password){
 
-        final boolean valid;
         if (password.isEmpty()){
-            valid = false;
             throw new IllegalArgumentException("No password entered");
         } else if (!password.matches(".*[A-Z].*")) {
-            valid = false;
             throw new IllegalArgumentException("Password must contain " +
                     "1 uppercase");
         } else if (!password.matches(".*[a-z].*")) {
-            valid = false;
             throw new IllegalArgumentException("Password must contain " +
                     "1 lowercase");
         } else if (!password.matches(".*[0-9].*")) {
-            valid = false;
             throw new IllegalArgumentException("Password must contain " +
                     "1 number");
         } else if (!password.matches(".*[!@#$%^&*].*")) {
-            valid = false;
             throw new IllegalArgumentException("Password must contain " +
                     "1 special character");
-        } else {
-            valid = true;
         }
 
-        return valid;
+        return true;
     }
 
     public void adjustRating(final double newRating){
@@ -129,23 +108,4 @@ public abstract class Profile {
 
     public void cancelCall(){}
 
-    protected String getName() {
-        return name;
-    }
-
-    protected String getUsername() {
-        return username;
-    }
-
-    protected String getPassword() {
-        return password;
-    }
-
-    protected double getRatingTotal() {
-        return ratingTotal;
-    }
-
-    protected double getRatingCount() {
-        return ratingCount;
-    }
 }
