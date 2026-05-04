@@ -19,11 +19,9 @@ public abstract class Profile {
         this.ratingCount = 0;
     }
 
-    public Profile(final String name, final String username, final String password){
-        setName(name);
-        setUsername(username);
-        setPassword(password);
+    public Profile(final String name){
 
+        this.name = name;
         this.ratingTotal = 0;
         this.ratingCount = 0;
     }
@@ -48,12 +46,12 @@ public abstract class Profile {
 
         //password must contain 1 uppercase, lowercase,
         //number, special character
-        if (validPassword(password)){
-            this.password = password;
-        }
+        validatePassword(password);
+        this.password = password;
+
     }
 
-    private boolean validPassword(final String password){
+    private static void validatePassword(final String password){
 
         if (password.isEmpty()){
             throw new IllegalArgumentException("No password entered");
@@ -70,8 +68,6 @@ public abstract class Profile {
             throw new IllegalArgumentException("Password must contain " +
                     "1 special character");
         }
-
-        return true;
     }
 
     public void adjustRating(final double newRating){

@@ -2,10 +2,8 @@ package edu.sandiego.comp305;
 
 public class Stylist extends ServicerAccount {
 
-    public Stylist(final String name,
-                   final String username,
-                   final String password){
-        super(name, username, password);
+    public Stylist(final String name){
+        super(name);
     }
 
     public void fullDye(){
