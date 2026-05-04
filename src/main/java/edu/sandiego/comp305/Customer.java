@@ -49,4 +49,9 @@ public class Customer extends Profile {
     protected String getAddress() {
         return this.address;
     }
+
+    @Override
+    public void cancelCall() {
+        this.selectedListing = null;
+    }
 }

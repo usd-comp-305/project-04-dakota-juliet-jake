@@ -205,4 +205,11 @@ class CustomerTest {
                 customer.getSelectedListing());
     }
 
+    @Test
+    void cancelCallMakesSelectedListingNull() {
+        customer.cancelCall();
+        assertThrows(IllegalStateException.class, () ->
+                customer.getSelectedListing());
+    }
+
 }
