@@ -23,7 +23,7 @@ public class Listing {
         this.availability = availability;
         this.generalServiceType = generalServiceType;
         this.servicesOffered = servicesOffered;
-        this.servicerObservers = List.of();
+        this.servicerObservers = new ArrayList<>();
     }
 
     public void registerObserver(final ServicerAccount servicer){

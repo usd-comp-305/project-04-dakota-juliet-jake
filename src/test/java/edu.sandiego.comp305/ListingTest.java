@@ -79,13 +79,12 @@ class ListingTest {
 
 
     @Test
-    void removeNonexistentObserverDoesntWork() {
-        /*final Customer stdCustomer = new Customer("123 address st", "user123", "safePass1!", "Jake");
+    void removeNonexistentObserverDoesNothing() {
         final ServicerAccount mockServicer = mock(ServicerAccount.class);
         final ServicerAccount diffMockServicer = mock(ServicerAccount.class);
-        customer.registerObserver(mockServicer);
-        customer.removeObserver(diffMockServicer);
-        assertEquals(1, stdCustomer.servicerObservers.size());*/
+        listing.registerObserver(mockServicer);
+        listing.removeObserver(diffMockServicer);
+        assertEquals(1, listing.servicerObservers.size());
     }
 
 
