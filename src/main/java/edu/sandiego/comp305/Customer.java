@@ -14,10 +14,10 @@ public class Customer extends Profile {
     }
 
     protected void selectListing(final ServiceList listings, final int index) {
-        final Listing chosenService = listings.getListing(index);
+        final Listing chosenListing = listings.getListing(index);
 
-        chosenService.getSelectedBy(this);
-        selectedListing = chosenService;
+        chosenListing.getSelectedBy(this);
+        selectedListing = chosenListing;
     }
 
     protected List<Listing> searchByPrice(final ServiceList listings,
