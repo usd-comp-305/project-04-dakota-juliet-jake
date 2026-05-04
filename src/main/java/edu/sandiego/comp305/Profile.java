@@ -10,7 +10,14 @@ public abstract class Profile {
 
     private double rating;
 
-    Profile(){}
+    private double ratingTotal;
+
+    private int ratingCount;
+
+    Profile(){
+        this.ratingTotal = 0;
+        this.ratingCount = 0;
+    }
 
     public void setName(String name){
         this.name = name;
@@ -21,6 +28,7 @@ public abstract class Profile {
     }
 
     public void setPassword(String password){
+
         //check if given password is empty
         if (password == null) throw new IllegalArgumentException("No password entered");
 
@@ -41,7 +49,14 @@ public abstract class Profile {
     }
 
     public void adjustRating(double newRating){
+        //check if legal rating
+        if (newRating < 0.0 || newRating > 5.0){
+            throw new IllegalArgumentException("Rating must be between 0 and 5");
+        }
 
+        this.ratingTotal += newRating;
+        this.ratingCount++;
+        this.rating = this.ratingTotal / this.ratingCount;
     }
 
     public String getName(){
@@ -57,7 +72,7 @@ public abstract class Profile {
     }
 
     public double getRating(){
-        return -1;
+        return this.rating;
     }
 
     public void cancelCall(){}
