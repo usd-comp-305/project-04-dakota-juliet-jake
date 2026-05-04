@@ -53,7 +53,8 @@ class CustomerTest {
         when(mockServiceList.filterByPrice(1.0)).thenReturn(List.of());
 
         mockPayment = mock(CreditCardPayment.class);
-        when(mockPayment.processPayment(50.0))
+        when(mockPayment.processPayment(50.0)).thenReturn(true);
+        when(mockPayment.processPayment(100.0)).thenReturn(false);
 
 
         stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
@@ -115,9 +116,11 @@ class CustomerTest {
     }
 
     @Test
-    void payCallsProcessPayment() {
-
+    void payReturnsTrueOnSuccessfulPaymentMethod() {
+        Service service = new Service("Shave", 50.0);
+        assertTrue(stdCustomer.pay(50.0, mockPayment, service));
     }
+
 
     @Test
     void joinQueue() {
