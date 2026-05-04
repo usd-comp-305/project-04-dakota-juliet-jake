@@ -29,6 +29,7 @@ public abstract class Customer extends Profile {
 
     public boolean pay(final double amount, PaymentMethod paymentMethod, Service service){
         return paymentMethod.processPayment(amount);
+
     }
 
     Listing getSelectedListing() {

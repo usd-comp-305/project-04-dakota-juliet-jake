@@ -16,6 +16,7 @@ class CustomerTest {
     private Listing mockStylistListing;
     private ServiceList mockServiceList;
     private PaymentMethod mockPayment;
+    private Service mockService;
 
     @BeforeEach
     void setUp() {
@@ -53,9 +54,8 @@ class CustomerTest {
         when(mockServiceList.filterByPrice(1.0)).thenReturn(List.of());
 
         mockPayment = mock(CreditCardPayment.class);
-        when(mockPayment.processPayment(50.0)).thenReturn(true);
-        when(mockPayment.processPayment(100.0)).thenReturn(false);
 
+        mockService = mock(Service.class);
 
         stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
     }
@@ -117,15 +117,26 @@ class CustomerTest {
 
     @Test
     void payReturnsTrueOnSuccessfulPaymentMethod() {
-        Service service = new Service("Shave", 50.0);
-        assertTrue(stdCustomer.pay(50.0, mockPayment, service));
+        when(mockPayment.processPayment(50.0)).thenReturn(true);
+
+        assertTrue(stdCustomer.pay(50.0, mockPayment, mockService));
     }
 
     @Test
     void payReturnsFalseOnFailedPaymentMethod() {
-        Service service = new Service("Shave", 50.0);
-        assertFalse(stdCustomer.pay(100.0, mockPayment, service));
+        when(mockPayment.processPayment(100.0)).thenReturn(false);
+
+        assertFalse(stdCustomer.pay(100.0, mockPayment, mockService));
     }
+
+    @Test
+    void payReturnsTrueOnTooMuchMoneyPaid() {
+        when(mockPayment.processPayment(70.0)).thenReturn(true);
+        when(mockService.getPrice()).thenReturn(35.0);
+
+        assertTrue(stdCustomer.pay(70.0, mockPayment, mockService));
+    }
+
 
     @Test
     void joinQueue() {
