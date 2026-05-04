@@ -32,7 +32,7 @@ public class AppController {
                              final double maxPrice) {
     }
 
-    public void handlePayment(final Payment payment) {
+    public void handlePayment(final PaymentMethod payment) {
     }
 
     public void handlePostListing(final ServicerAccount servicer) {

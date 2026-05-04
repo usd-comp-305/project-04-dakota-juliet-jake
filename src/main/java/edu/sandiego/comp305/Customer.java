@@ -27,8 +27,8 @@ public abstract class Customer extends Profile {
 
     void joinQueue(final String service){}
 
-    void pay(final Payment payment, PaymentType paymentType){
-        payment.processPayment(paymentType);
+    public Receipt pay(final double amount, PaymentMethod paymentMethod){
+        return null;
     }
 
     Listing getSelectedListing() {

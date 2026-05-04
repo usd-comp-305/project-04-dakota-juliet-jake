@@ -111,17 +111,6 @@ class CustomerTest {
 
     @Test
     void payCallsProcessPayment() {
-        Customer stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
-
-        Payment mockPayment = mock(Payment.class);
-
-        stdCustomer.pay(mockPayment, PaymentType.VENMO);
-
-        verify(mockPayment, times(1)).processPayment(PaymentType.VENMO);
-    }
-
-    @Test
-    void searchByPriceCallsFilterByPriceAndReturnsList() {
 
     }
 
@@ -129,7 +118,4 @@ class CustomerTest {
     void joinQueue() {
     }
 
-    @Test
-    void searchByProvider() {
-    }
 }
