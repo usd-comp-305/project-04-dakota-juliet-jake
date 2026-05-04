@@ -11,18 +11,24 @@ import static org.mockito.Mockito.*;
 
 class CustomerTest {
     private Customer stdCustomer;
+
     private ServicerAccount mockServicer;
+
     private Listing mockBarberListing;
+
     private Listing mockStylistListing;
+
     private ServiceList mockServiceList;
+
     private PaymentMethod mockPayment;
+
     private Service mockService;
 
     @BeforeEach
     void setUp() {
         mockServicer = mock(ServicerAccount.class);
 
-        ArrayList<Service> barberServices = new ArrayList<>(List.of(
+        final ArrayList<Service> barberServices = new ArrayList<>(List.of(
                 new Service("Shave", 20.0),
                 new Service("Wax", 30.0),
                 new Service("Buzz", 15.0),
@@ -34,83 +40,97 @@ class CustomerTest {
         when(mockBarberListing.isAvailable()).thenReturn(true);
         when(mockBarberListing.getProviderName()).thenReturn("Jake");
 
-        ArrayList<Service> stylistServices = new ArrayList<>(List.of(
+        final ArrayList<Service> stylistServices = new ArrayList<>(List.of(
                 new Service("Full Dye", 150.0),
                 new Service("Highlights", 100.0)
         ));
 
         mockStylistListing = mock(Listing.class);
-        when(mockStylistListing.getServicesOffered()).thenReturn(stylistServices);
+        when(mockStylistListing.getServicesOffered())
+                .thenReturn(stylistServices);
         when(mockStylistListing.isAvailable()).thenReturn(true);
         when(mockStylistListing.getProviderName()).thenReturn("Dakota");
 
         mockServiceList = mock(ServiceList.class);
         when(mockServiceList.getListing(0)).thenReturn(mockBarberListing);
         when(mockServiceList.getListing(1)).thenReturn(mockStylistListing);
-        when(mockServiceList.getList()).thenReturn(new ArrayList<>(List.of(mockBarberListing, mockStylistListing)));
-        when(mockServiceList.filterByService("Barber")).thenReturn(List.of(mockBarberListing));
-        when(mockServiceList.filterByService("Nail Tech")).thenReturn(List.of());
-        when(mockServiceList.filterByPrice(50.0)).thenReturn(List.of(mockBarberListing));
-        when(mockServiceList.filterByPrice(1.0)).thenReturn(List.of());
+        when(mockServiceList.getList()).thenReturn(new ArrayList<>(
+                List.of(mockBarberListing, mockStylistListing)));
+        when(mockServiceList.filterByService("Barber"))
+                .thenReturn(List.of(mockBarberListing));
+        when(mockServiceList.filterByService("Nail Tech"))
+                .thenReturn(List.of());
+        when(mockServiceList.filterByPrice(50.0))
+                .thenReturn(List.of(mockBarberListing));
+        when(mockServiceList.filterByPrice(1.0))
+                .thenReturn(List.of());
 
         mockPayment = mock(CreditCardPayment.class);
 
         mockService = mock(Service.class);
 
-        stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
+        stdCustomer = new StandardCustomer("123 address st", "user123",
+                "safePass1!", "Jake");
     }
 
     @Test
     void selectListingCorrectlyChangesSelectedListingVariable() {
-        int index = 1;
+        final int index = 1;
         stdCustomer.selectListing(mockServiceList, index);
         assertEquals(mockStylistListing, stdCustomer.getSelectedListing());
     }
 
     @Test
     void selectListingCorrectlyCallsGetSelectedByInListing() {
-        int index = 1;
+        final int index = 1;
         stdCustomer.selectListing(mockServiceList, index);
         verify(mockStylistListing, times(1)).getSelectedBy(stdCustomer);
     }
 
     @Test
     void selectListingWithBadIndexThrowsException() {
-        int badIndex = 20;
+        final int badIndex = 20;
 
-        when(mockServiceList.getListing(badIndex)).thenThrow(new IndexOutOfBoundsException("No Such Index Found"));
-        assertThrows(IndexOutOfBoundsException.class, () -> stdCustomer.selectListing(mockServiceList, badIndex));
-        verify(mockServiceList, times(1)).getListing(badIndex);
+        when(mockServiceList.getListing(badIndex)).thenThrow(
+                new IndexOutOfBoundsException("No Such Index Found"));
+        assertThrows(IndexOutOfBoundsException.class, () ->
+                stdCustomer.selectListing(mockServiceList, badIndex));
+        verify(mockServiceList, times(1))
+                .getListing(badIndex);
     }
 
     @Test
     void searchByServiceReturnsCorrectFilteredList() {
-        List<Listing> filteredList = stdCustomer.searchByService(mockServiceList, "Barber");
-        List<Listing> expectedFilteredList = List.of(mockBarberListing);
+        final List<Listing> filteredList =
+                stdCustomer.searchByService(mockServiceList, "Barber");
+        final List<Listing> expectedFilteredList = List.of(mockBarberListing);
 
         assertEquals(expectedFilteredList, filteredList);
     }
 
     @Test
     void searchByServiceReturnsEmptyListWhenNoMatches() {
-        List<Listing> filteredList = stdCustomer.searchByService(mockServiceList, "Nail Tech");
-        List<Listing> expectedFilteredList = List.of();
+        final List<Listing> filteredList =
+                stdCustomer.searchByService(mockServiceList, "Nail Tech");
+        final List<Listing> expectedFilteredList = List.of();
 
         assertEquals(expectedFilteredList, filteredList);
     }
 
     @Test
     void searchByPriceReturnsCorrectFilteredList() {
-        List<Listing> filteredList = stdCustomer.searchByPrice(mockServiceList, 50.0);
-        List<Listing> expectedFilteredList = List.of(mockBarberListing);
+        final List<Listing> filteredList =
+                stdCustomer.searchByPrice(mockServiceList, 50.0);
+        final List<Listing> expectedFilteredList = List.of(mockBarberListing);
 
         assertEquals(expectedFilteredList, filteredList);
     }
 
     @Test
     void searchByPriceReturnsEmptyListWhenNoMatches() {
-        List<Listing> filteredList = stdCustomer.searchByService(mockServiceList, "Nail Tech");
-        List<Listing> expectedFilteredList = List.of();
+        final List<Listing> filteredList =
+                stdCustomer.searchByService(mockServiceList, "Nail Tech");
+        final List<Listing> expectedFilteredList = List.of();
 
         assertEquals(expectedFilteredList, filteredList);
     }
@@ -155,7 +175,8 @@ class CustomerTest {
 
     @Test
     void getSelectedListingThrowsExceptionIfNull() {
-        assertThrows(IllegalStateException.class, () -> stdCustomer.getSelectedListing());
+        assertThrows(IllegalStateException.class, () ->
+                stdCustomer.getSelectedListing());
     }
 
 }

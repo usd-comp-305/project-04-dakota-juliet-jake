@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Listing {
+    List<ServicerAccount> servicerObservers;
+
     private String providerName;
 
     private ArrayList<Service> servicesOffered;
@@ -11,8 +13,6 @@ public class Listing {
     private String availability;
 
     private String generalServiceType;
-
-    List<ServicerAccount> servicerObservers;
 
     public Listing(final String providerName,
                    final String generalServiceType,
@@ -41,7 +41,7 @@ public class Listing {
         }
     }
 
-    public void getSelectedBy(Customer customer) {}
+    public void getSelectedBy(final Customer customer) {}
 
     public void setProviderName(final String name){
 
@@ -59,11 +59,13 @@ public class Listing {
         return providerName;
     }
 
-    public ArrayList<Service> getServicesOffered(){
+    public ArrayList<Service> getServicesOffered() {
         return servicesOffered;
     }
 
-    public String getGeneralServiceType() { return generalServiceType;}
+    public String getGeneralServiceType() {
+        return generalServiceType;
+    }
 
     public String getAvailability() {
         return availability;

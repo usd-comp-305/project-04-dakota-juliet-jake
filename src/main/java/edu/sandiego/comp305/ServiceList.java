@@ -9,7 +9,7 @@ public class ServiceList {
         this.listings = listings;
     }
 
-    Listing getListing(int index){
+    Listing getListing(final int index){
         return listings.get(index);
     }
 

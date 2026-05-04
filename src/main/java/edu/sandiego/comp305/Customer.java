@@ -7,24 +7,26 @@ public abstract class Customer extends Profile {
 
     protected Listing selectedListing;
 
-    protected void selectListing(final ServiceList listings, int index) {
-        Listing chosenService = listings.getListing(index);
+    protected void selectListing(final ServiceList listings, final int index) {
+        final Listing chosenService = listings.getListing(index);
 
         chosenService.getSelectedBy(this);
         selectedListing = chosenService;
     }
 
     protected List<Listing> searchByPrice(final ServiceList listings,
-                                final double maxPrice){
+                                          final double maxPrice){
         return listings.filterByPrice(maxPrice);
     }
 
     protected List<Listing> searchByService(final ServiceList listings,
-                                  final String serviceName){
+                                            final String serviceName){
         return listings.filterByService(serviceName);
     }
 
-    public boolean pay(final double amount, PaymentMethod paymentMethod, Service service){
+    public boolean pay(final double amount,
+                       final PaymentMethod paymentMethod,
+                       final Service service){
         if (amount >= service.getPrice()) {
             return paymentMethod.processPayment(amount);
         }
