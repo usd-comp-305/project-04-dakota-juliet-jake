@@ -18,6 +18,12 @@ public class Listing {
         if (!servicerObservers.contains(servicer)) {
             servicerObservers.add(servicer);
         }
+    public Listing(final String providerName,
+                   final ArrayList<Service> services,
+                   final String availability) {
+        this.providerName = providerName;
+        this.servicesOffered = new ArrayList<>(services);
+        this.availability = availability;
     }
 
     public void removeObserver(final ServicerAccount servicer){

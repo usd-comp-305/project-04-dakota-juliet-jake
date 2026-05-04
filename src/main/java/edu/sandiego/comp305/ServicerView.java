@@ -4,7 +4,12 @@ import java.util.List;
 
 public class ServicerView {
 
+    public ServicerView(final DisplayStrategy strategy) {
+
+    }
+
     public void setStrategy(final DisplayStrategy strategy) {
+
     }
 
     public void render() {

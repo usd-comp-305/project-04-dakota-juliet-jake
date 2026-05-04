@@ -4,6 +4,10 @@ import java.util.List;
 
 public class ServicerDisplayStrategy implements DisplayStrategy {
 
+    public ServicerDisplayStrategy() {
+
+    }
+
     @Override
     public void display() {
     }
