@@ -62,7 +62,6 @@ class ListingTest {
         assertEquals(1, listing.getServicerObservers().size());
     }
 
-
     @Test
     void cantRegisterSameObserverMoreThanOnce() {
         listing.registerObserver(mockServicer);
@@ -70,14 +69,12 @@ class ListingTest {
         assertEquals(1, listing.servicerObservers.size());
     }
 
-
     @Test
     void removeObserverRemovesObserverFromList() {
-        /*final Customer stdCustomer = new Customer("123 address st", "user123", "safePass1!", "Jake");
         final ServicerAccount mockServicer = mock(ServicerAccount.class);
-        customer.registerObserver(mockServicer);
-        customer.removeObserver(mockServicer);
-        assertEquals(0, stdCustomer.servicerObservers.size());*/
+        listing.registerObserver(mockServicer);
+        listing.removeObserver(mockServicer);
+        assertEquals(0, listing.servicerObservers.size());
     }
 
 
