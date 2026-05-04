@@ -13,6 +13,10 @@ public class ServiceList {
         return listings.get(index);
     }
 
+    List<Listing> getList(){
+        return listings;
+    }
+
     List<Listing> filterByService(final String service){
         return listings;
     }

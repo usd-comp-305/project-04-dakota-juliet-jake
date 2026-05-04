@@ -8,7 +8,7 @@ public abstract class Customer extends Profile {
 
     Listing selectedListing;
 
-    void selectListing(final ServiceList listings, int index){
+    void selectListing(final ServiceList listings, int index) {
         Listing chosenService = listings.getListing(index);
 
         chosenService.getSelectedBy(this);

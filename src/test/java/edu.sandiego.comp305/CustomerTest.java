@@ -14,7 +14,6 @@ class CustomerTest {
     private ServicerAccount mockServicer;
     private Listing mockBarberListing;
     private Listing mockStylistListing;
-    private ArrayList<Service> mockStylistServices;
     private ServiceList mockServiceList;
 
     @BeforeEach
@@ -33,15 +32,20 @@ class CustomerTest {
         when(mockBarberListing.isAvailable()).thenReturn(true);
         when(mockBarberListing.getProviderName()).thenReturn("Jake");
 
-        mockStylistServices = new ArrayList<>(List.of(
+        ArrayList<Service> stylistServices = new ArrayList<>(List.of(
                 new Service("Full Dye", 150.0),
                 new Service("Highlights", 100.0)
         ));
 
         mockStylistListing = mock(Listing.class);
-        when(mockStylistListing.getServicesOffered()).thenReturn(mockStylistServices);
+        when(mockStylistListing.getServicesOffered()).thenReturn(stylistServices);
         when(mockStylistListing.isAvailable()).thenReturn(true);
         when(mockStylistListing.getProviderName()).thenReturn("Dakota");
+
+        mockServiceList = mock(ServiceList.class);
+        when(mockServiceList.getListing(0)).thenReturn(mockBarberListing);
+        when(mockServiceList.getListing(1)).thenReturn(mockStylistListing);
+        when(mockServiceList.getList()).thenReturn(new ArrayList<>(List.of(mockBarberListing, mockStylistListing)));
 
         mockServiceList = new ServiceList(List.of(mockBarberListing, mockStylistListing));
         stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
@@ -49,8 +53,21 @@ class CustomerTest {
 
     @Test
     void selectListingCorrectlyChangesSelectedListingVariable() {
-        stdCustomer.selectListing(mockServiceList, 1);
+        int index = 1;
+        stdCustomer.selectListing(mockServiceList, index);
         assertEquals(mockStylistListing, stdCustomer.getSelectedListing());
+    }
+
+    @Test
+    void selectListingCorrectlyCallsGetSelectedByInListing() {
+        int index = 1;
+        stdCustomer.selectListing(mockServiceList, index);
+        verify(mockStylistListing, times(1)).getSelectedBy(stdCustomer);
+    }
+
+    @Test
+    void selectListingWithBadIndexThrowsException() {
+
     }
 
     @Test
