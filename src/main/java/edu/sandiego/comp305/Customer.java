@@ -1,7 +1,6 @@
 package edu.sandiego.comp305;
 
 import java.util.List;
-import java.util.ArrayList;
 
 public abstract class Customer extends Profile {
     String address;
@@ -25,10 +24,8 @@ public abstract class Customer extends Profile {
         return listings.filterByService(serviceName);
     }
 
-    void joinQueue(final String service){}
-
     public boolean pay(final double amount, PaymentMethod paymentMethod, Service service){
-        if (amount > service.getPrice()) {
+        if (amount >= service.getPrice()) {
             return paymentMethod.processPayment(amount);
         }
         return false;

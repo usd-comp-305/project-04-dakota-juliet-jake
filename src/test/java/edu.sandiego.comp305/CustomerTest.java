@@ -146,7 +146,11 @@ class CustomerTest {
     }
 
     @Test
-    void joinQueue() {
+    void payReturnsTrueOnExactMoneyPaid() {
+        when(mockPayment.processPayment(35.0)).thenReturn(true);
+        when(mockService.getPrice()).thenReturn(35.0);
+
+        assertTrue(stdCustomer.pay(35.0, mockPayment, mockService));
     }
 
 }
