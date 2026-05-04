@@ -28,8 +28,10 @@ public abstract class Customer extends Profile {
     void joinQueue(final String service){}
 
     public boolean pay(final double amount, PaymentMethod paymentMethod, Service service){
-        return paymentMethod.processPayment(amount);
-
+        if (amount > service.getPrice()) {
+            return paymentMethod.processPayment(amount);
+        }
+        return false;
     }
 
     Listing getSelectedListing() {

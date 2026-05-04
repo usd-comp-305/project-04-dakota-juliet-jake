@@ -137,6 +137,13 @@ class CustomerTest {
         assertTrue(stdCustomer.pay(70.0, mockPayment, mockService));
     }
 
+    @Test
+    void payReturnsFalseOnNotEnoughMoneyPaid() {
+        when(mockPayment.processPayment(20.0)).thenReturn(true);
+        when(mockService.getPrice()).thenReturn(35.0);
+
+        assertFalse(stdCustomer.pay(20.0, mockPayment, mockService));
+    }
 
     @Test
     void joinQueue() {
