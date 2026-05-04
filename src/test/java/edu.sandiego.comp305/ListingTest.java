@@ -13,7 +13,7 @@ import static org.mockito.Mockito.when;
 class ListingTest {
     private Customer customer;
 
-    private ServicerAccount servicer;
+    private ServicerAccount mockServicer;
 
     private Service mockService;
 
@@ -46,7 +46,7 @@ class ListingTest {
 
         customer = createCustomer();
 
-        servicer = createMockServicer();
+        mockServicer = createMockServicer();
 
         listing = createListing();
     }
@@ -58,9 +58,8 @@ class ListingTest {
 
     @Test
     void registerObserverAddsObserverToList() {
-        /*final ServicerAccount mockServicer = mock(ServicerAccount.class);
-        customer.registerObserver(mockServicer);
-        assertEquals(1, stdCustomer.servicerObservers.size());*/
+        listing.registerObserver(mockServicer);
+        assertEquals(1, listing.getServicerObservers().size());
     }
 
 
