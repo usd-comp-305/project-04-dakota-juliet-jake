@@ -27,8 +27,8 @@ public abstract class Customer extends Profile {
 
     void joinQueue(final String service){}
 
-    public Receipt pay(final double amount, PaymentMethod paymentMethod){
-        return null;
+    public boolean pay(final double amount, PaymentMethod paymentMethod){
+        return false;
     }
 
     Listing getSelectedListing() {

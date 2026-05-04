@@ -15,6 +15,7 @@ class CustomerTest {
     private Listing mockBarberListing;
     private Listing mockStylistListing;
     private ServiceList mockServiceList;
+    private PaymentMethod mockPayment;
 
     @BeforeEach
     void setUp() {
@@ -50,6 +51,10 @@ class CustomerTest {
         when(mockServiceList.filterByService("Nail Tech")).thenReturn(List.of());
         when(mockServiceList.filterByPrice(50.0)).thenReturn(List.of(mockBarberListing));
         when(mockServiceList.filterByPrice(1.0)).thenReturn(List.of());
+
+        mockPayment = mock(CreditCardPayment.class);
+        when(mockPayment.processPayment(50.0))
+
 
         stdCustomer = new StandardCustomer("123 address st", "user123", "safePass1!", "Jake");
     }

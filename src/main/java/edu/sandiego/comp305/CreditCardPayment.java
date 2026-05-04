@@ -8,7 +8,7 @@ public class CreditCardPayment implements PaymentMethod{
     }
 
     @Override
-    public Receipt processPayment(final double amount){
-        return null;
+    public boolean processPayment(final double amount){
+        return false;
     }
 }
