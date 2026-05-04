@@ -42,7 +42,7 @@ public class ProfileTest {
 
     @Test
     public void adjustRatingTest(){
-        when(profile.getRating()).thenReturn(1.0);
+        profile.adjustRating(1.0);
         profile.adjustRating(5.0);
         assertEquals(3.0, profile.getRating());
     }
