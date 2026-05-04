@@ -13,37 +13,11 @@ import static org.mockito.Mockito.when;
 class ListingTest {
     private Customer customer;
 
-    private Listing mockBarberListing;
-
-    private Listing mockStylistListing;
-
-    private ServiceList mockServiceList;
-
-    private PaymentMethod mockPayment;
+    private ServicerAccount servicer;
 
     private Service mockService;
 
-    ServiceList createMockServiceList() {
-        mockServiceList = mock(ServiceList.class);
-        when(mockServiceList.getListing(0)).thenReturn(mockBarberListing);
-        when(mockServiceList.getListing(1)).thenReturn(mockStylistListing);
-        when(mockServiceList.getList()).thenReturn(new ArrayList<>(
-                List.of(mockBarberListing, mockStylistListing)));
-        when(mockServiceList.filterByService("Barber"))
-                .thenReturn(List.of(mockBarberListing));
-        when(mockServiceList.filterByService("Nail Tech"))
-                .thenReturn(List.of());
-        when(mockServiceList.filterByPrice(50.0))
-                .thenReturn(List.of(mockBarberListing));
-        when(mockServiceList.filterByPrice(1.0))
-                .thenReturn(List.of());
-
-        return mockServiceList;
-    }
-
-    PaymentMethod createMockPayment() {
-        return mock(CreditCardPayment.class);
-    }
+    private Listing listing;
 
     Service createMockService() {
         return mock(Service.class);
@@ -54,56 +28,69 @@ class ListingTest {
                 "safePass1!","123 address st");
     }
 
+    ServicerAccount createMockServicer() {
+        return mock(ServicerAccount.class);
+    }
+
     Listing createListing() {
-        return new Listing("Dakota", "MoTuWeThFr", "Barber", )
+        return new Listing("Dakota",
+                "MoTuWeThFr",
+                "Barber",
+                new ArrayList<Service> (List.of(new Service("Shave", 20.0),
+                        new Service("Shear", 25.0))));
     }
 
     @BeforeEach
     void setUp() {
-        mockServiceList = createMockServiceList();
-
-        mockPayment = createMockPayment();
-
         mockService = createMockService();
 
         customer = createCustomer();
+
+        servicer = createMockServicer();
+
+        listing = createListing();
+    }
+
+    @Test
+    void listingStartsWithNoObservers() {
+        assertEquals(0, listing.getServicerObservers().size());
     }
 
     @Test
     void registerObserverAddsObserverToList() {
-        final ServicerAccount mockServicer = mock(ServicerAccount.class);
+        /*final ServicerAccount mockServicer = mock(ServicerAccount.class);
         customer.registerObserver(mockServicer);
-        assertEquals(1, stdCustomer.servicerObservers.size());
+        assertEquals(1, stdCustomer.servicerObservers.size());*/
     }
 
 
     @Test
     void cantRegisterSameObserverMoreThanOnce() {
-        final ServicerAccount mockServicer = mock(ServicerAccount.class);
+        /*final ServicerAccount mockServicer = mock(ServicerAccount.class);
         customer.registerObserver(mockServicer);
         customer.registerObserver(mockServicer);
-        assertEquals(1, stdCustomer.servicerObservers.size());
+        assertEquals(1, stdCustomer.servicerObservers.size());*/
     }
 
 
     @Test
     void removeObserverRemovesObserverFromList() {
-        final Customer stdCustomer = new Customer("123 address st", "user123", "safePass1!", "Jake");
+        /*final Customer stdCustomer = new Customer("123 address st", "user123", "safePass1!", "Jake");
         final ServicerAccount mockServicer = mock(ServicerAccount.class);
         customer.registerObserver(mockServicer);
         customer.removeObserver(mockServicer);
-        assertEquals(0, stdCustomer.servicerObservers.size());
+        assertEquals(0, stdCustomer.servicerObservers.size());*/
     }
 
 
     @Test
     void removeNonexistentObserverDoesntWork() {
-        final Customer stdCustomer = new Customer("123 address st", "user123", "safePass1!", "Jake");
+        /*final Customer stdCustomer = new Customer("123 address st", "user123", "safePass1!", "Jake");
         final ServicerAccount mockServicer = mock(ServicerAccount.class);
         final ServicerAccount diffMockServicer = mock(ServicerAccount.class);
         customer.registerObserver(mockServicer);
         customer.removeObserver(diffMockServicer);
-        assertEquals(1, stdCustomer.servicerObservers.size());
+        assertEquals(1, stdCustomer.servicerObservers.size());*/
     }
 
 

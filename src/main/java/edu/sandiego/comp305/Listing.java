@@ -23,6 +23,7 @@ public class Listing {
         this.availability = availability;
         this.generalServiceType = generalServiceType;
         this.servicesOffered = servicesOffered;
+        this.servicerObservers = List.of();
     }
 
     public void registerObserver(final ServicerAccount servicer){
@@ -75,5 +76,9 @@ public class Listing {
 
     public boolean isAvailable() {
         return true;
+    }
+
+    public List<ServicerAccount> getServicerObservers() {
+        return servicerObservers;
     }
 }
