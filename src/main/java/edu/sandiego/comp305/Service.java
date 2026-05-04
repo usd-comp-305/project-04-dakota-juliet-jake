@@ -3,6 +3,7 @@ package edu.sandiego.comp305;
 public class Service {
 
     private String name;
+
     private double price;
 
     Service(){}
