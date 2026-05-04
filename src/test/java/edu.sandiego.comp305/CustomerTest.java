@@ -67,7 +67,12 @@ class CustomerTest {
 
     @Test
     void selectListingWithBadIndexThrowsException() {
+        ServiceList mockServiceList = mock(ServiceList.class);
+        int badIndex = 20;
 
+        when(mockServiceList.getListing(badIndex)).thenThrow(new IndexOutOfBoundsException("No Such Index Found"));
+        assertThrows(IndexOutOfBoundsException.class, () -> stdCustomer.selectListing(mockServiceList, badIndex));
+        verify(mockServiceList, times(1)).getListing(badIndex);
     }
 
     @Test
