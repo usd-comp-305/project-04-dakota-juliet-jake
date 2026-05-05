@@ -23,6 +23,9 @@ public class Customer extends Profile {
     }
 
     protected void selectService(final int index) {
+        if (index >= selectedListing.getServicesOffered().size() || index < 0) {
+            throw new IndexOutOfBoundsException("Given index is not in the bounds of the Listing's services");
+        }
         selectedService = selectedListing.getServicesOffered().get(index);
     }
 

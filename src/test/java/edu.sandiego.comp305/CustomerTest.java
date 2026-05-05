@@ -234,5 +234,17 @@ class CustomerTest {
         assertEquals(mockBarberListing.getServicesOffered().getFirst(), customer.getSelectedService());
     }
 
+    @Test
+    void selectServiceWithBadIndexThrowsException() {
+        final int index = 0;
+        final int badIndex = 20;
+
+        customer.selectListing(mockServiceList, index);
+
+        assertThrows(IndexOutOfBoundsException.class, () ->
+                customer.selectService(badIndex));
+    }
+
+
 
 }
