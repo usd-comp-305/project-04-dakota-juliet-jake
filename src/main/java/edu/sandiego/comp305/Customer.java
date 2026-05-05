@@ -7,6 +7,8 @@ public class Customer extends Profile {
 
     protected Listing selectedListing;
 
+    protected Service selectedService;
+
     public Customer(final String name, final String username,
                      final String password, final String address) {
         super(name, username, password);
@@ -18,6 +20,10 @@ public class Customer extends Profile {
 
         chosenListing.getSelectedBy(this);
         selectedListing = chosenListing;
+    }
+
+    protected void selectService(final int index) {
+        selectedService = selectedListing.getServicesOffered().get(index);
     }
 
     protected List<Listing> searchByPrice(final ServiceList listings,
@@ -44,6 +50,13 @@ public class Customer extends Profile {
             throw new IllegalStateException("No listing has been selected");
         }
         return this.selectedListing;
+    }
+
+    protected Service getSelectedService() {
+        if (this.selectedListing == null) {
+            throw new IllegalStateException("No service has been selected from the listing");
+        }
+        return this.selectedService;
     }
 
     protected String getAddress() {

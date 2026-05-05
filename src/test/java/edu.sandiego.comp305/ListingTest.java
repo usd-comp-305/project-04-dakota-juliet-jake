@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ListingTest {
     private Customer customer;
@@ -89,7 +88,14 @@ class ListingTest {
 
 
     @Test
-    void notifyObservers() {
+    void notifyObserversCallsUpdateOnAllObservers() {
+        /*ServicerAccount mockServicer2 = mock(ServicerAccount.class);
+        listing.registerObserver(mockServicer);
+        listing.registerObserver(mockServicer2);
+
+        listing.notifyObservers(customer.getName(), customer.getAddress(), customer.getSelectedService());
+
+        verify(mockServicer, times(1)).update(listing);*/
     }
 
 

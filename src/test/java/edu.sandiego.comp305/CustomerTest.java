@@ -34,6 +34,7 @@ class CustomerTest {
         when(mockBarberListing.getServicesOffered()).thenReturn(barberServices);
         when(mockBarberListing.isAvailable()).thenReturn(true);
         when(mockBarberListing.getProviderName()).thenReturn("Jake");
+        when(mockBarberListing.getServicesOffered()).thenReturn(barberServices);
 
         return mockBarberListing;
     }
@@ -221,5 +222,17 @@ class CustomerTest {
         assertThrows(IllegalStateException.class, () ->
                 customer.cancelCall());
     }
+
+    @Test
+    void selectServiceCorrectlyChangesSelectedServiceVariable() {
+        final int index = 0;
+
+        customer.selectListing(mockServiceList, index);
+
+        customer.selectService(index);
+
+        assertEquals(mockBarberListing.getServicesOffered().getFirst(), customer.getSelectedService());
+    }
+
 
 }
