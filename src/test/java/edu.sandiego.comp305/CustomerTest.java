@@ -245,6 +245,12 @@ class CustomerTest {
                 customer.selectService(badIndex));
     }
 
+    @Test
+    void selectServiceWithNoSelectedListingThrowsException() {
+        final int index = 0;
 
+        assertThrows(IllegalStateException.class, () ->
+                customer.selectService(index));
+    }
 
 }

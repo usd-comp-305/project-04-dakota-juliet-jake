@@ -23,6 +23,9 @@ public class Customer extends Profile {
     }
 
     protected void selectService(final int index) {
+        if (selectedListing == null) {
+            throw new IllegalStateException("No Listing has been selected yet");
+        }
         if (index >= selectedListing.getServicesOffered().size() || index < 0) {
             throw new IndexOutOfBoundsException("Given index is not in the bounds of the Listing's services");
         }
