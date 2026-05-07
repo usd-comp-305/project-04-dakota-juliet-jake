@@ -8,7 +8,7 @@ public abstract class ServicerAccount extends Profile {
         super(name, username, password);
     }
 
-    public void update(final String customerName, final String address,
+    public void update(final Customer customer,
                        final Service Service){
 
     }

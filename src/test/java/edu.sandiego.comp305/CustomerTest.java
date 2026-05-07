@@ -111,7 +111,8 @@ class CustomerTest {
     void selectListingCorrectlyCallsGetSelectedByInListing() {
         final int index = 1;
         customer.selectListing(mockServiceList, index);
-        verify(mockStylistListing, times(1)).getSelectedBy(customer);
+        customer.selectService(index);
+        verify(mockStylistListing, times(1)).getSelectedBy(customer, customer.getSelectedService());
     }
 
     @Test

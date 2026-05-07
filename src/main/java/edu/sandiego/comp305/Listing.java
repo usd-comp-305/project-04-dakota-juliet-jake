@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Listing {
-    List<ServicerAccount> servicerObservers;
+    ServicerAccount servicer;
 
     private String providerName;
 
@@ -18,33 +18,23 @@ public class Listing {
     public Listing(final String providerName,
                    final String availability,
                    final String generalServiceType,
-                   final ArrayList<Service> servicesOffered) {
+                   final ArrayList<Service> servicesOffered,
+                   ServicerAccount servicer) {
         this.providerName = providerName;
         this.availability = availability;
         this.generalServiceType = generalServiceType;
         this.servicesOffered = servicesOffered;
-        this.servicerObservers = new ArrayList<>();
+        this.servicer = servicer;
     }
 
-    public void registerObserver(final ServicerAccount servicer){
-        if (!servicerObservers.contains(servicer)) {
-            servicerObservers.add(servicer);
-        }
-    }
-
-    public void removeObserver(final ServicerAccount servicer){
-        servicerObservers.remove(servicer);
-    }
-
-    public void notifyObservers(final String customerName,
-                                final String address,
+    public void notifyServicer(final Customer customer,
                                 final Service service){
-        for (ServicerAccount servicer : servicerObservers) {
-            servicer.update(customerName, address, service);
-        }
+        servicer.update(customer, service);
     }
 
-    public void getSelectedBy(final Customer customer) {}
+    public void getSelectedBy(final Customer customer, final Service selectedService) {
+
+    }
 
     public void setProviderName(final String name){
 
@@ -76,9 +66,5 @@ public class Listing {
 
     public boolean isAvailable() {
         return true;
-    }
-
-    public List<ServicerAccount> getServicerObservers() {
-        return servicerObservers;
     }
 }

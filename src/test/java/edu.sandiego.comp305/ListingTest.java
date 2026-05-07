@@ -18,13 +18,72 @@ class ListingTest {
 
     private Listing listing;
 
+    private Listing mockBarberListing;
+
+    private Listing mockStylistListing;
+
+    private ServiceList mockServiceList;
+
     Service createMockService() {
         return mock(Service.class);
     }
 
+    Listing createMockBarberListing() {
+        final ArrayList<Service> barberServices = new ArrayList<>(List.of(
+                new Service("Shave", 20.0),
+                new Service("Wax", 30.0),
+                new Service("Buzz", 15.0),
+                new Service("Shear", 15.0)
+        ));
+
+        mockBarberListing = mock(Listing.class);
+        when(mockBarberListing.getServicesOffered()).thenReturn(barberServices);
+        when(mockBarberListing.isAvailable()).thenReturn(true);
+        when(mockBarberListing.getProviderName()).thenReturn("Jake");
+        when(mockBarberListing.getServicesOffered()).thenReturn(barberServices);
+
+        return mockBarberListing;
+    }
+
+    Listing createMockStylistListing() {
+        final ArrayList<Service> stylistServices = new ArrayList<>(List.of(
+                new Service("Full Dye", 150.0),
+                new Service("Highlights", 100.0)
+        ));
+
+        mockStylistListing = mock(Listing.class);
+        when(mockStylistListing.getServicesOffered())
+                .thenReturn(stylistServices);
+        when(mockStylistListing.isAvailable()).thenReturn(true);
+        when(mockStylistListing.getProviderName()).thenReturn("Dakota");
+
+        return mockStylistListing;
+    }
+
+    ServiceList createMockServiceList() {
+        mockServiceList = mock(ServiceList.class);
+        when(mockServiceList.getListing(0)).thenReturn(mockBarberListing);
+        when(mockServiceList.getListing(1)).thenReturn(mockStylistListing);
+        when(mockServiceList.getList()).thenReturn(new ArrayList<>(
+                List.of(mockBarberListing, mockStylistListing)));
+        when(mockServiceList.filterByService("Barber"))
+                .thenReturn(List.of(mockBarberListing));
+        when(mockServiceList.filterByService("Nail Tech"))
+                .thenReturn(List.of());
+        when(mockServiceList.filterByPrice(50.0))
+                .thenReturn(List.of(mockBarberListing));
+        when(mockServiceList.filterByPrice(1.0))
+                .thenReturn(List.of());
+
+        return mockServiceList;
+    }
+
     Customer createCustomer() {
-        return new Customer("Jake", "user123",
+        customer = new Customer("Jake", "user123",
                 "safePass1!","123 address st");
+        customer.selectListing(mockServiceList, 0);
+        customer.selectService(0);
+        return customer;
     }
 
     ServicerAccount createMockServicer() {
@@ -32,70 +91,45 @@ class ListingTest {
     }
 
     Listing createListing() {
+        ArrayList<Service> tempList = new ArrayList<>
+                (List.of(new Service("Shave", 20.0),
+                        new Service("Shear", 25.0)));
         return new Listing("Dakota",
                 "MoTuWeThFr",
                 "Barber",
-                new ArrayList<Service> (List.of(new Service("Shave", 20.0),
-                        new Service("Shear", 25.0))));
+                tempList,
+                mockServicer);
     }
 
     @BeforeEach
     void setUp() {
         mockService = createMockService();
 
-        customer = createCustomer();
-
         mockServicer = createMockServicer();
 
         listing = createListing();
+
+        mockBarberListing = createMockBarberListing();
+
+        mockStylistListing = createMockStylistListing();
+
+        mockServiceList = createMockServiceList();
+
+        customer = createCustomer();
     }
 
     @Test
-    void listingStartsWithNoObservers() {
-        assertEquals(0, listing.getServicerObservers().size());
-    }
-
-    @Test
-    void registerObserverAddsObserverToList() {
-        listing.registerObserver(mockServicer);
-        assertEquals(1, listing.getServicerObservers().size());
-    }
-
-    @Test
-    void cantRegisterSameObserverMoreThanOnce() {
-        listing.registerObserver(mockServicer);
-        listing.registerObserver(mockServicer);
-        assertEquals(1, listing.servicerObservers.size());
-    }
-
-    @Test
-    void removeObserverRemovesObserverFromList() {
-        final ServicerAccount mockServicer = mock(ServicerAccount.class);
-        listing.registerObserver(mockServicer);
-        listing.removeObserver(mockServicer);
-        assertEquals(0, listing.servicerObservers.size());
-    }
-
-
-    @Test
-    void removeNonexistentObserverDoesNothing() {
-        final ServicerAccount mockServicer = mock(ServicerAccount.class);
-        final ServicerAccount diffMockServicer = mock(ServicerAccount.class);
-        listing.registerObserver(mockServicer);
-        listing.removeObserver(diffMockServicer);
-        assertEquals(1, listing.servicerObservers.size());
-    }
-
-
-    @Test
-    void notifyObserversCallsUpdateOnAllObservers() {
+    void notifyServicerCallsUpdateOnAllObservers() {
         /*ServicerAccount mockServicer2 = mock(ServicerAccount.class);
         listing.registerObserver(mockServicer);
         listing.registerObserver(mockServicer2);
+        customer.selectListing(mockServiceList,0);
+        customer.selectService(0);
 
-        listing.notifyObservers(customer.getName(), customer.getAddress(), customer.getSelectedService());
+        listing.notifyObservers(customer, customer.getSelectedService());
 
-        verify(mockServicer, times(1)).update(listing);*/
+        verify(mockServicer, times(1)).update(customer, customer.getSelectedService());
+        verify(mockServicer2, times(1)).update(customer, customer.getSelectedService());*/
     }
 
 
