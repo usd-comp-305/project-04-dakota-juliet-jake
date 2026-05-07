@@ -119,17 +119,13 @@ class ListingTest {
     }
 
     @Test
-    void notifyServicerCallsUpdateOnAllObservers() {
-        /*ServicerAccount mockServicer2 = mock(ServicerAccount.class);
-        listing.registerObserver(mockServicer);
-        listing.registerObserver(mockServicer2);
+    void notifyServicerCallsUpdate() {
         customer.selectListing(mockServiceList,0);
         customer.selectService(0);
 
-        listing.notifyObservers(customer, customer.getSelectedService());
+        listing.notifyServicer(customer, customer.getSelectedService());
 
         verify(mockServicer, times(1)).update(customer, customer.getSelectedService());
-        verify(mockServicer2, times(1)).update(customer, customer.getSelectedService());*/
     }
 
 
