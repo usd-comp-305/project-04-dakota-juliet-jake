@@ -81,8 +81,10 @@ class CustomerTest {
     }
 
     Customer createCustomer() {
-        return new Customer("Jake", "user123",
-                "safePass1!","123 address st");
+        final Customer customer = new Customer("Jake", "123 address st");
+        customer.setUsername("user123");
+        customer.setPassword("safePass1!");
+        return customer;
     }
 
     @BeforeEach
