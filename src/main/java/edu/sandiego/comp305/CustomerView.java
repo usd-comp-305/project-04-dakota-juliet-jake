@@ -19,6 +19,10 @@ public class CustomerView {
     }
 
     public void showServiceList(final List<Listing> listings) {
+        for (Listing listing : listings) {
+            System.out.println(listing.getProviderName());
+        }
+        render();
     }
 
     public void showSearchResults(final List<Listing> results) {
