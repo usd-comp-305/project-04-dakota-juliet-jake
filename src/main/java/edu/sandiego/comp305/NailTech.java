@@ -2,10 +2,8 @@ package edu.sandiego.comp305;
 
 public class NailTech extends ServicerAccount {
 
-    public NailTech(final String name,
-                    final String username,
-                    final String password){
-        super(name, username, password);
+    public NailTech(final String name){
+        super(name);
     }
 
     public void pedi() {
