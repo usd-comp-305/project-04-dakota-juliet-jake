@@ -93,9 +93,9 @@ class ListingTest {
     }
 
     Listing createListing() {
-        services = new ArrayList<>
-                (List.of(new Service("Shave", 20.0),
-                        new Service("Shear", 25.0)));
+        services = new ArrayList<>(List.of(
+                new Service("Shave", 20.0),
+                new Service("Shear", 25.0)));
         return new Listing("Dakota",
                 "9am-5pm",
                 "Barber",
@@ -132,7 +132,8 @@ class ListingTest {
 
         listing.selectedByCustomer(customer, customer.getSelectedService());
 
-        verify(mockServicer, times(1)).update(customer, customer.getSelectedService());
+        verify(mockServicer, times(1))
+                .update(customer, customer.getSelectedService());
     }
 
     @Test
@@ -163,25 +164,5 @@ class ListingTest {
     @Test
     void listingHasCorrectServicesOffered() {
         assertEquals(services, listing.getServicesOffered());
-    }
-
-    @Test
-    void setServicesOffered() {
-    }
-
-    @Test
-    void setAvailability() {
-    }
-
-    @Test
-    void getProviderName() {
-    }
-
-    @Test
-    void getServicesOffered() {
-    }
-
-    @Test
-    void getAvailability() {
     }
 }

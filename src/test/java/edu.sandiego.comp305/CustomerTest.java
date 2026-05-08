@@ -112,7 +112,8 @@ class CustomerTest {
         final int index = 1;
         customer.selectListing(mockServiceList, index);
         customer.selectService(index);
-        verify(mockStylistListing, times(1)).selectedByCustomer(customer, customer.getSelectedService());
+        verify(mockStylistListing, times(1))
+                .selectedByCustomer(customer, customer.getSelectedService());
     }
 
     @Test
@@ -232,7 +233,8 @@ class CustomerTest {
 
         customer.selectService(index);
 
-        assertEquals(mockBarberListing.getServicesOffered().getFirst(), customer.getSelectedService());
+        assertEquals(mockBarberListing.getServicesOffered().getFirst(),
+                customer.getSelectedService());
     }
 
     @Test

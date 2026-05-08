@@ -24,7 +24,9 @@ public class Customer extends Profile {
             throw new IllegalStateException("No Listing has been selected yet");
         }
         if (index >= selectedListing.getServicesOffered().size() || index < 0) {
-            throw new IndexOutOfBoundsException("Given index is not in the bounds of the Listing's services");
+            throw new IndexOutOfBoundsException(
+                    "Given index is not in the " +
+                            "bounds of the Listing's services");
         }
         selectedService = selectedListing.getServicesOffered().get(index);
         selectedListing.selectedByCustomer(this, selectedService);
@@ -58,7 +60,8 @@ public class Customer extends Profile {
 
     protected Service getSelectedService() {
         if (this.selectedListing == null) {
-            throw new IllegalStateException("No service has been selected from the listing");
+            throw new IllegalStateException(
+                    "No service has been selected from the listing");
         }
         return this.selectedService;
     }

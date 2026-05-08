@@ -20,16 +20,17 @@ public class Listing {
                    final String availability,
                    final String generalServiceType,
                    final ArrayList<Service> servicesOffered,
-                   ServicerAccount servicer) {
+                   final ServicerAccount servicer) {
         this.providerName = providerName;
         this.availability = availability;
         this.generalServiceType = generalServiceType;
-        this.servicesOffered = servicesOffered;
+        this.servicesOffered = new ArrayList<>(servicesOffered);
         this.servicer = servicer;
         this.isAvailable = true;
     }
 
-    public void selectedByCustomer(final Customer customer, final Service selectedService) {
+    public void selectedByCustomer(final Customer customer,
+                                   final Service selectedService) {
         this.isAvailable = false;
         servicer.update(customer, selectedService);
     }
@@ -39,7 +40,7 @@ public class Listing {
     }
 
     public void setServicesOffered(final ArrayList<Service> services){
-        this.servicesOffered = services;
+        this.servicesOffered = new ArrayList<>(services);
     }
 
     public void setAvailability(final String availability){
@@ -51,7 +52,7 @@ public class Listing {
     }
 
     public ArrayList<Service> getServicesOffered() {
-        return this.servicesOffered;
+        return new ArrayList<>(this.servicesOffered);
     }
 
     public String getGeneralServiceType() {
