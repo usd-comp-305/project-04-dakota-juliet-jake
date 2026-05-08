@@ -7,9 +7,8 @@ public class Customer extends Profile {
 
     protected Listing selectedListing;
 
-    public Customer(final String name, final String username,
-                     final String password, final String address) {
-        super(name, username, password);
+    public Customer(final String name, final String address) {
+        super(name);
         this.address = address;
     }
 

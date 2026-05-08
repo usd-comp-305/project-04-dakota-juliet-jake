@@ -5,9 +5,8 @@ import java.util.List;
 
 public class PremiumCustomer extends Customer{
 
-    PremiumCustomer(final String address, final String username,
-                    final String password, final String name) {
-        super(address, username, password, name);
+    PremiumCustomer(final String name, final String address) {
+        super(name, address);
     }
 
     List<Listing> filterByTime(final int time){
