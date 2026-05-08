@@ -121,8 +121,8 @@ class ListingTest {
     }
 
     @Test
-    void isAvailableIsFalseToStart() {
-        assertFalse(listing.getIsAvailable());
+    void isAvailableIsTrueToStart() {
+        assertTrue(listing.getIsAvailable());
     }
 
     @Test
@@ -133,6 +133,16 @@ class ListingTest {
         listing.selectedByCustomer(customer, customer.getSelectedService());
 
         verify(mockServicer, times(1)).update(customer, customer.getSelectedService());
+    }
+
+    @Test
+    void selectedByCustomerChangesIsAvailable() {
+        customer.selectListing(mockServiceList,0);
+        customer.selectService(0);
+
+        listing.selectedByCustomer(customer, customer.getSelectedService());
+
+        assertFalse(listing.getIsAvailable());
     }
 
     @Test
