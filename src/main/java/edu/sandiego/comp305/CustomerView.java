@@ -4,15 +4,18 @@ import java.util.List;
 
 public class CustomerView {
 
-    public CustomerView(final DisplayStrategy strategy) {
+    private DisplayStrategy strategy;
 
+    public CustomerView(final DisplayStrategy strategy) {
+        this.strategy = strategy;
     }
 
     public void setStrategy(final DisplayStrategy strategy) {
-
+        this.strategy = strategy;
     }
 
     public void render() {
+        strategy.display();
     }
 
     public void showServiceList(final List<Listing> listings) {
