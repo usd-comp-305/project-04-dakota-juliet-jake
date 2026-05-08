@@ -13,6 +13,8 @@ public class Listing {
 
     private String availability;
 
+    private boolean isAvailable;
+
     private String generalServiceType;
 
     public Listing(final String providerName,
@@ -25,6 +27,7 @@ public class Listing {
         this.generalServiceType = generalServiceType;
         this.servicesOffered = servicesOffered;
         this.servicer = servicer;
+        this.isAvailable = true;
     }
 
     public void getSelectedBy(final Customer customer, final Service selectedService) {
@@ -32,34 +35,34 @@ public class Listing {
     }
 
     public void setProviderName(final String name){
-
+        this.providerName = name;
     }
 
     public void setServicesOffered(final ArrayList<Service> services){
-
+        this.servicesOffered = services;
     }
 
     public void setAvailability(final String availability){
-
+        this.availability = availability;
     }
 
     public String getProviderName(){
-        return providerName;
+        return this.providerName;
     }
 
     public ArrayList<Service> getServicesOffered() {
-        return new ArrayList<>(servicesOffered);
+        return this.servicesOffered;
     }
 
     public String getGeneralServiceType() {
-        return generalServiceType;
+        return this.generalServiceType;
     }
 
     public String getAvailability() {
-        return availability;
+        return this.availability;
     }
 
-    public boolean isAvailable() {
-        return true;
+    public boolean getIsAvailable() {
+        return this.isAvailable;
     }
 }
