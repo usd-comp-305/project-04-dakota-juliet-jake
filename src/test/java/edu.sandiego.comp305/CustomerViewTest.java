@@ -39,4 +39,17 @@ class CustomerViewTest {
         view.showServiceList(listings);
         Mockito.verify(mockStrategy).display();
     }
+
+    @Test
+    public void testShowSearchResults() {
+        final DisplayStrategy mockStrategy =
+                Mockito.mock(DisplayStrategy.class);
+        final CustomerView view = new CustomerView(mockStrategy);
+        final Listing mockListing = Mockito.mock(Listing.class);
+        Mockito.when(mockListing.getProviderName()).thenReturn("Jake");
+        final List<Listing> results = new ArrayList<>();
+        results.add(mockListing);
+        view.showSearchResults(results);
+        Mockito.verify(mockListing).getProviderName();
+    }
 }

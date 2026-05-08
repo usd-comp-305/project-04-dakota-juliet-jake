@@ -26,5 +26,9 @@ public class CustomerView {
     }
 
     public void showSearchResults(final List<Listing> results) {
+        for (Listing listing : results) {
+            System.out.println(listing.getProviderName());
+        }
+        render();
     }
 }
