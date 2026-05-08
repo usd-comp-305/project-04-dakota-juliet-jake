@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class ListingTest {
@@ -38,7 +38,7 @@ class ListingTest {
 
         mockBarberListing = mock(Listing.class);
         when(mockBarberListing.getServicesOffered()).thenReturn(barberServices);
-        when(mockBarberListing.isAvailable()).thenReturn(true);
+        when(mockBarberListing.getIsAvailable()).thenReturn(true);
         when(mockBarberListing.getProviderName()).thenReturn("Jake");
         when(mockBarberListing.getServicesOffered()).thenReturn(barberServices);
 
@@ -54,7 +54,7 @@ class ListingTest {
         mockStylistListing = mock(Listing.class);
         when(mockStylistListing.getServicesOffered())
                 .thenReturn(stylistServices);
-        when(mockStylistListing.isAvailable()).thenReturn(true);
+        when(mockStylistListing.getIsAvailable()).thenReturn(true);
         when(mockStylistListing.getProviderName()).thenReturn("Dakota");
 
         return mockStylistListing;
@@ -119,21 +119,18 @@ class ListingTest {
     }
 
     @Test
-    void getSelectedByCallsUpdate() {
+    void selectedByCustomerCallsUpdate() {
         customer.selectListing(mockServiceList,0);
         customer.selectService(0);
 
-        listing.notifyServicer(customer, customer.getSelectedService());
+        listing.selectedByCustomer(customer, customer.getSelectedService());
 
         verify(mockServicer, times(1)).update(customer, customer.getSelectedService());
     }
 
     @Test
-    void getSelectedBy() {
-    }
-
-    @Test
-    void setProviderName() {
+    void listingHasCorrectProviderName() {
+        assertEquals("Dakota", listing.getProviderName());
     }
 
     @Test

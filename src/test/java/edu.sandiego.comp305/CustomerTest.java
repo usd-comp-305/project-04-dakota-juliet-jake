@@ -32,7 +32,7 @@ class CustomerTest {
 
         mockBarberListing = mock(Listing.class);
         when(mockBarberListing.getServicesOffered()).thenReturn(barberServices);
-        when(mockBarberListing.isAvailable()).thenReturn(true);
+        when(mockBarberListing.getIsAvailable()).thenReturn(true);
         when(mockBarberListing.getProviderName()).thenReturn("Jake");
         when(mockBarberListing.getServicesOffered()).thenReturn(barberServices);
 
@@ -48,7 +48,7 @@ class CustomerTest {
         mockStylistListing = mock(Listing.class);
         when(mockStylistListing.getServicesOffered())
                 .thenReturn(stylistServices);
-        when(mockStylistListing.isAvailable()).thenReturn(true);
+        when(mockStylistListing.getIsAvailable()).thenReturn(true);
         when(mockStylistListing.getProviderName()).thenReturn("Dakota");
 
         return mockStylistListing;
@@ -112,7 +112,7 @@ class CustomerTest {
         final int index = 1;
         customer.selectListing(mockServiceList, index);
         customer.selectService(index);
-        verify(mockStylistListing, times(1)).getSelectedBy(customer, customer.getSelectedService());
+        verify(mockStylistListing, times(1)).selectedByCustomer(customer, customer.getSelectedService());
     }
 
     @Test

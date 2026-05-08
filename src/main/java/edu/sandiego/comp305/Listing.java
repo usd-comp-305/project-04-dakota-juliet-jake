@@ -2,7 +2,6 @@ package edu.sandiego.comp305;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Listing {
     ServicerAccount servicer;
@@ -30,7 +29,8 @@ public class Listing {
         this.isAvailable = true;
     }
 
-    public void getSelectedBy(final Customer customer, final Service selectedService) {
+    public void selectedByCustomer(final Customer customer, final Service selectedService) {
+        this.isAvailable = false;
         servicer.update(customer, selectedService);
     }
 

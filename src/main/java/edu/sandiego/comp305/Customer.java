@@ -27,7 +27,7 @@ public class Customer extends Profile {
             throw new IndexOutOfBoundsException("Given index is not in the bounds of the Listing's services");
         }
         selectedService = selectedListing.getServicesOffered().get(index);
-        selectedListing.getSelectedBy(this, selectedService);
+        selectedListing.selectedByCustomer(this, selectedService);
     }
 
     protected List<Listing> searchByPrice(final ServiceList listings,
