@@ -95,7 +95,7 @@ class ListingTest {
                 (List.of(new Service("Shave", 20.0),
                         new Service("Shear", 25.0)));
         return new Listing("Dakota",
-                "MoTuWeThFr",
+                "9am-5pm",
                 "Barber",
                 tempList,
                 mockServicer);
@@ -131,6 +131,11 @@ class ListingTest {
     @Test
     void listingHasCorrectProviderName() {
         assertEquals("Dakota", listing.getProviderName());
+    }
+
+    @Test
+    void listingHasCorrectAvailability() {
+        assertEquals("9am-5pm", listing.getAvailability());
     }
 
     @Test
