@@ -14,8 +14,6 @@ class ListingTest {
 
     private ServicerAccount mockServicer;
 
-    private Service mockService;
-
     private Listing listing;
 
     private Listing mockBarberListing;
@@ -25,10 +23,6 @@ class ListingTest {
     private ServiceList mockServiceList;
 
     private ArrayList<Service> services;
-
-    Service createMockService() {
-        return mock(Service.class);
-    }
 
     Listing createMockBarberListing() {
         final ArrayList<Service> barberServices = new ArrayList<>(List.of(
@@ -105,8 +99,6 @@ class ListingTest {
 
     @BeforeEach
     void setUp() {
-        mockService = createMockService();
-
         mockServicer = createMockServicer();
 
         listing = createListing();
