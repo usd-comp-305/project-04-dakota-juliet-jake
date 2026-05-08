@@ -121,6 +121,11 @@ class ListingTest {
     }
 
     @Test
+    void isAvailableIsFalseToStart() {
+        assertFalse(listing.getIsAvailable());
+    }
+
+    @Test
     void selectedByCustomerCallsUpdate() {
         customer.selectListing(mockServiceList,0);
         customer.selectService(0);
