@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ListingTest {
@@ -23,6 +23,8 @@ class ListingTest {
     private Listing mockStylistListing;
 
     private ServiceList mockServiceList;
+
+    private ArrayList<Service> services;
 
     Service createMockService() {
         return mock(Service.class);
@@ -91,13 +93,13 @@ class ListingTest {
     }
 
     Listing createListing() {
-        ArrayList<Service> tempList = new ArrayList<>
+        services = new ArrayList<>
                 (List.of(new Service("Shave", 20.0),
                         new Service("Shear", 25.0)));
         return new Listing("Dakota",
                 "9am-5pm",
                 "Barber",
-                tempList,
+                services,
                 mockServicer);
     }
 
@@ -141,6 +143,11 @@ class ListingTest {
     @Test
     void listingHasCorrectGeneralServiceType() {
         assertEquals("Barber", listing.getGeneralServiceType());
+    }
+
+    @Test
+    void listingHasCorrectServicesOffered() {
+        assertEquals(services, listing.getServicesOffered());
     }
 
     @Test
