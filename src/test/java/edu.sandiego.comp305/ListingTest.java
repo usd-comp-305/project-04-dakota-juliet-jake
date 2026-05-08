@@ -139,6 +139,11 @@ class ListingTest {
     }
 
     @Test
+    void listingHasCorrectGeneralServiceType() {
+        assertEquals("Barber", listing.getGeneralServiceType());
+    }
+
+    @Test
     void setServicesOffered() {
     }
 
