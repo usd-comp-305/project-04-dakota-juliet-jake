@@ -119,7 +119,7 @@ class ListingTest {
     }
 
     @Test
-    void notifyServicerCallsUpdate() {
+    void getSelectedByCallsUpdate() {
         customer.selectListing(mockServiceList,0);
         customer.selectService(0);
 
@@ -128,6 +128,9 @@ class ListingTest {
         verify(mockServicer, times(1)).update(customer, customer.getSelectedService());
     }
 
+    @Test
+    void getSelectedBy() {
+    }
 
     @Test
     void setProviderName() {

@@ -27,13 +27,8 @@ public class Listing {
         this.servicer = servicer;
     }
 
-    public void notifyServicer(final Customer customer,
-                                final Service service){
-        servicer.update(customer, service);
-    }
-
     public void getSelectedBy(final Customer customer, final Service selectedService) {
-
+        servicer.update(customer, selectedService);
     }
 
     public void setProviderName(final String name){
