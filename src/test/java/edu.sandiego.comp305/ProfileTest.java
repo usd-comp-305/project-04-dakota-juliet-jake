@@ -83,5 +83,7 @@ public class ProfileTest {
         public TestProfile(){
             super();
         }
+
+        public void cancelCall() {}
     }
 }

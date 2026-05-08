@@ -102,6 +102,6 @@ public abstract class Profile {
         return this.ratingCount;
     }
 
-    public void cancelCall(){}
+    public abstract void cancelCall();
 
 }

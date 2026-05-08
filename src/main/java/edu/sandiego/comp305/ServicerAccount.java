@@ -18,4 +18,6 @@ public abstract class ServicerAccount extends Profile {
     public void postService() {
 
     }
+
+    public void cancelCall(){}
 }
