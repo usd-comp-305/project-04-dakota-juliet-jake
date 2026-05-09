@@ -20,8 +20,16 @@ class ListingTest {
 
     private Service shaveService;
 
+    private ArrayList<Service> servicesOffered;
+
+    void createServicesOffered() {
+        servicesOffered = new ArrayList<>(List.of(
+                new Service("Shave", 20.0),
+                new Service("Shear", 25.0)));
+    }
+
     void createShaveService() {
-        shaveService = new Service("Shave", 20.0);
+        shaveService = servicesOffered.getFirst();
     }
 
     void createCustomer() {
@@ -32,6 +40,10 @@ class ListingTest {
 
     void createMockServicer() {
         mockServicer = mock(ServicerAccount.class);
+        when(mockServicer.getName()).thenReturn("Dakota");
+        when(mockServicer.getAvailability()).thenReturn("9am-5pm");
+        when(mockServicer.getServicesOffered()).thenReturn(servicesOffered);
+        when(mockServicer.getGeneralServiceType()).thenReturn("Barber");
     }
 
     void createListing() {
@@ -40,6 +52,8 @@ class ListingTest {
 
     @BeforeEach
     void setUp() {
+        createServicesOffered();
+
         createShaveService();
 
         createMockServicer();
