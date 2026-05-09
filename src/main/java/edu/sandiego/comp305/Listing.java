@@ -4,7 +4,7 @@ package edu.sandiego.comp305;
 import java.util.ArrayList;
 
 public class Listing {
-    ServicerAccount servicer;
+    private ServicerAccount servicer;
 
     private String providerName;
 

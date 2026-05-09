@@ -75,8 +75,7 @@ class ListingTest {
     }
 
     Customer createCustomer() {
-        customer = new Customer("Jake", "user123",
-                "safePass1!","123 address st");
+        customer = new Customer("Jake", "123 address st");
         customer.selectListing(mockServiceList, 0);
         customer.selectService(0);
         return customer;

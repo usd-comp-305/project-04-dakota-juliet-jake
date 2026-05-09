@@ -1,9 +1,52 @@
 package edu.sandiego.comp305;
 
+import java.util.ArrayList;
+
 public abstract class ServicerAccount extends Profile {
 
-    public ServicerAccount(final String name) {
+    private ArrayList<Service> servicesOffered;
+
+    private ArrayList<Listing> listings;
+
+    private String availability;
+
+    private boolean isAvailable;
+
+    private String generalServiceType;
+
+    public ServicerAccount(final String name,
+                           final String availability,
+                           final String generalServiceType,
+                           final ArrayList<Service> servicesOffered) {
         super(name);
+        this.availability = availability;
+        this.generalServiceType = generalServiceType;
+        this.servicesOffered = new ArrayList<>(servicesOffered);
+        this.isAvailable = true;
+    }
+
+    public void setServicesOffered(final ArrayList<Service> services){
+        this.servicesOffered = new ArrayList<>(services);
+    }
+
+    public void setAvailability(final String availability){
+        this.availability = availability;
+    }
+
+    public ArrayList<Service> getServicesOffered() {
+        return new ArrayList<>(this.servicesOffered);
+    }
+
+    public String getGeneralServiceType() {
+        return this.generalServiceType;
+    }
+
+    public String getAvailability() {
+        return this.availability;
+    }
+
+    public boolean getIsAvailable() {
+        return this.isAvailable;
     }
 
     public void update(final Customer customer,
@@ -20,4 +63,37 @@ public abstract class ServicerAccount extends Profile {
     }
 
     public void cancelCall(){}
+
+    public class Listing {
+
+        public Listing() {
+            ServicerAccount.this.isAvailable = true;
+        }
+
+        public void selectedByCustomer(final Customer customer,
+                                       final Service selectedService) {
+            ServicerAccount.this.isAvailable = false;
+            ServicerAccount.this.update(customer, selectedService);
+        }
+
+        public String getProviderName(){
+            return ServicerAccount.this.getName();
+        }
+
+        public ArrayList<Service> getServiceOffered() {
+            return ServicerAccount.this.servicesOffered;
+        }
+
+        public String getGeneralServiceType() {
+            return ServicerAccount.this.generalServiceType;
+        }
+
+        public String getAvailability() {
+            return ServicerAccount.this.availability;
+        }
+
+        public boolean getIsAvailable() {
+            return ServicerAccount.this.isAvailable;
+        }
+    }
 }
