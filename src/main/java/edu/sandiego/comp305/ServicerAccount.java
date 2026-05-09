@@ -65,8 +65,10 @@ public abstract class ServicerAccount extends Profile {
     public void cancelCall(){}
 
     public class Listing {
+        private final Service listingService;
 
-        public Listing() {
+        public Listing(final Service listingService) {
+            this.listingService = listingService;
             ServicerAccount.this.isAvailable = true;
         }
 
