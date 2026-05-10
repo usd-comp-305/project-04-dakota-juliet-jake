@@ -2,6 +2,8 @@ package edu.sandiego.comp305;
 
 import java.util.ArrayList;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 public abstract class ServicerAccount extends Profile {
 
     private ArrayList<Service> servicesOffered;
@@ -23,6 +25,7 @@ public abstract class ServicerAccount extends Profile {
         this.generalServiceType = generalServiceType;
         this.servicesOffered = new ArrayList<>(servicesOffered);
         this.isAvailable = true;
+        this.listings = new ArrayList<>();
     }
 
     public void setServicesOffered(final ArrayList<Service> services){
@@ -49,6 +52,10 @@ public abstract class ServicerAccount extends Profile {
         return this.isAvailable;
     }
 
+    public ArrayList<Listing> getListings() {
+        return new ArrayList<>(listings);
+    }
+
     public void update(final Customer customer,
                        final Listing listing){
 
@@ -65,8 +72,11 @@ public abstract class ServicerAccount extends Profile {
     public void cancelCall(){}
 
     public class Listing {
-        private Service listingService;
+        private final Service listingService;
 
+        @SuppressFBWarnings(value = "EI2",
+                justification = "this$0 is an implicit outer class " +
+                        "reference required by the inner class design")
         public Listing(final Service listingService) {
             this.listingService = listingService;
             ServicerAccount.this.isAvailable = true;

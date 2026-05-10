@@ -18,13 +18,15 @@ public class Customer extends Profile {
     }
 
 
-    protected List<ServicerAccount.Listing> searchByPrice(final ServiceList listings,
-                                          final double maxPrice){
+    protected List<ServicerAccount.Listing> searchByPrice(
+            final ServiceList listings,
+            final double maxPrice){
         return listings.filterByPrice(maxPrice);
     }
 
-    protected List<ServicerAccount.Listing> searchByService(final ServiceList listings,
-                                            final String serviceName){
+    protected List<ServicerAccount.Listing> searchByService(
+            final ServiceList listings,
+            final String serviceName){
         return listings.filterByService(serviceName);
     }
 

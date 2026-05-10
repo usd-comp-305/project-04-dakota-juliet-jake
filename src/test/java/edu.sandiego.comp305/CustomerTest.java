@@ -124,7 +124,8 @@ class CustomerTest {
     void searchByServiceReturnsCorrectFilteredList() {
         final List<ServicerAccount.Listing> filteredList =
                 customer.searchByService(mockServiceList, "Barber");
-        final List<ServicerAccount.Listing> expectedFilteredList = List.of(mockBarberListing);
+        final List<ServicerAccount.Listing> expectedFilteredList =
+                List.of(mockBarberListing);
 
         assertEquals(expectedFilteredList, filteredList);
     }
@@ -142,7 +143,8 @@ class CustomerTest {
     void searchByPriceReturnsCorrectFilteredList() {
         final List<ServicerAccount.Listing> filteredList =
                 customer.searchByPrice(mockServiceList, 50.0);
-        final List<ServicerAccount.Listing> expectedFilteredList = List.of(mockBarberListing);
+        final List<ServicerAccount.Listing> expectedFilteredList =
+                List.of(mockBarberListing);
 
         assertEquals(expectedFilteredList, filteredList);
     }
@@ -158,6 +160,7 @@ class CustomerTest {
 
     @Test
     void payReturnsTrueOnSuccessfulPaymentMethod() {
+        when(mockService.getPrice()).thenReturn(35.0);
         when(mockPayment.processPayment(50.0)).thenReturn(true);
 
         assertTrue(customer.pay(50.0, mockPayment, mockService));
@@ -165,6 +168,7 @@ class CustomerTest {
 
     @Test
     void payReturnsFalseOnFailedPaymentMethod() {
+        when(mockService.getPrice()).thenReturn(35.0);
         when(mockPayment.processPayment(100.0)).thenReturn(false);
 
         assertFalse(customer.pay(100.0, mockPayment, mockService));

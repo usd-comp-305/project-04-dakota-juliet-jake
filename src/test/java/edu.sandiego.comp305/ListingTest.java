@@ -10,15 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ListingTest {
-    static class TestServicerAccount extends ServicerAccount {
-        public TestServicerAccount(final String name,
-                                   final String availability,
-                                   final String generalServiceType,
-                                   final ArrayList<Service> servicesOffered) {
-            super(name, availability, generalServiceType, servicesOffered);
-        }
-    }
-
     private Customer customer;
 
     private TestServicerAccount spyServicer;
@@ -52,7 +43,8 @@ class ListingTest {
     }
 
     void createSpyServicer() {
-        spyServicer = spy(new TestServicerAccount("Dakota","9am-5pm", "Barber", servicesOffered));
+        spyServicer = spy(new TestServicerAccount(
+                "Dakota","9am-5pm", "Barber", servicesOffered));
     }
 
     void createShaveListing() {
@@ -102,7 +94,8 @@ class ListingTest {
 
     @Test
     void selectedByCustomerPassesCorrectCustomerToUpdate() {
-        Customer anotherCustomer = new Customer("Juliet", "12 address st");
+        final Customer anotherCustomer = new Customer(
+                "Juliet", "12 address st");
         shaveListing.selectedByCustomer(anotherCustomer);
 
         verify(spyServicer, times(1)).update(anotherCustomer, shaveListing);
@@ -132,5 +125,14 @@ class ListingTest {
     void selectingOneListingMakesOtherListingsUnavailable() {
         shaveListing.selectedByCustomer(customer);
         assertFalse(dyeListing.getIsAvailable());
+    }
+
+    static class TestServicerAccount extends ServicerAccount {
+        public TestServicerAccount(final String name,
+                                   final String availability,
+                                   final String generalServiceType,
+                                   final ArrayList<Service> servicesOffered) {
+            super(name, availability, generalServiceType, servicesOffered);
+        }
     }
 }
