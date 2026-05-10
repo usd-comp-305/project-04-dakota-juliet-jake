@@ -19,6 +19,7 @@ public class ServicerView {
     }
 
     public void showOfferedServices(final List<Service> services) {
+        strategy.display();
     }
 
     public void showSchedule(final String schedule) {
