@@ -27,28 +27,11 @@ class ListingTest {
 
     private ServicerAccount.Listing dyeListing;
 
-    private ServiceList mockServiceList;
-
     private Service shaveService;
 
     private Service dyeService;
 
     private ArrayList<Service> servicesOffered;
-
-    void createMockServiceList() {
-        mockServiceList = mock(ServiceList.class);
-        when(mockServiceList.getListing(0)).thenReturn(shaveListing);
-        when(mockServiceList.getList()).thenReturn(new ArrayList<>(
-                List.of(shaveListing)));
-        when(mockServiceList.filterByService("Barber"))
-                .thenReturn(List.of(shaveListing));
-        when(mockServiceList.filterByService("Stylist"))
-                .thenReturn(List.of(dyeListing));
-        when(mockServiceList.filterByPrice(50.0))
-                .thenReturn(List.of(shaveListing));
-        when(mockServiceList.filterByPrice(1.0))
-                .thenReturn(List.of());
-    }
 
     void createServicesOffered() {
         servicesOffered = new ArrayList<>(List.of(
@@ -93,8 +76,6 @@ class ListingTest {
         createShaveListing();
 
         createDyeListing();
-
-        createMockServiceList();
 
         createCustomer();
     }
@@ -145,5 +126,11 @@ class ListingTest {
     @Test
     void listingHasCorrectService() {
         assertEquals(shaveService, shaveListing.getServiceOffered());
+    }
+
+    @Test
+    void selectingOneListingMakesOtherListingsUnavailable() {
+        shaveListing.selectedByCustomer(customer);
+        assertFalse(dyeListing.getIsAvailable());
     }
 }
