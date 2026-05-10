@@ -28,5 +28,6 @@ public class ServicerView {
 
     public void showNotification(final String customerName,
                                  final String address, final Service service) {
+        service.getName();
     }
 }

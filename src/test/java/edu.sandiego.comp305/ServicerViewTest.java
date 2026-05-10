@@ -48,4 +48,15 @@ class ServicerViewTest {
         view.showSchedule("Monday 9am-5pm");
         Mockito.verify(mockStrategy).display();
     }
+
+    @Test
+    public void testShowNotification() {
+        final DisplayStrategy mockStrategy =
+                Mockito.mock(DisplayStrategy.class);
+        final ServicerView view = new ServicerView(mockStrategy);
+        final Service mockService = Mockito.mock(Service.class);
+        Mockito.when(mockService.getName()).thenReturn("Haircut");
+        view.showNotification("John", "123 Main St", mockService);
+        Mockito.verify(mockService).getName();
+    }
 }
