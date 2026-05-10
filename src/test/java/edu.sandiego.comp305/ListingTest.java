@@ -113,12 +113,17 @@ class ListingTest {
     }
 
     @Test
-    void selectedByCustomerChangesIsAvailable() {
-        customer.selectListing(mockServiceList,0);
-
+    void selectedByCustomerChangesIsAvailableToFalse() {
         shaveListing.selectedByCustomer(customer);
 
         assertFalse(shaveListing.getIsAvailable());
+    }
+
+    @Test
+    void selectedByCustomerPassesCorrectCustomerToUpdate() {
+        Customer anotherCustomer = new Customer("Juliet", "12 address st");
+        shaveListing.selectedByCustomer(anotherCustomer);
+        verify(spyServicer, times(1)).update(anotherCustomer, shaveListing);
     }
 
     @Test
