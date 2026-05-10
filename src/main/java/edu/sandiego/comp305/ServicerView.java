@@ -23,6 +23,7 @@ public class ServicerView {
     }
 
     public void showSchedule(final String schedule) {
+        strategy.display();
     }
 
     public void showNotification(final String customerName,
