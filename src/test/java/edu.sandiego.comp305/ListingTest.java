@@ -10,9 +10,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ListingTest {
+    static class TestServicerAccount extends ServicerAccount {
+        public TestServicerAccount(final String name,
+                                   final String availability,
+                                   final String generalServiceType,
+                                   final ArrayList<Service> servicesOffered) {
+            super(name, availability, generalServiceType, servicesOffered);
+        }
+    }
+
     private Customer customer;
 
-    private ServicerAccount mockServicer;
+    private TestServicerAccount spyServicer;
 
     private ServicerAccount.Listing shaveListing;
 
@@ -59,21 +68,16 @@ class ListingTest {
         customer = new Customer("Jake", "123 address st");
     }
 
-    void createMockServicer() {
-        mockServicer = mock(ServicerAccount.class);
-        when(mockServicer.getName()).thenReturn("Dakota");
-        when(mockServicer.getAvailability()).thenReturn("9am-5pm");
-        when(mockServicer.getServicesOffered()).thenReturn(servicesOffered);
-        when(mockServicer.getGeneralServiceType()).thenReturn("Barber");
-        when(mockServicer.getIsAvailable()).thenReturn(true);
+    void createSpyServicer() {
+        spyServicer = spy(new TestServicerAccount("Dakota","9am-5pm", "Barber", servicesOffered));
     }
 
     void createShaveListing() {
-        shaveListing = mockServicer.new Listing(shaveService);
+        shaveListing = spyServicer.new Listing(shaveService);
     }
 
     void createDyeListing() {
-        dyeListing = mockServicer.new Listing(dyeService);
+        dyeListing = spyServicer.new Listing(dyeService);
     }
 
     @BeforeEach
@@ -84,7 +88,7 @@ class ListingTest {
 
         createDyeService();
 
-        createMockServicer();
+        createSpyServicer();
 
         createShaveListing();
 
@@ -102,12 +106,10 @@ class ListingTest {
 
     @Test
     void selectedByCustomerCallsUpdate() {
-        customer.selectListing(mockServiceList,0);
-
         shaveListing.selectedByCustomer(customer);
 
-        verify(mockServicer, times(1))
-                .update(customer, customer.getSelectedListing());
+        verify(spyServicer, times(1))
+                .update(customer, shaveListing);
     }
 
     @Test
@@ -132,10 +134,5 @@ class ListingTest {
     @Test
     void listingHasCorrectGeneralServiceType() {
         assertEquals("Barber", shaveListing.getGeneralServiceType());
-    }
-
-    @Test
-    void listingHasCorrectServicesOffered() {
-        //assertEquals(services, barberListing.getServicesOffered());
     }
 }
