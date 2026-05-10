@@ -123,6 +123,7 @@ class ListingTest {
     void selectedByCustomerPassesCorrectCustomerToUpdate() {
         Customer anotherCustomer = new Customer("Juliet", "12 address st");
         shaveListing.selectedByCustomer(anotherCustomer);
+
         verify(spyServicer, times(1)).update(anotherCustomer, shaveListing);
     }
 
@@ -139,5 +140,10 @@ class ListingTest {
     @Test
     void listingHasCorrectGeneralServiceType() {
         assertEquals("Barber", shaveListing.getGeneralServiceType());
+    }
+
+    @Test
+    void listingHasCorrectService() {
+        assertEquals(shaveService, shaveListing.getServiceOffered());
     }
 }
