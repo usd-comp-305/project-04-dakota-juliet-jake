@@ -23,11 +23,14 @@ public class ServicerView {
     }
 
     public void showSchedule(final String schedule) {
-        strategy.display();
+        System.out.println(schedule);
+        render();
     }
 
     public void showNotification(final String customerName,
                                  final String address, final Service service) {
-        service.getName();
+        System.out.println(customerName + " " + address + " " +
+                service.getName());
+        render();
     }
 }

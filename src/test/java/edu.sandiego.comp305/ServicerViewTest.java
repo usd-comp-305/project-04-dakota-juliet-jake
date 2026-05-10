@@ -1,7 +1,6 @@
 package edu.sandiego.comp305;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,5 +57,6 @@ class ServicerViewTest {
         Mockito.when(mockService.getName()).thenReturn("Haircut");
         view.showNotification("John", "123 Main St", mockService);
         Mockito.verify(mockService).getName();
+        Mockito.verify(mockStrategy).display();
     }
 }
