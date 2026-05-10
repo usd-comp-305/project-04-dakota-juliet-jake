@@ -15,9 +15,9 @@ public class CustomerView {
     public void render() {
     }
 
-    public void showServiceList(final List<Listing> listings) {
+    public void showServiceList(final List<ServicerAccount.Listing> listings) {
     }
 
-    public void showSearchResults(final List<Listing> results) {
+    public void showSearchResults(final List<ServicerAccount.Listing> results) {
     }
 }

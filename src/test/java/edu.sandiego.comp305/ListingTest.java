@@ -14,13 +14,32 @@ class ListingTest {
 
     private ServicerAccount mockServicer;
 
-    private ServicerAccount.Listing listing;
+    private ServicerAccount.Listing shaveListing;
+
+    private ServicerAccount.Listing dyeListing;
 
     private ServiceList mockServiceList;
 
     private Service shaveService;
 
+    private Service dyeService;
+
     private ArrayList<Service> servicesOffered;
+
+    void createMockServiceList() {
+        mockServiceList = mock(ServiceList.class);
+        when(mockServiceList.getListing(0)).thenReturn(shaveListing);
+        when(mockServiceList.getList()).thenReturn(new ArrayList<>(
+                List.of(shaveListing)));
+        when(mockServiceList.filterByService("Barber"))
+                .thenReturn(List.of(shaveListing));
+        when(mockServiceList.filterByService("Stylist"))
+                .thenReturn(List.of(dyeListing));
+        when(mockServiceList.filterByPrice(50.0))
+                .thenReturn(List.of(shaveListing));
+        when(mockServiceList.filterByPrice(1.0))
+                .thenReturn(List.of());
+    }
 
     void createServicesOffered() {
         servicesOffered = new ArrayList<>(List.of(
@@ -32,10 +51,12 @@ class ListingTest {
         shaveService = servicesOffered.getFirst();
     }
 
+    void createDyeService() {
+        dyeService = new Service("Full Dye", 150.0);
+    }
+
     void createCustomer() {
         customer = new Customer("Jake", "123 address st");
-        customer.selectListing(mockServiceList, 0);
-        customer.selectService(0);
     }
 
     void createMockServicer() {
@@ -44,10 +65,15 @@ class ListingTest {
         when(mockServicer.getAvailability()).thenReturn("9am-5pm");
         when(mockServicer.getServicesOffered()).thenReturn(servicesOffered);
         when(mockServicer.getGeneralServiceType()).thenReturn("Barber");
+        when(mockServicer.getIsAvailable()).thenReturn(true);
     }
 
-    void createListing() {
-        listing = mockServicer.new Listing(shaveService);
+    void createShaveListing() {
+        shaveListing = mockServicer.new Listing(shaveService);
+    }
+
+    void createDyeListing() {
+        dyeListing = mockServicer.new Listing(dyeService);
     }
 
     @BeforeEach
@@ -56,56 +82,60 @@ class ListingTest {
 
         createShaveService();
 
+        createDyeService();
+
         createMockServicer();
 
-        createListing();
+        createShaveListing();
+
+        createDyeListing();
+
+        createMockServiceList();
 
         createCustomer();
     }
 
     @Test
     void isAvailableIsTrueToStart() {
-        assertTrue(listing.getIsAvailable());
+        assertTrue(shaveListing.getIsAvailable());
     }
 
     @Test
     void selectedByCustomerCallsUpdate() {
         customer.selectListing(mockServiceList,0);
-        customer.selectService(0);
 
-        listing.selectedByCustomer(customer, customer.getSelectedService());
+        shaveListing.selectedByCustomer(customer);
 
         verify(mockServicer, times(1))
-                .update(customer, customer.getSelectedService());
+                .update(customer, customer.getSelectedListing());
     }
 
     @Test
     void selectedByCustomerChangesIsAvailable() {
         customer.selectListing(mockServiceList,0);
-        customer.selectService(0);
 
-        listing.selectedByCustomer(customer, customer.getSelectedService());
+        shaveListing.selectedByCustomer(customer);
 
-        assertFalse(listing.getIsAvailable());
+        assertFalse(shaveListing.getIsAvailable());
     }
 
     @Test
     void listingHasCorrectProviderName() {
-        assertEquals("Dakota", listing.getProviderName());
+        assertEquals("Dakota", shaveListing.getProviderName());
     }
 
     @Test
     void listingHasCorrectAvailability() {
-        assertEquals("9am-5pm", listing.getAvailability());
+        assertEquals("9am-5pm", shaveListing.getAvailability());
     }
 
     @Test
     void listingHasCorrectGeneralServiceType() {
-        assertEquals("Barber", listing.getGeneralServiceType());
+        assertEquals("Barber", shaveListing.getGeneralServiceType());
     }
 
     @Test
     void listingHasCorrectServicesOffered() {
-        //assertEquals(services, listing.getServicesOffered());
+        //assertEquals(services, barberListing.getServicesOffered());
     }
 }

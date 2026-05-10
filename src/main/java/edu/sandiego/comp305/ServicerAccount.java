@@ -50,7 +50,7 @@ public abstract class ServicerAccount extends Profile {
     }
 
     public void update(final Customer customer,
-                       final Service Service){
+                       final Listing listing){
 
     }
 
@@ -65,37 +65,36 @@ public abstract class ServicerAccount extends Profile {
     public void cancelCall(){}
 
     public class Listing {
-        private final Service listingService;
+        private Service listingService;
 
         public Listing(final Service listingService) {
             this.listingService = listingService;
             ServicerAccount.this.isAvailable = true;
         }
 
-        public void selectedByCustomer(final Customer customer,
-                                       final Service selectedService) {
+        public void selectedByCustomer(final Customer customer) {
             ServicerAccount.this.isAvailable = false;
-            ServicerAccount.this.update(customer, selectedService);
+            ServicerAccount.this.update(customer, this);
         }
 
         public String getProviderName(){
             return ServicerAccount.this.getName();
         }
 
-        public ArrayList<Service> getServiceOffered() {
-            return ServicerAccount.this.servicesOffered;
+        public Service getServiceOffered() {
+            return this.listingService;
         }
 
         public String getGeneralServiceType() {
-            return ServicerAccount.this.generalServiceType;
+            return ServicerAccount.this.getGeneralServiceType();
         }
 
         public String getAvailability() {
-            return ServicerAccount.this.availability;
+            return ServicerAccount.this.getAvailability();
         }
 
         public boolean getIsAvailable() {
-            return ServicerAccount.this.isAvailable;
+            return ServicerAccount.this.getIsAvailable();
         }
     }
 }

@@ -5,9 +5,7 @@ import java.util.List;
 public class Customer extends Profile {
     protected String address;
 
-    protected Listing selectedListing;
-
-    protected Service selectedService;
+    protected ServicerAccount.Listing selectedListing;
 
     public Customer(final String name, final String address) {
         super(name);
@@ -16,27 +14,16 @@ public class Customer extends Profile {
 
     protected void selectListing(final ServiceList listings, final int index) {
         selectedListing = listings.getListing(index);
+        selectedListing.selectedByCustomer(this);
     }
 
-    protected void selectService(final int index) {
-        if (selectedListing == null) {
-            throw new IllegalStateException("No Listing has been selected yet");
-        }
-        if (index >= selectedListing.getServicesOffered().size() || index < 0) {
-            throw new IndexOutOfBoundsException(
-                    "Given index is not in the " +
-                            "bounds of the Listing's services");
-        }
-        selectedService = selectedListing.getServicesOffered().get(index);
-        selectedListing.selectedByCustomer(this, selectedService);
-    }
 
-    protected List<Listing> searchByPrice(final ServiceList listings,
+    protected List<ServicerAccount.Listing> searchByPrice(final ServiceList listings,
                                           final double maxPrice){
         return listings.filterByPrice(maxPrice);
     }
 
-    protected List<Listing> searchByService(final ServiceList listings,
+    protected List<ServicerAccount.Listing> searchByService(final ServiceList listings,
                                             final String serviceName){
         return listings.filterByService(serviceName);
     }
@@ -50,19 +37,11 @@ public class Customer extends Profile {
         return false;
     }
 
-    protected Listing getSelectedListing() {
+    protected ServicerAccount.Listing getSelectedListing() {
         if (this.selectedListing == null) {
             throw new IllegalStateException("No listing has been selected");
         }
         return this.selectedListing;
-    }
-
-    protected Service getSelectedService() {
-        if (this.selectedListing == null) {
-            throw new IllegalStateException(
-                    "No service has been selected from the listing");
-        }
-        return this.selectedService;
     }
 
     protected String getAddress() {
