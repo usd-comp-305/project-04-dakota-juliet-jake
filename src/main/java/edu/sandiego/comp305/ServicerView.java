@@ -4,15 +4,18 @@ import java.util.List;
 
 public class ServicerView {
 
-    public ServicerView(final DisplayStrategy strategy) {
+    private DisplayStrategy strategy;
 
+    public ServicerView(final DisplayStrategy strategy) {
+        this.strategy = strategy;
     }
 
     public void setStrategy(final DisplayStrategy strategy) {
-
+        this.strategy = strategy;
     }
 
     public void render() {
+        strategy.display();
     }
 
     public void showOfferedServices(final List<Service> services) {
