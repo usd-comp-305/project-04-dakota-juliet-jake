@@ -73,6 +73,21 @@ public class ServicerAccountTest {
                         getServiceOffered().getName());
     }
 
+    @Test
+    public void cancelCallThrows(){
+    }
+
+    @Test
+    public void cancelCallResetsAvailability(){
+
+    }
+
+    @Test
+    public void cancelCallRemovesCorrectCustomer(){
+
+    }
+
+
     static class TestServicer extends ServicerAccount {
         public TestServicer(final String name,
                             final String availability,
