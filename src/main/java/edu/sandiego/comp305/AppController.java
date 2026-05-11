@@ -12,6 +12,7 @@ public class AppController {
 
     private final ServiceList serviceList;
 
+    @SuppressWarnings("EI_EXPOSE_REP2")
     public AppController(final Customer customer,
                          final ServicerAccount servicer,
                          final CustomerView customerView,
@@ -26,7 +27,8 @@ public class AppController {
 
     public void handleServiceSelection(final Service service,
                                        final ServicerAccount servicer) {
-        servicer.update(customer.getName(), customer.getAddress(), service);
+        final ServicerAccount.Listing listing = servicer.new Listing(service);
+        listing.selectedByCustomer(customer);
     }
 
     public void handleSearch(final Service service,
