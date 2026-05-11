@@ -74,7 +74,7 @@ public abstract class ServicerAccount extends Profile {
 
     public void update(final Customer customer,
                        final Listing listing){
-
+        takeCall(customer, listing.listingService);
     }
 
 
@@ -104,7 +104,6 @@ public abstract class ServicerAccount extends Profile {
         }
 
         public void selectedByCustomer(final Customer customer) {
-            ServicerAccount.this.isAvailable = false;
             ServicerAccount.this.update(customer, this);
         }
 
