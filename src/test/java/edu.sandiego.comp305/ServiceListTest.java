@@ -130,6 +130,13 @@ class ServiceListTest {
     }
 
     @Test
+    void filterByUnavailableServiceReturnsEmptyList() {
+        ArrayList<ServicerAccount.Listing> expectedList =
+                new ArrayList<>((List.of()));
+        assertEquals(expectedList, serviceList.filterByService(ServiceType.NAIL_TECH));
+    }
+
+    @Test
     void filterByPrice() {
         assertTrue(true);
     }
