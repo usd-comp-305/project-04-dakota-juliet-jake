@@ -14,7 +14,10 @@ class ServiceListTest {
 
     private ServiceList serviceList;
 
-    private ListingTest.TestServicerAccount spyServicer;
+    private ListingTest.TestServicerAccount spyBarberServicer;
+
+    private ListingTest.TestServicerAccount spyStylistServicer;
+
 
     private ServicerAccount.Listing shaveListing;
 
@@ -24,37 +27,50 @@ class ServiceListTest {
 
     private Service dyeService;
 
-    private ArrayList<Service> servicesOffered;
+    private ArrayList<Service> barberServicesOffered;
 
-    void createServicesOffered() {
-        servicesOffered = new ArrayList<>(List.of(
+    private ArrayList<Service> stylistServicesOffered;
+
+    void createBarberServicesOffered() {
+        barberServicesOffered = new ArrayList<>(List.of(
                 new Service("Shave", 20.0),
                 new Service("Shear", 25.0)));
     }
 
+    void createStylistServicesOffered() {
+        stylistServicesOffered = new ArrayList<>(List.of(
+                new Service("Full Dye", 150.0),
+                new Service("Highlights", 120.0)));
+    }
+
     void createShaveService() {
-        shaveService = servicesOffered.getFirst();
+        shaveService = barberServicesOffered.getFirst();
     }
 
     void createDyeService() {
-        dyeService = new Service("Full Dye", 150.0);
+        dyeService = stylistServicesOffered.getFirst();
     }
 
     void createCustomer() {
         customer = new Customer("Jake", "123 address st");
     }
 
-    void createSpyServicer() {
-        spyServicer = spy(new ListingTest.TestServicerAccount(
-                "Dakota","9am-5pm", "Barber", servicesOffered));
+    void createSpyBarberServicer() {
+        spyBarberServicer = spy(new ListingTest.TestServicerAccount(
+                "Dakota","9am-5pm", ServiceType.BARBER, barberServicesOffered));
+    }
+
+    void createSpyStylistServicer() {
+        spyStylistServicer = spy(new ListingTest.TestServicerAccount(
+                "Juliet","11am-2pm", ServiceType.STYLIST, stylistServicesOffered));
     }
 
     void createShaveListing() {
-        shaveListing = spyServicer.new Listing(shaveService);
+        shaveListing = spyBarberServicer.new Listing(shaveService);
     }
 
     void createDyeListing() {
-        dyeListing = spyServicer.new Listing(dyeService);
+        dyeListing = spyStylistServicer.new Listing(dyeService);
     }
 
     void createServiceList() {
@@ -65,13 +81,17 @@ class ServiceListTest {
 
     @BeforeEach
     void setUp() {
-        createServicesOffered();
+        createBarberServicesOffered();
+
+        createStylistServicesOffered();
 
         createShaveService();
 
         createDyeService();
 
-        createSpyServicer();
+        createSpyBarberServicer();
+
+        createSpyStylistServicer();
 
         createShaveListing();
 
@@ -103,8 +123,10 @@ class ServiceListTest {
     }
 
     @Test
-    void filterByService() {
-        assertTrue(true);
+    void filterByServiceReturnsCorrectFilteredList() {
+        ArrayList<ServicerAccount.Listing> expectedList =
+                new ArrayList<>((List.of(dyeListing)));
+        assertEquals(expectedList, serviceList.filterByService(ServiceType.STYLIST));
     }
 
     @Test

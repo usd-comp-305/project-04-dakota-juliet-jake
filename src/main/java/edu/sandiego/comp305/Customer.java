@@ -27,7 +27,12 @@ public class Customer extends Profile {
     protected List<ServicerAccount.Listing> searchByService(
             final ServiceList listings,
             final String serviceName){
-        return listings.filterByService(serviceName);
+        try {
+            ServiceType serviceType = ServiceType.valueOf(serviceName.toUpperCase().replace(" ", "_"));
+            return listings.filterByService(serviceType);
+        } catch (IllegalArgumentException e) {
+            return List.of();
+        }
     }
 
     public boolean pay(final double amount,

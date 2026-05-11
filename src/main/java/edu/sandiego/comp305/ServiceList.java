@@ -1,5 +1,6 @@
 package edu.sandiego.comp305;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceList {
@@ -17,8 +18,14 @@ public class ServiceList {
         return listings;
     }
 
-    public List<ServicerAccount.Listing> filterByService(final String service){
-        return listings;
+    public List<ServicerAccount.Listing> filterByService(final ServiceType serviceType){
+        List<ServicerAccount.Listing> filteredList = new ArrayList<>();
+        for (ServicerAccount.Listing listing : listings) {
+            if (listing.getGeneralServiceType().equals(serviceType)) {
+                filteredList.add(listing);
+            }
+        }
+        return filteredList;
     }
 
     List<ServicerAccount.Listing> filterByPrice(final double maxPrice){

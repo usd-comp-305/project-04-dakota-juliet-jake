@@ -51,9 +51,9 @@ class CustomerTest {
         when(mockServiceList.getListing(1)).thenReturn(mockStylistListing);
         when(mockServiceList.getList()).thenReturn(new ArrayList<>(
                 List.of(mockBarberListing, mockStylistListing)));
-        when(mockServiceList.filterByService("Barber"))
+        when(mockServiceList.filterByService(ServiceType.BARBER))
                 .thenReturn(List.of(mockBarberListing));
-        when(mockServiceList.filterByService("Nail Tech"))
+        when(mockServiceList.filterByService(ServiceType.NAIL_TECH))
                 .thenReturn(List.of());
         when(mockServiceList.filterByPrice(50.0))
                 .thenReturn(List.of(mockBarberListing));
