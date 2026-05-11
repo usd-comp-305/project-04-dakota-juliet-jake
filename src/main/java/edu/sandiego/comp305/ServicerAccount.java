@@ -72,13 +72,16 @@ public abstract class ServicerAccount extends Profile {
     public void cancelCall(){}
 
     public class Listing {
-        private final Service listingService;
+        private final String serviceName;
+
+        private final double servicePrice;
 
         @SuppressFBWarnings(value = "EI2",
                 justification = "this$0 is an implicit outer class " +
                         "reference required by the inner class design")
         public Listing(final Service listingService) {
-            this.listingService = listingService;
+            this.serviceName = listingService.getName();
+            this.servicePrice = listingService.getPrice();
             ServicerAccount.this.isAvailable = true;
         }
 
@@ -91,8 +94,8 @@ public abstract class ServicerAccount extends Profile {
             return ServicerAccount.this.getName();
         }
 
-        public Service getServiceOffered() {
-            return this.listingService;
+        public String getServiceName() {
+            return this.serviceName;
         }
 
         public ServiceType getGeneralServiceType() {
@@ -108,7 +111,7 @@ public abstract class ServicerAccount extends Profile {
         }
 
         public double getPrice() {
-            return listingService.getPrice();
+            return servicePrice;
         }
     }
 }

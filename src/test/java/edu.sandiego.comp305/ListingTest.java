@@ -118,7 +118,7 @@ class ListingTest {
 
     @Test
     void listingHasCorrectService() {
-        assertEquals(shaveService, shaveListing.getServiceOffered());
+        assertEquals(shaveService.getName(), shaveListing.getServiceName());
     }
 
     @Test
