@@ -2,8 +2,31 @@ package edu.sandiego.comp305;
 
 public class AppController {
 
+    private final Customer customer;
+
+    private final ServicerAccount servicer;
+
+    private final CustomerView customerView;
+
+    private final ServicerView servicerView;
+
+    private final ServiceList serviceList;
+
+    public AppController(final Customer customer,
+                         final ServicerAccount servicer,
+                         final CustomerView customerView,
+                         final ServicerView servicerView,
+                         final ServiceList serviceList) {
+        this.customer = customer;
+        this.servicer = servicer;
+        this.customerView = customerView;
+        this.servicerView = servicerView;
+        this.serviceList = serviceList;
+    }
+
     public void handleServiceSelection(final Service service,
                                        final ServicerAccount servicer) {
+        servicer.update(customer.getName(), customer.getAddress(), service);
     }
 
     public void handleSearch(final Service service,
