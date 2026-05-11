@@ -36,6 +36,27 @@ public class ServicerAccountTest {
                 servicer.getSchedule().get(mockCustomer).getName());
     }
 
+    @Test
+    public void postServiceAddsToListings(){
+        servicer.postService(mockService);
+        assertTrue(!servicer.getListings().isEmpty());
+    }
+
+    @Test
+    public void postServiceSetsIsAvailableToTrue() {
+        when(servicer.getIsAvailable()).thenReturn(false);
+        assertFalse(servicer.getIsAvailable());
+        servicer.postService(mockService);
+        assertTrue(servicer.getIsAvailable());
+    }
+
+    @Test
+    public void postService_listingHasCorrectService() {
+        when(mockService.getName()).thenReturn("Buzz");
+        servicer.postService(mockService);
+        assertEquals("Buzz", servicer.getListings().getFirst().getServiceOffered().getName());
+    }
+
     static class TestServicer extends ServicerAccount {
         public TestServicer(final String name,
                             final String availability,
