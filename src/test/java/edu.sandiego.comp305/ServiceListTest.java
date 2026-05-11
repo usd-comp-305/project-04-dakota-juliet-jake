@@ -89,6 +89,13 @@ class ServiceListTest {
     }
 
     @Test
+    void getListingOutOfBoundsIndexThrowsError() {
+        int index = 10;
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> serviceList.getListing(index));
+    }
+
+    @Test
     void getList() {
         assertTrue(true);
     }
