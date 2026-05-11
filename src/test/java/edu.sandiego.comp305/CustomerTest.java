@@ -12,9 +12,9 @@ import static org.mockito.Mockito.*;
 class CustomerTest {
     private Customer customer;
 
-    private Listing mockBarberListing;
+    private ServicerAccount.Listing mockBarberListing;
 
-    private Listing mockStylistListing;
+    private ServicerAccount.Listing mockStylistListing;
 
     private ServiceList mockServiceList;
 
@@ -22,32 +22,24 @@ class CustomerTest {
 
     private Service mockService;
 
-    Listing createMockBarberListing() {
-        final ArrayList<Service> barberServices = new ArrayList<>(List.of(
-                new Service("Shave", 20.0),
-                new Service("Wax", 30.0),
-                new Service("Buzz", 15.0),
-                new Service("Shear", 15.0)
-        ));
+    ServicerAccount.Listing createMockBarberListing() {
+        final Service barberService = new Service("Shave", 20.0);
 
-        mockBarberListing = mock(Listing.class);
-        when(mockBarberListing.getServicesOffered()).thenReturn(barberServices);
-        when(mockBarberListing.isAvailable()).thenReturn(true);
+        mockBarberListing = mock(ServicerAccount.Listing.class);
+        when(mockBarberListing.getServiceOffered()).thenReturn(barberService);
+        when(mockBarberListing.getIsAvailable()).thenReturn(true);
         when(mockBarberListing.getProviderName()).thenReturn("Jake");
 
         return mockBarberListing;
     }
 
-    Listing createMockStylistListing() {
-        final ArrayList<Service> stylistServices = new ArrayList<>(List.of(
-                new Service("Full Dye", 150.0),
-                new Service("Highlights", 100.0)
-        ));
+    ServicerAccount.Listing createMockStylistListing() {
+        final Service stylistService = new Service("Full Dye", 150.0);
 
-        mockStylistListing = mock(Listing.class);
-        when(mockStylistListing.getServicesOffered())
-                .thenReturn(stylistServices);
-        when(mockStylistListing.isAvailable()).thenReturn(true);
+        mockStylistListing = mock(ServicerAccount.Listing.class);
+        when(mockStylistListing.getServiceOffered())
+                .thenReturn(stylistService);
+        when(mockStylistListing.getIsAvailable()).thenReturn(true);
         when(mockStylistListing.getProviderName()).thenReturn("Dakota");
 
         return mockStylistListing;
@@ -112,7 +104,8 @@ class CustomerTest {
     void selectListingCorrectlyCallsGetSelectedByInListing() {
         final int index = 1;
         customer.selectListing(mockServiceList, index);
-        verify(mockStylistListing, times(1)).getSelectedBy(customer);
+        verify(mockStylistListing, times(1))
+                .selectedByCustomer(customer);
     }
 
     @Test
@@ -129,42 +122,45 @@ class CustomerTest {
 
     @Test
     void searchByServiceReturnsCorrectFilteredList() {
-        final List<Listing> filteredList =
+        final List<ServicerAccount.Listing> filteredList =
                 customer.searchByService(mockServiceList, "Barber");
-        final List<Listing> expectedFilteredList = List.of(mockBarberListing);
+        final List<ServicerAccount.Listing> expectedFilteredList =
+                List.of(mockBarberListing);
 
         assertEquals(expectedFilteredList, filteredList);
     }
 
     @Test
     void searchByServiceReturnsEmptyListWhenNoMatches() {
-        final List<Listing> filteredList =
+        final List<ServicerAccount.Listing> filteredList =
                 customer.searchByService(mockServiceList, "Nail Tech");
-        final List<Listing> expectedFilteredList = List.of();
+        final List<ServicerAccount.Listing> expectedFilteredList = List.of();
 
         assertEquals(expectedFilteredList, filteredList);
     }
 
     @Test
     void searchByPriceReturnsCorrectFilteredList() {
-        final List<Listing> filteredList =
+        final List<ServicerAccount.Listing> filteredList =
                 customer.searchByPrice(mockServiceList, 50.0);
-        final List<Listing> expectedFilteredList = List.of(mockBarberListing);
+        final List<ServicerAccount.Listing> expectedFilteredList =
+                List.of(mockBarberListing);
 
         assertEquals(expectedFilteredList, filteredList);
     }
 
     @Test
     void searchByPriceReturnsEmptyListWhenNoMatches() {
-        final List<Listing> filteredList =
+        final List<ServicerAccount.Listing> filteredList =
                 customer.searchByService(mockServiceList, "Nail Tech");
-        final List<Listing> expectedFilteredList = List.of();
+        final List<ServicerAccount.Listing> expectedFilteredList = List.of();
 
         assertEquals(expectedFilteredList, filteredList);
     }
 
     @Test
     void payReturnsTrueOnSuccessfulPaymentMethod() {
+        when(mockService.getPrice()).thenReturn(35.0);
         when(mockPayment.processPayment(50.0)).thenReturn(true);
 
         assertTrue(customer.pay(50.0, mockPayment, mockService));
@@ -172,6 +168,7 @@ class CustomerTest {
 
     @Test
     void payReturnsFalseOnFailedPaymentMethod() {
+        when(mockService.getPrice()).thenReturn(35.0);
         when(mockPayment.processPayment(100.0)).thenReturn(false);
 
         assertFalse(customer.pay(100.0, mockPayment, mockService));

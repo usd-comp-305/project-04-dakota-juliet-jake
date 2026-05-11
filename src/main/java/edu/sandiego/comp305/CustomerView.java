@@ -18,15 +18,15 @@ public class CustomerView {
         strategy.display();
     }
 
-    public void showServiceList(final List<Listing> listings) {
-        for (Listing listing : listings) {
+    public void showServiceList(final List<ServicerAccount.Listing> listings) {
+        for (ServicerAccount.Listing listing : listings) {
             System.out.println(listing.getProviderName());
         }
         render();
     }
 
-    public void showSearchResults(final List<Listing> results) {
-        for (Listing listing : results) {
+    public void showSearchResults(final List<ServicerAccount.Listing> results) {
+        for (ServicerAccount.Listing listing : results) {
             System.out.println(listing.getProviderName());
         }
         render();

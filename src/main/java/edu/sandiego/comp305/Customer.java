@@ -5,7 +5,7 @@ import java.util.List;
 public class Customer extends Profile {
     protected String address;
 
-    protected Listing selectedListing;
+    protected ServicerAccount.Listing selectedListing;
 
     public Customer(final String name, final String address) {
         super(name);
@@ -13,19 +13,20 @@ public class Customer extends Profile {
     }
 
     protected void selectListing(final ServiceList listings, final int index) {
-        final Listing chosenListing = listings.getListing(index);
-
-        chosenListing.getSelectedBy(this);
-        selectedListing = chosenListing;
+        selectedListing = listings.getListing(index);
+        selectedListing.selectedByCustomer(this);
     }
 
-    protected List<Listing> searchByPrice(final ServiceList listings,
-                                          final double maxPrice){
+
+    protected List<ServicerAccount.Listing> searchByPrice(
+            final ServiceList listings,
+            final double maxPrice){
         return listings.filterByPrice(maxPrice);
     }
 
-    protected List<Listing> searchByService(final ServiceList listings,
-                                            final String serviceName){
+    protected List<ServicerAccount.Listing> searchByService(
+            final ServiceList listings,
+            final String serviceName){
         return listings.filterByService(serviceName);
     }
 
@@ -38,7 +39,7 @@ public class Customer extends Profile {
         return false;
     }
 
-    protected Listing getSelectedListing() {
+    protected ServicerAccount.Listing getSelectedListing() {
         if (this.selectedListing == null) {
             throw new IllegalStateException("No listing has been selected");
         }
