@@ -43,8 +43,5 @@ public class ServicerAccountTest {
                             final ArrayList<Service> servicesOffered){
             super(name, availability, generalServiceType, servicesOffered);
         }
-
-        @Override
-        public void cancelCall() {}
     }
 }

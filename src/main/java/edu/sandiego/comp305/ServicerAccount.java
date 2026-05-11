@@ -33,26 +33,32 @@ public abstract class ServicerAccount extends Profile {
     }
 
     public void setServicesOffered(final ArrayList<Service> services){
+
         this.servicesOffered = new ArrayList<>(services);
     }
 
     public void setAvailability(final String availability){
+
         this.availability = availability;
     }
 
     public ArrayList<Service> getServicesOffered() {
+
         return new ArrayList<>(this.servicesOffered);
     }
 
     public String getGeneralServiceType() {
+
         return this.generalServiceType;
     }
 
     public String getAvailability() {
+
         return this.availability;
     }
 
     public boolean getIsAvailable() {
+
         return this.isAvailable;
     }
 
@@ -62,6 +68,7 @@ public abstract class ServicerAccount extends Profile {
     }
 
     public ArrayList<Listing> getListings() {
+
         return new ArrayList<>(listings);
     }
 
@@ -72,6 +79,7 @@ public abstract class ServicerAccount extends Profile {
 
 
     public void takeCall(final Customer customer, final Service service){
+
         this.isAvailable = false;
         this.schedule.put(customer, service);
     }
@@ -80,7 +88,9 @@ public abstract class ServicerAccount extends Profile {
 
     }
 
-    public void cancelCall(){}
+    public void cancelCall(){
+
+    }
 
     public class Listing {
         private final Service listingService;
