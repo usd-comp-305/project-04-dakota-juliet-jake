@@ -12,6 +12,8 @@ import static org.mockito.Mockito.spy;
 class ServiceListTest {
     private Customer customer;
 
+    private ServiceList serviceList;
+
     private ListingTest.TestServicerAccount spyServicer;
 
     private ServicerAccount.Listing shaveListing;
@@ -55,6 +57,12 @@ class ServiceListTest {
         dyeListing = spyServicer.new Listing(dyeService);
     }
 
+    void createServiceList() {
+        ArrayList<ServicerAccount.Listing> tempList =
+                new ArrayList<>(List.of(shaveListing, dyeListing));
+        serviceList = new ServiceList(tempList);
+    }
+
     @BeforeEach
     void setUp() {
         createServicesOffered();
@@ -70,11 +78,14 @@ class ServiceListTest {
         createDyeListing();
 
         createCustomer();
+
+        createServiceList();
     }
 
     @Test
-    void getListing() {
-        assertTrue(true);
+    void getListingReturnsCorrectListing() {
+        int index = 1;
+        assertEquals(dyeListing, serviceList.getListing(index));
     }
 
     @Test
