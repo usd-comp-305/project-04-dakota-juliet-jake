@@ -137,7 +137,9 @@ class ServiceListTest {
     }
 
     @Test
-    void filterByPrice() {
-        assertTrue(true);
+    void filterByPriceReturnsCorrectFilteredList() {
+        ArrayList<ServicerAccount.Listing> expectedList =
+                new ArrayList<>((List.of(shaveListing)));
+        assertEquals(expectedList, serviceList.filterByPrice(50.0));
     }
 }

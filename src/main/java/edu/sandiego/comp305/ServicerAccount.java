@@ -106,5 +106,9 @@ public abstract class ServicerAccount extends Profile {
         public boolean getIsAvailable() {
             return ServicerAccount.this.getIsAvailable();
         }
+
+        public double getPrice() {
+            return listingService.getPrice();
+        }
     }
 }

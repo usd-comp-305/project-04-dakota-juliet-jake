@@ -29,6 +29,12 @@ public class ServiceList {
     }
 
     List<ServicerAccount.Listing> filterByPrice(final double maxPrice){
-        return listings;
+        List<ServicerAccount.Listing> filteredList = new ArrayList<>();
+        for (ServicerAccount.Listing listing : listings) {
+            if (listing.getPrice() <= maxPrice) {
+                filteredList.add(listing);
+            }
+        }
+        return filteredList;
     }
 }
