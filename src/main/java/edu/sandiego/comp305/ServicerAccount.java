@@ -14,16 +14,14 @@ public abstract class ServicerAccount extends Profile {
 
     private boolean isAvailable;
 
+    private ArrayList<Service> schedule;
+
     private String generalServiceType;
 
     public ServicerAccount(final String name,
-                           final String availability,
-                           final String generalServiceType,
-                           final ArrayList<Service> servicesOffered) {
+                           final String availability) {
         super(name);
         this.availability = availability;
-        this.generalServiceType = generalServiceType;
-        this.servicesOffered = new ArrayList<>(servicesOffered);
         this.isAvailable = true;
         this.listings = new ArrayList<>();
     }
@@ -52,6 +50,10 @@ public abstract class ServicerAccount extends Profile {
         return this.isAvailable;
     }
 
+    public ArrayList<Service> getSchedule(){
+        return new ArrayList<Service>();
+    }
+
     public ArrayList<Listing> getListings() {
         return new ArrayList<>(listings);
     }
@@ -61,7 +63,8 @@ public abstract class ServicerAccount extends Profile {
 
     }
 
-    public void takeCall(final Service service){
+
+    public void takeCall(final Customer customer, final Service service){
 
     }
 
