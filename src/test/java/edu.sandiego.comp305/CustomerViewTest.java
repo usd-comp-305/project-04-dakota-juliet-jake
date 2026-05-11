@@ -33,7 +33,8 @@ class CustomerViewTest {
         final DisplayStrategy mockStrategy =
                 Mockito.mock(DisplayStrategy.class);
         final CustomerView view = new CustomerView(mockStrategy);
-        final ServicerAccount.Listing mockListing = Mockito.mock(ServicerAccount.Listing.class);
+        final ServicerAccount.Listing mockListing =
+                Mockito.mock(ServicerAccount.Listing.class);
         final List<ServicerAccount.Listing> listings = new ArrayList<>();
         listings.add(mockListing);
         view.showServiceList(listings);
@@ -45,7 +46,8 @@ class CustomerViewTest {
         final DisplayStrategy mockStrategy =
                 Mockito.mock(DisplayStrategy.class);
         final CustomerView view = new CustomerView(mockStrategy);
-        final ServicerAccount.Listing mockListing = Mockito.mock(ServicerAccount.Listing.class);
+        final ServicerAccount.Listing mockListing =
+                Mockito.mock(ServicerAccount.Listing.class);
         Mockito.when(mockListing.getProviderName()).thenReturn("Jake");
         final List<ServicerAccount.Listing> results = new ArrayList<>();
         results.add(mockListing);
