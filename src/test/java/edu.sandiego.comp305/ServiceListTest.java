@@ -10,14 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.spy;
 
 class ServiceListTest {
-    private Customer customer;
-
     private ServiceList serviceList;
 
     private ListingTest.TestServicerAccount spyBarberServicer;
 
     private ListingTest.TestServicerAccount spyStylistServicer;
-
 
     private ServicerAccount.Listing shaveListing;
 
@@ -27,40 +24,26 @@ class ServiceListTest {
 
     private Service dyeService;
 
-    private ArrayList<Service> barberServicesOffered;
-
-    private ArrayList<Service> stylistServicesOffered;
-
-    void createBarberServicesOffered() {
-        barberServicesOffered = new ArrayList<>(List.of(
-                new Service("Shave", 20.0),
-                new Service("Shear", 25.0)));
-    }
-
-    void createStylistServicesOffered() {
-        stylistServicesOffered = new ArrayList<>(List.of(
-                new Service("Full Dye", 150.0),
-                new Service("Highlights", 120.0)));
-    }
-
     void createShaveService() {
-        shaveService = barberServicesOffered.getFirst();
+        shaveService = new Service("Shave", 20.0);
     }
 
     void createDyeService() {
-        dyeService = stylistServicesOffered.getFirst();
-    }
-
-    void createCustomer() {
-        customer = new Customer("Jake", "123 address st");
+        dyeService = new Service("Full Dye", 150.0);
     }
 
     void createSpyBarberServicer() {
+        ArrayList<Service> barberServicesOffered = new ArrayList<>(List.of(
+                shaveService,
+                new Service("Shear", 25.0)));
         spyBarberServicer = spy(new ListingTest.TestServicerAccount(
                 "Dakota","9am-5pm", ServiceType.BARBER, barberServicesOffered));
     }
 
     void createSpyStylistServicer() {
+        ArrayList<Service> stylistServicesOffered = new ArrayList<>(List.of(
+                dyeService,
+                new Service("Highlights", 120.0)));
         spyStylistServicer = spy(new ListingTest.TestServicerAccount(
                 "Juliet","11am-2pm", ServiceType.STYLIST, stylistServicesOffered));
     }
@@ -81,10 +64,6 @@ class ServiceListTest {
 
     @BeforeEach
     void setUp() {
-        createBarberServicesOffered();
-
-        createStylistServicesOffered();
-
         createShaveService();
 
         createDyeService();
@@ -96,8 +75,6 @@ class ServiceListTest {
         createShaveListing();
 
         createDyeListing();
-
-        createCustomer();
 
         createServiceList();
     }
@@ -153,5 +130,12 @@ class ServiceListTest {
     @Test
     void filterByEncompassingPriceReturnsOriginalList() {
         assertEquals(serviceList.getList(), serviceList.filterByPrice(200.0));
+    }
+
+    @Test
+    void filterByExactPriceReturnsCorrectFilteredList() {
+        ArrayList<ServicerAccount.Listing> expectedList =
+                new ArrayList<>((List.of(shaveListing)));
+        assertEquals(expectedList, serviceList.filterByPrice(20.0));
     }
 }
