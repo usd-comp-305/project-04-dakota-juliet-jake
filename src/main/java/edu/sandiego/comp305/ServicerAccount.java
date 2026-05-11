@@ -88,10 +88,23 @@ public abstract class ServicerAccount extends Profile {
         this.listings.add(new Listing(newService));
     }
 
-    public void cancelCall(){
+    @Override
+    public void cancelCall() {
+        throw new UnsupportedOperationException(
+                "Must provide a customer to cancel a call");
+    }
+
+    public void cancelCall(final Customer customer){
+        if(!this.schedule.containsKey(customer)) {
+            throw new IllegalStateException("Customer has no active booking");
+        }
+        this.isAvailable = true;
+        this.schedule.remove(customer);
 
     }
 
+
+    //helper class to make a service postable
     public class Listing {
         private final Service listingService;
 

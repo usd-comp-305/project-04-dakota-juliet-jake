@@ -74,13 +74,20 @@ public class ServicerAccountTest {
     }
 
     @Test
-    public void cancelCallThrows(){
+    public void cancelCallNoCustomerThrows(){
+        assertThrows(UnsupportedOperationException.class,
+                () -> servicer.cancelCall());
+    }
+
+    @Test
+    public void cancelCallWrongCustomerThrows(){
         final Customer newCustomer = mock(Customer.class);
         when(newCustomer.getName()).thenReturn("Jake");
 
         when(mockCustomer.getName()).thenReturn("Juliet");
         servicer.takeCall(mockCustomer, mockService);
-        assertThrows(IllegalStateException.class, servicer.cancelCall(newCustomer));
+        assertThrows(IllegalStateException.class,
+                () -> servicer.cancelCall(newCustomer));
     }
 
     @Test
