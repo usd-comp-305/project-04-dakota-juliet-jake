@@ -1,6 +1,7 @@
 package edu.sandiego.comp305;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -14,16 +15,21 @@ public abstract class ServicerAccount extends Profile {
 
     private boolean isAvailable;
 
-    private ArrayList<Service> schedule;
+    private HashMap<Customer,Service> schedule;
 
     private String generalServiceType;
 
     public ServicerAccount(final String name,
-                           final String availability) {
+                           final String availability,
+                           final String generalServiceType,
+                           final ArrayList<Service> servicesOffered) {
         super(name);
         this.availability = availability;
         this.isAvailable = true;
+        this.generalServiceType = generalServiceType;
+        this.servicesOffered = new ArrayList<>(servicesOffered);
         this.listings = new ArrayList<>();
+        this.schedule = new HashMap<Customer, Service>();
     }
 
     public void setServicesOffered(final ArrayList<Service> services){
@@ -50,8 +56,9 @@ public abstract class ServicerAccount extends Profile {
         return this.isAvailable;
     }
 
-    public ArrayList<Service> getSchedule(){
-        return new ArrayList<Service>();
+    public HashMap<Customer, Service> getSchedule(){
+
+        return new HashMap<>(this.schedule);
     }
 
     public ArrayList<Listing> getListings() {
@@ -65,7 +72,8 @@ public abstract class ServicerAccount extends Profile {
 
 
     public void takeCall(final Customer customer, final Service service){
-
+        this.isAvailable = false;
+        this.schedule.put(customer, service);
     }
 
     public void postService() {
