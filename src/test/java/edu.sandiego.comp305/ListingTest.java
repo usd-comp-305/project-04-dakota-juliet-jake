@@ -113,7 +113,7 @@ class ListingTest {
 
     @Test
     void listingHasCorrectGeneralServiceType() {
-        assertEquals("Barber", shaveListing.getGeneralServiceType());
+        assertEquals(ServiceType.BARBER, shaveListing.getGeneralServiceType());
     }
 
     @Test

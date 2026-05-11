@@ -28,7 +28,8 @@ public class Customer extends Profile {
             final ServiceList listings,
             final String serviceName){
         try {
-            ServiceType serviceType = ServiceType.valueOf(serviceName.toUpperCase().replace(" ", "_"));
+            final ServiceType serviceType = ServiceType.valueOf(
+                    serviceName.toUpperCase().replace(" ", "_"));
             return listings.filterByService(serviceType);
         } catch (IllegalArgumentException e) {
             return List.of();

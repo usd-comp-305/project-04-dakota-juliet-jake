@@ -11,6 +11,10 @@ public class ServiceList {
     }
 
     public ServicerAccount.Listing getListing(final int index){
+        if (index >= listings.size() || index < 0) {
+            throw new IndexOutOfBoundsException(
+                    "No listing exists at that index in the Service List");
+        }
         return listings.get(index);
     }
 
@@ -18,8 +22,9 @@ public class ServiceList {
         return new ArrayList<>(listings);
     }
 
-    public List<ServicerAccount.Listing> filterByService(final ServiceType serviceType){
-        List<ServicerAccount.Listing> filteredList = new ArrayList<>();
+    public List<ServicerAccount.Listing> filterByService(
+            final ServiceType serviceType){
+        final List<ServicerAccount.Listing> filteredList = new ArrayList<>();
         for (ServicerAccount.Listing listing : listings) {
             if (listing.getGeneralServiceType().equals(serviceType)) {
                 filteredList.add(listing);
@@ -29,7 +34,7 @@ public class ServiceList {
     }
 
     public List<ServicerAccount.Listing> filterByPrice(final double maxPrice){
-        List<ServicerAccount.Listing> filteredList = new ArrayList<>();
+        final List<ServicerAccount.Listing> filteredList = new ArrayList<>();
         for (ServicerAccount.Listing listing : listings) {
             if (listing.getPrice() <= maxPrice) {
                 filteredList.add(listing);
