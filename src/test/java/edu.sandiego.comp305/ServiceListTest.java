@@ -114,6 +114,14 @@ class ServiceListTest {
     }
 
     @Test
+    void filterByServiceOnEmptyListReturnsEmptyList() {
+        ServiceList emptyServiceList = new ServiceList(new ArrayList<>());
+        ArrayList<ServicerAccount.Listing> expectedList =
+                new ArrayList<>((List.of()));
+        assertEquals(expectedList, emptyServiceList.filterByService(ServiceType.BARBER));
+    }
+
+    @Test
     void filterByPriceReturnsCorrectFilteredList() {
         ArrayList<ServicerAccount.Listing> expectedList =
                 new ArrayList<>((List.of(shaveListing)));
@@ -138,4 +146,13 @@ class ServiceListTest {
                 new ArrayList<>((List.of(shaveListing)));
         assertEquals(expectedList, serviceList.filterByPrice(20.0));
     }
+
+    @Test
+    void filterByPriceOnEmptyListReturnsEmptyList() {
+        ServiceList emptyServiceList = new ServiceList(new ArrayList<>());
+        ArrayList<ServicerAccount.Listing> expectedList =
+                new ArrayList<>((List.of()));
+        assertEquals(expectedList, emptyServiceList.filterByPrice(100.0));
+    }
+
 }

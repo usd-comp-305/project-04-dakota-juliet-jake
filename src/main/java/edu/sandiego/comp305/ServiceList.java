@@ -7,7 +7,7 @@ public class ServiceList {
     private List<ServicerAccount.Listing> listings;
 
     public ServiceList(final List<ServicerAccount.Listing> listings) {
-        this.listings = listings;
+        this.listings = new ArrayList<>(listings);
     }
 
     public ServicerAccount.Listing getListing(final int index){
@@ -15,7 +15,7 @@ public class ServiceList {
     }
 
     public List<ServicerAccount.Listing> getList(){
-        return listings;
+        return new ArrayList<>(listings);
     }
 
     public List<ServicerAccount.Listing> filterByService(final ServiceType serviceType){
@@ -28,7 +28,7 @@ public class ServiceList {
         return filteredList;
     }
 
-    List<ServicerAccount.Listing> filterByPrice(final double maxPrice){
+    public List<ServicerAccount.Listing> filterByPrice(final double maxPrice){
         List<ServicerAccount.Listing> filteredList = new ArrayList<>();
         for (ServicerAccount.Listing listing : listings) {
             if (listing.getPrice() <= maxPrice) {
