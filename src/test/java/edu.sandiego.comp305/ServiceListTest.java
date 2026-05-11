@@ -96,8 +96,10 @@ class ServiceListTest {
     }
 
     @Test
-    void getList() {
-        assertTrue(true);
+    void getListReturnsCorrectListOfListings() {
+        ArrayList<ServicerAccount.Listing> expectedList =
+                new ArrayList<>(List.of(shaveListing, dyeListing));
+        assertEquals(expectedList, serviceList.getList());
     }
 
     @Test
