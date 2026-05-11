@@ -84,8 +84,8 @@ public abstract class ServicerAccount extends Profile {
         this.schedule.put(customer, service);
     }
 
-    public void postService() {
-
+    public void postService(final Service newService) {
+        this.listings.add(new Listing(newService));
     }
 
     public void cancelCall(){
