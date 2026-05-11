@@ -32,6 +32,19 @@ public class ServicerAccountTest {
     public void takeCallAddToSchedule(){
         servicer.takeCall(mockCustomer, mockService);
         when(mockService.getName()).thenReturn("Buzz");
+        assertTrue(!servicer.getSchedule().isEmpty());
+    }
+
+    @Test
+    public void takeCallScheduleHasCustomer(){
+        servicer.takeCall(mockCustomer, mockService);
+        assertTrue(servicer.getSchedule().containsKey(mockCustomer));
+    }
+
+    @Test
+    public void takeCallScheduleHasCorrectService(){
+        servicer.takeCall(mockCustomer, mockService);
+        when(mockService.getName()).thenReturn("Buzz");
         assertEquals("Buzz",
                 servicer.getSchedule().get(mockCustomer).getName());
     }
@@ -44,17 +57,20 @@ public class ServicerAccountTest {
 
     @Test
     public void postServiceSetsIsAvailableToTrue() {
-        when(servicer.getIsAvailable()).thenReturn(false);
+        //use takeCall method to set availability to false
+        servicer.takeCall(mockCustomer, mockService);
         assertFalse(servicer.getIsAvailable());
         servicer.postService(mockService);
         assertTrue(servicer.getIsAvailable());
     }
 
     @Test
-    public void postService_listingHasCorrectService() {
+    public void postServiceListingHasCorrectService() {
         when(mockService.getName()).thenReturn("Buzz");
         servicer.postService(mockService);
-        assertEquals("Buzz", servicer.getListings().getFirst().getServiceOffered().getName());
+        assertEquals("Buzz",
+                servicer.getListings().getFirst().
+                        getServiceOffered().getName());
     }
 
     static class TestServicer extends ServicerAccount {
