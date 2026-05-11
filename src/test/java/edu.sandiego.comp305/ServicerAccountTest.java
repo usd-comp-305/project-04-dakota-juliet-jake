@@ -75,15 +75,26 @@ public class ServicerAccountTest {
 
     @Test
     public void cancelCallThrows(){
+        final Customer newCustomer = mock(Customer.class);
+        when(newCustomer.getName()).thenReturn("Jake");
+
+        when(mockCustomer.getName()).thenReturn("Juliet");
+        servicer.takeCall(mockCustomer, mockService);
+        assertThrows(IllegalStateException.class, servicer.cancelCall(newCustomer));
     }
 
     @Test
     public void cancelCallResetsAvailability(){
-
+        servicer.takeCall(mockCustomer, mockService);
+        servicer.cancelCall(mockCustomer);
+        assertTrue(servicer.getIsAvailable());
     }
 
     @Test
     public void cancelCallRemovesCorrectCustomer(){
+        servicer.takeCall(mockCustomer, mockService);
+        servicer.cancelCall(mockCustomer);
+        assertFalse(servicer.getSchedule().containsKey(mockCustomer));
 
     }
 
