@@ -50,4 +50,10 @@ class CreditCardPaymentTest {
                 payment.processPayment(35.0));
     }
 
+    @Test
+    void processPaymentReturnsTrueNoSpacesInCardNumber() {
+        CreditCardPayment payment = new CreditCardPayment("1111222233334444");
+        assertTrue(payment.processPayment(35.0));
+    }
+
 }
