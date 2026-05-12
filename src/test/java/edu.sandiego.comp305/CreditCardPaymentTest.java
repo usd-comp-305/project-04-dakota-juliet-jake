@@ -33,5 +33,12 @@ class CreditCardPaymentTest {
                 payment.processPayment(35.0));
     }
 
+    @Test
+    void processPaymentThrowsExceptionForLongCardLength() {
+        CreditCardPayment payment = new CreditCardPayment("1111 2222 3333 4444 5555");
+        assertThrows(IllegalArgumentException.class, () ->
+                payment.processPayment(35.0));
+    }
+
 
 }
