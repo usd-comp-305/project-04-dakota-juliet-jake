@@ -8,6 +8,10 @@ public class CashPayment implements PaymentMethod{
 
     @Override
     public boolean processPayment(final double amountPaying) {
+        if (amountPaying < 0) {
+            throw new IllegalArgumentException(
+                    "You cannot pay with a negative amount");
+        }
         if (amountPaying >= amountDue) {
             return true;
         }

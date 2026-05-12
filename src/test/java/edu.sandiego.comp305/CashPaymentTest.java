@@ -7,25 +7,27 @@ import static org.junit.jupiter.api.Assertions.*;
 class CashPaymentTest {
 
     @Test
-    void cashPaymentReturnsTrueForEqualAmountPaying() {
+    void processPaymentReturnsTrueForEqualAmountPaying() {
         CashPayment payment = new CashPayment(35.0);
         assertTrue(payment.processPayment(35.0));
     }
 
     @Test
-    void cashPaymentReturnsTrueForGreaterAmountPaying() {
+    void processPaymentReturnsTrueForGreaterAmountPaying() {
         CashPayment payment = new CashPayment(35.0);
         assertTrue(payment.processPayment(40.0));
     }
 
     @Test
-    void cashPaymentReturnsFalseForLessAmountPaying() {
+    void processPaymentReturnsFalseForLessAmountPaying() {
         CashPayment payment = new CashPayment(35.0);
         assertFalse(payment.processPayment(30.0));
     }
 
     @Test
-    void cashPaymentThrowsExceptionForNegativeAmount() {
-
+    void processPaymentThrowsExceptionForNegativeAmount() {
+        CashPayment payment = new CashPayment(35.0);
+        assertThrows(IllegalArgumentException.class, () ->
+                payment.processPayment(-20.0));
     }
 }
