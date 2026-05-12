@@ -13,6 +13,12 @@ class CashPaymentTest {
     }
 
     @Test
+    void cashPaymentReturnsTrueForGreaterAmountPaying() {
+        CashPayment payment = new CashPayment(35.0);
+        assertTrue(payment.processPayment(40.0));
+    }
+
+    @Test
     void cashPaymentReturnsFalseForZeroAmount() {
 
     }
