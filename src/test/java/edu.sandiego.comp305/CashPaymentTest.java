@@ -7,8 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class CashPaymentTest {
 
     @Test
-    void cashPaymentReturnsTrueForValidAmount() {
-
+    void cashPaymentReturnsTrueForEqualAmountPaying() {
+        CashPayment payment = new CashPayment(35.0);
+        assertTrue(payment.processPayment(35.0));
     }
 
     @Test
