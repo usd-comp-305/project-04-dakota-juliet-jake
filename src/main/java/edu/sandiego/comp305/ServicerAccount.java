@@ -76,7 +76,7 @@ public abstract class ServicerAccount extends Profile {
 
         @SuppressFBWarnings(value = "EI2",
                 justification = "this$0 is an implicit outer class " +
-                        "reference required by the inner class design")
+                        "reference required by the inner class design"7)
         public Listing(final Service listingService) {
             this.listingService = listingService;
             ServicerAccount.this.isAvailable = true;

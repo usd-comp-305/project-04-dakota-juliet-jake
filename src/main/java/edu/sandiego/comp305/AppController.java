@@ -1,5 +1,7 @@
 package edu.sandiego.comp305;
 
+import java.util.Scanner;
+
 public class AppController {
 
     private final Customer customer;
@@ -25,14 +27,18 @@ public class AppController {
         this.serviceList = serviceList;
     }
 
+    public void run() {
+
+    }
+
     public void handleServiceSelection(final Service service,
                                        final ServicerAccount servicer) {
         final ServicerAccount.Listing listing = servicer.new Listing(service);
         listing.selectedByCustomer(customer);
     }
 
-    public void handleSearch(final Service service,
-                             final double maxPrice) {
+    public void handleSearch(final Service service, final double maxPrice) {
+        serviceList.filterByService(service.getName());
     }
 
     public void handlePayment(final PaymentMethod payment) {
