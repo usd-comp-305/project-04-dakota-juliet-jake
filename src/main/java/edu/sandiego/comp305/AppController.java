@@ -1,6 +1,8 @@
 package edu.sandiego.comp305;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -99,6 +101,14 @@ public class AppController {
     }
 
     public void handlePostListing(final ServicerAccount servicer) {
+        System.out.println("Enter the name of the service you want to post:");
+        final String serviceName = scanner.nextLine();
+        System.out.println("Enter the price of the service:");
+        final double price = Double.parseDouble(scanner.nextLine());
+        final Service service = new Service(serviceName, price);
+        final ArrayList<Service> services = servicer.getServicesOffered();
+        services.add(service);
+        servicer.setServicesOffered(services);
     }
 
     public void handleJoinQueue(final Service service) {

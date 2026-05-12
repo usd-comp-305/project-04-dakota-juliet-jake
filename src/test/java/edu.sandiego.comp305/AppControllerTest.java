@@ -80,7 +80,8 @@ class AppControllerTest {
         final CustomerView mockCustomerView = Mockito.mock(CustomerView.class);
         final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
         final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
-        final Scanner scanner = new Scanner("Dakota\nuser123\nPass1!\nS\n");
+        final Scanner scanner = new Scanner("Dakota\nuser123\nPass1!\nS" +
+                "\nHaircut\n20.0\n");
         final AppController controller = new AppController(mockCustomer,
                 mockServicer, mockCustomerView,
                 mockServicerView, mockServiceList, scanner);
@@ -94,7 +95,19 @@ class AppControllerTest {
     }
 
     @Test
-    void handlePostListing() {
+    void testHandlePostListing() {
+        final Customer mockCustomer = Mockito.mock(Customer.class);
+        final ServicerAccount mockServicer =
+                Mockito.mock(ServicerAccount.class);
+        final CustomerView mockCustomerView = Mockito.mock(CustomerView.class);
+        final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
+        final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
+        final Scanner scanner = new Scanner("Haircut\n20.0\n");
+        final AppController controller = new AppController(mockCustomer,
+                mockServicer, mockCustomerView,
+                mockServicerView, mockServiceList, scanner);
+        controller.handlePostListing(mockServicer);
+        Mockito.verify(mockServicer).setServicesOffered(Mockito.any());
     }
 
     @Test
