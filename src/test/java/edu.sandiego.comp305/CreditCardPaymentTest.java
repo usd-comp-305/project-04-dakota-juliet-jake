@@ -56,4 +56,11 @@ class CreditCardPaymentTest {
         assertTrue(payment.processPayment(35.0));
     }
 
+    @Test
+    void processPaymentThrowsWithNonNumberInCardNumber() {
+        CreditCardPayment payment = new CreditCardPayment("1111 2b22 33!3 4444");
+        assertThrows(IllegalArgumentException.class, () ->
+                payment.processPayment(35.0));
+    }
+
 }

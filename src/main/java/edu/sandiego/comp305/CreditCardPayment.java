@@ -24,11 +24,24 @@ public class CreditCardPayment implements PaymentMethod{
         }
     }
 
+    private void checkCardAllNumbers() {
+        formatCardNumber();
+        for (int i = 0; i < cardNumber.length(); i++) {
+            char cardDigit = cardNumber.charAt(i);
+            if (!Character.isDigit(cardDigit)) {
+                throw new IllegalArgumentException(
+                        "Card number must only be numbers");
+            }
+        }
+    }
+
     @Override
     public boolean processPayment(final double amount){
         formatCardNumber();
 
         checkCardLength();
+
+        checkCardAllNumbers();
 
         if (amount < 0) {
             throw new IllegalArgumentException(
