@@ -9,7 +9,11 @@ public class CreditCardPayment implements PaymentMethod{
         this.cardNumber = cardNumber;
     }
 
-    private void formatCardNumber() {
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    void formatCardNumber() {
         cardNumber = cardNumber.replaceAll("\\s", "");
     }
 

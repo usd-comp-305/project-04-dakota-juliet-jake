@@ -7,6 +7,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class CreditCardPaymentTest {
 
     @Test
+    void formatCardRemovesSpaces() {
+        final String expectedCardNum = "1111222233334444";
+        CreditCardPayment payment = new CreditCardPayment("1111 2222 3333 4444");
+
+        payment.formatCardNumber();
+
+        assertEquals(expectedCardNum, payment.getCardNumber());
+    }
+
+    @Test
     void processPaymentReturnsTrueForValidAmount() {
         CreditCardPayment payment = new CreditCardPayment("1111 2222 3333 4444");
         assertTrue(payment.processPayment(35.0));
@@ -39,6 +49,5 @@ class CreditCardPaymentTest {
         assertThrows(IllegalArgumentException.class, () ->
                 payment.processPayment(35.0));
     }
-
 
 }
