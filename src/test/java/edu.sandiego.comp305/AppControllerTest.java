@@ -91,7 +91,28 @@ class AppControllerTest {
     }
 
     @Test
-    void handlePayment() {
+    void testHandlePayment() {
+        final Customer mockCustomer = Mockito.mock(Customer.class);
+        final ServicerAccount mockServicer =
+                Mockito.mock(ServicerAccount.class);
+        final CustomerView mockCustomerView = Mockito.mock(CustomerView.class);
+        final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
+        final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
+        final ServicerAccount.Listing mockListing =
+                Mockito.mock(ServicerAccount.Listing.class);
+        final Service mockService = Mockito.mock(Service.class);
+        final Scanner scanner = new Scanner("50.0\nCASH\n");
+        final AppController controller = new AppController(mockCustomer,
+                mockServicer, mockCustomerView,
+                mockServicerView, mockServiceList, scanner);
+        Mockito.when(mockCustomer.getSelectedListing())
+                .thenReturn(mockListing);
+        Mockito.when(mockListing.getServiceOffered())
+                .thenReturn(mockService);
+        controller.handlePayment();
+        Mockito.verify(mockCustomer).pay(Mockito.anyDouble(),
+                Mockito.any(PaymentMethod.class),
+                Mockito.any(Service.class));
     }
 
     @Test
