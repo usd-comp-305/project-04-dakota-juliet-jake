@@ -1,6 +1,10 @@
 package edu.sandiego.comp305;
 
-import java.util.Scanner;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.util.List;
+
+//import java.util.Scanner;
 
 public class AppController {
 
@@ -14,7 +18,9 @@ public class AppController {
 
     private final ServiceList serviceList;
 
-    @SuppressWarnings("EI_EXPOSE_REP2")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+            justification =
+                    "Storing references is intentional for MVC controller")
     public AppController(final Customer customer,
                          final ServicerAccount servicer,
                          final CustomerView customerView,
@@ -38,7 +44,9 @@ public class AppController {
     }
 
     public void handleSearch(final Service service, final double maxPrice) {
-        serviceList.filterByService(service.getName());
+        final List<ServicerAccount.Listing> results =
+                serviceList.filterByService(service.getName());
+        customerView.showSearchResults(results);
     }
 
     public void handlePayment(final PaymentMethod payment) {
