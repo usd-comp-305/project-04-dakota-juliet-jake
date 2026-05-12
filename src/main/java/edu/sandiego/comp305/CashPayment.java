@@ -1,20 +1,19 @@
 package edu.sandiego.comp305;
 
 public class CashPayment implements PaymentMethod{
-    private final double amountDue;
-    public CashPayment(double amountDue) {
-        this.amountDue = amountDue;
-    }
+
+    private static final double CENT_PRECISION = 100.0;
 
     @Override
-    public boolean processPayment(final double amountPaying) {
-        if (amountPaying < 0) {
+    public boolean processPayment(final double amount) {
+        if (amount < 0) {
             throw new IllegalArgumentException(
-                    "You cannot pay with a negative amount");
+                    "Payment amount must be positive");
         }
-        if (amountPaying >= amountDue) {
-            return true;
+        if (Math.round(amount * CENT_PRECISION) != amount * CENT_PRECISION) {
+            throw new IllegalArgumentException(
+                    "Payment amount cannot have more than 2 decimal places");
         }
-        return false;
+        return true;
     }
 }
