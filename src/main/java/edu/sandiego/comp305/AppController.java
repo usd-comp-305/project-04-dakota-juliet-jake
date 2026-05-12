@@ -1,12 +1,9 @@
 package edu.sandiego.comp305;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-//import java.util.Scanner;
 
 public class AppController {
 
@@ -49,18 +46,26 @@ public class AppController {
         System.out.println("Customer or Servicer? (C or S):");
         final String accountType = scanner.nextLine();
         if (accountType.equals("C")) {
-            System.out.println("Enter your address:");
-            scanner.nextLine();
-            customerView.showServiceList(serviceList.getList());
-            System.out.println("Enter the number of the listing you want:");
-            final int listingIndex = Integer.parseInt(scanner.nextLine());
-            customer.selectListing(serviceList, listingIndex);
-            handlePayment();
+            handleCustomerFlow();
         } else {
-            servicerView.showOfferedServices(servicer.getServicesOffered());
-            servicerView.showSchedule(servicer.getAvailability());
-            handlePostListing(servicer);
+            handleServicerFlow();
         }
+    }
+
+    public void handleCustomerFlow() {
+        System.out.println("Enter your address:");
+        scanner.nextLine();
+        customerView.showServiceList(serviceList.getList());
+        System.out.println("Enter the number of the listing you want:");
+        final int listingIndex = Integer.parseInt(scanner.nextLine());
+        customer.selectListing(serviceList, listingIndex);
+        handlePayment();
+    }
+
+    public void handleServicerFlow() {
+        servicerView.showOfferedServices(servicer.getServicesOffered());
+        servicerView.showSchedule(servicer.getAvailability());
+        handlePostListing(servicer);
     }
 
     public void handleServiceSelection(final Service service,

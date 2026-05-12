@@ -148,4 +148,48 @@ class AppControllerTest {
         controller.handleScheduleAppointment(mockServiceList);
         Mockito.verify(mockCustomer).selectListing(mockServiceList, 0);
     }
+
+    @Test
+    void testHandleCustomerFlow() {
+        final Customer mockCustomer = Mockito.mock(Customer.class);
+        final ServicerAccount mockServicer =
+                Mockito.mock(ServicerAccount.class);
+        final CustomerView mockCustomerView = Mockito.mock(CustomerView.class);
+        final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
+        final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
+        final ServicerAccount.Listing mockListing =
+                Mockito.mock(ServicerAccount.Listing.class);
+        final Service mockService = Mockito.mock(Service.class);
+        final Scanner scanner = new Scanner("123 st\n0\n50.0\nCASH\n");
+        final AppController controller = new AppController(mockCustomer,
+                mockServicer, mockCustomerView,
+                mockServicerView, mockServiceList, scanner);
+        Mockito.when(mockServiceList.getList())
+                .thenReturn(new java.util.ArrayList<>());
+        Mockito.when(mockCustomer.getSelectedListing())
+                .thenReturn(mockListing);
+        Mockito.when(mockListing.getServiceOffered())
+                .thenReturn(mockService);
+        controller.handleCustomerFlow();
+        Mockito.verify(mockCustomer).selectListing(mockServiceList, 0);
+    }
+
+    @Test
+    void testHandleServicerFlow() {
+        final Customer mockCustomer = Mockito.mock(Customer.class);
+        final ServicerAccount mockServicer =
+                Mockito.mock(ServicerAccount.class);
+        final CustomerView mockCustomerView = Mockito.mock(CustomerView.class);
+        final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
+        final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
+        final Scanner scanner = new Scanner("Haircut\n20.0\n");
+        final AppController controller = new AppController(mockCustomer,
+                mockServicer, mockCustomerView,
+                mockServicerView, mockServiceList, scanner);
+        Mockito.when(mockServicer.getServicesOffered())
+                .thenReturn(new java.util.ArrayList<>());
+        controller.handleServicerFlow();
+        Mockito.verify(mockServicerView)
+                .showOfferedServices(Mockito.any());
+    }
 }
