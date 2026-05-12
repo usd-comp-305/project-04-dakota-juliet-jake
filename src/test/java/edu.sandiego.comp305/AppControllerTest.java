@@ -111,6 +111,20 @@ class AppControllerTest {
     }
 
     @Test
-    void handleJoinQueue() {
+    void testHandleJoinQueue() {
+        final Customer mockCustomer = Mockito.mock(Customer.class);
+        final ServicerAccount mockServicer =
+                Mockito.mock(ServicerAccount.class);
+        final CustomerView mockCustomerView = Mockito.mock(CustomerView.class);
+        final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
+        final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
+        final Scanner scanner = new Scanner("0\n");
+        final AppController controller = new AppController(mockCustomer,
+                mockServicer, mockCustomerView,
+                mockServicerView, mockServiceList, scanner);
+        Mockito.when(mockServiceList.getList())
+                .thenReturn(new java.util.ArrayList<>());
+        controller.handleJoinQueue(mockServiceList);
+        Mockito.verify(mockCustomer).selectListing(mockServiceList, 0);
     }
 }
