@@ -111,7 +111,7 @@ class AppControllerTest {
     }
 
     @Test
-    void testHandleJoinQueue() {
+    void testHandleScheduleAppointment() {
         final Customer mockCustomer = Mockito.mock(Customer.class);
         final ServicerAccount mockServicer =
                 Mockito.mock(ServicerAccount.class);
@@ -124,7 +124,7 @@ class AppControllerTest {
                 mockServicerView, mockServiceList, scanner);
         Mockito.when(mockServiceList.getList())
                 .thenReturn(new java.util.ArrayList<>());
-        controller.handleJoinQueue(mockServiceList);
+        controller.handleScheduleAppointment(mockServiceList);
         Mockito.verify(mockCustomer).selectListing(mockServiceList, 0);
     }
 }

@@ -111,7 +111,7 @@ public class AppController {
         servicer.setServicesOffered(services);
     }
 
-    public void handleJoinQueue(final ServiceList serviceList) {
+    public void handleScheduleAppointment(final ServiceList serviceList) {
         customerView.showServiceList(serviceList.getList());
         System.out.println("Enter the number of the listing " +
                 "you want to schedule:");
