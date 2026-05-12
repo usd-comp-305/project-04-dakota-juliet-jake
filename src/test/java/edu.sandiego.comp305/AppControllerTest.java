@@ -2,6 +2,7 @@ package edu.sandiego.comp305;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import java.util.Scanner;
 
 class AppControllerTest {
 
@@ -13,9 +14,10 @@ class AppControllerTest {
         final CustomerView mockCustomerView = Mockito.mock(CustomerView.class);
         final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
         final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
+        final Scanner scanner = new Scanner("test input\n");
         final AppController controller = new AppController(mockCustomer,
                 mockServicer, mockCustomerView,
-                mockServicerView, mockServiceList);
+                mockServicerView, mockServiceList, scanner);
         final Service mockService = Mockito.mock(Service.class);
         controller.handleServiceSelection(mockService, mockServicer);
         Mockito.verify(mockServicer).update(Mockito.any(Customer.class),
@@ -30,13 +32,61 @@ class AppControllerTest {
         final CustomerView mockCustomerView = Mockito.mock(CustomerView.class);
         final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
         final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
+        final Scanner scanner = new Scanner("test input\n");
         final AppController controller = new AppController(mockCustomer,
                 mockServicer, mockCustomerView,
-                mockServicerView, mockServiceList);
+                mockServicerView, mockServiceList, scanner);
         final Service mockService = Mockito.mock(Service.class);
         Mockito.when(mockService.getName()).thenReturn("Haircut");
         controller.handleSearch(mockService, 50.0);
         Mockito.verify(mockServiceList).filterByService("Haircut");
+    }
+
+    @Test
+    void testRun() {
+        final Customer mockCustomer = Mockito.mock(Customer.class);
+        final ServicerAccount mockServicer =
+                Mockito.mock(ServicerAccount.class);
+        final CustomerView mockCustomerView = Mockito.mock(CustomerView.class);
+        final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
+        final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
+        final ServicerAccount.Listing mockListing =
+                Mockito.mock(ServicerAccount.Listing.class);
+        final Service mockService = Mockito.mock(Service.class);
+        final Scanner scanner = new Scanner(
+                "Dakota\nuser123\nPass1!\nC\n123 st\n0\n50.0\nVENMO" +
+                        "\nmyvenmo\n");
+        final AppController controller = new AppController(mockCustomer,
+                mockServicer, mockCustomerView,
+                mockServicerView, mockServiceList, scanner);
+        Mockito.when(mockServiceList.getList())
+                .thenReturn(new java.util.ArrayList<>());
+        Mockito.when(mockCustomer.getSelectedListing())
+                .thenReturn(mockListing);
+        Mockito.when(mockListing.getServiceOffered())
+                .thenReturn(mockService);
+        controller.run();
+        Mockito.verify(mockCustomer).selectListing(mockServiceList, 0);
+        Mockito.verify(mockCustomer).pay(Mockito.anyDouble(),
+                Mockito.any(PaymentMethod.class),
+                Mockito.any(Service.class));
+    }
+
+    @Test
+    void testRunServicer() {
+        final Customer mockCustomer = Mockito.mock(Customer.class);
+        final ServicerAccount mockServicer =
+                Mockito.mock(ServicerAccount.class);
+        final CustomerView mockCustomerView = Mockito.mock(CustomerView.class);
+        final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
+        final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
+        final Scanner scanner = new Scanner("Dakota\nuser123\nPass1!\nS\n");
+        final AppController controller = new AppController(mockCustomer,
+                mockServicer, mockCustomerView,
+                mockServicerView, mockServiceList, scanner);
+        controller.run();
+        Mockito.verify(mockServicerView)
+                .showOfferedServices(Mockito.any());
     }
 
     @Test
