@@ -19,8 +19,9 @@ class CashPaymentTest {
     }
 
     @Test
-    void cashPaymentReturnsFalseForZeroAmount() {
-
+    void cashPaymentReturnsFalseForLessAmountPaying() {
+        CashPayment payment = new CashPayment(35.0);
+        assertFalse(payment.processPayment(30.0));
     }
 
     @Test
