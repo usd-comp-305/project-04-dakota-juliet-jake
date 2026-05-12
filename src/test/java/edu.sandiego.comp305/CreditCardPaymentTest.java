@@ -8,21 +8,30 @@ class CreditCardPaymentTest {
 
     @Test
     void processPaymentReturnsTrueForValidAmount() {
-        CashPayment payment = new CashPayment();
+        CreditCardPayment payment = new CreditCardPayment("1111 2222 3333 4444");
         assertTrue(payment.processPayment(35.0));
     }
 
     @Test
     void processPaymentThrowsExceptionForNegativeAmount() {
-        CashPayment payment = new CashPayment();
+        CreditCardPayment payment = new CreditCardPayment("1111 2222 3333 4444");
         assertThrows(IllegalArgumentException.class, () ->
                 payment.processPayment(-20.0));
     }
 
     @Test
     void processPaymentThrowsExceptionForImproperDecimals() {
-        CashPayment payment = new CashPayment();
+        CreditCardPayment payment = new CreditCardPayment("1111 2222 3333 4444");
         assertThrows(IllegalArgumentException.class, () ->
                 payment.processPayment(50.123));
     }
+
+    @Test
+    void processPaymentThrowsExceptionForShortCardLength() {
+        CreditCardPayment payment = new CreditCardPayment("1111");
+        assertThrows(IllegalArgumentException.class, () ->
+                payment.processPayment(35.0));
+    }
+
+
 }
