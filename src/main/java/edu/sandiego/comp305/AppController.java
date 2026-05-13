@@ -60,7 +60,7 @@ public class AppController {
         }
     }
 
-    private String promptUntilValid(final String prompt,
+    String promptUntilValid(final String prompt,
                                     final Consumer<String> setter) {
         while (true) {
             try {
