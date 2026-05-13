@@ -5,8 +5,12 @@ import java.util.Scanner;
 
 public class Simulation {
 
+    private Simulation() {
+    }
+
     public static void main(final String[] args) {
-        final Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in,
+                java.nio.charset.StandardCharsets.UTF_8);
         System.out.println("Welcome! Please enter your name:");
         final String name = scanner.nextLine();
         System.out.println("Enter your desired username:");
