@@ -83,38 +83,37 @@ public class AppController {
     }
 
     public void handlePayment() {
-        System.out.println("Enter amount to pay:");
-        final double amount = Double.parseDouble(scanner.nextLine());
-
-        PaymentMethod payment = null;
-        boolean isValid = false;
-        while (!isValid) {
+        while (true) {
+            System.out.println("Enter amount to pay:");
+            final double amount = Double.parseDouble(scanner.nextLine());
             System.out.println("Enter payment method (CREDIT/CASH/VENMO):");
             final String paymentType = scanner.nextLine();
-
-            if (paymentType.toLowerCase().equals("cash")) {
+            final PaymentMethod payment;
+            final PaymentType type = PaymentType.valueOf(paymentType
+                    .toUpperCase());
+            if (type == PaymentType.CASH) {
                 payment = new CashPayment();
-                isValid = true;
-            } else if (paymentType.toLowerCase().equals("credit")) {
+            } else if (type == PaymentType.CREDIT) {
                 System.out.println("Enter your card number:");
                 final String cardNumber = scanner.nextLine();
                 payment = new CreditCardPayment(cardNumber);
-                isValid = true;
-            } else if (paymentType.toLowerCase().equals("venmo")) {
+            } else if (type == PaymentType.VENMO) {
                 System.out.println("Enter your Venmo handle:");
                 final String venmoHandle = scanner.nextLine();
                 payment = new VenmoPayment(venmoHandle);
-                isValid = true;
             } else {
-                System.out.println("Invalid input.");
+                System.out.println("Invalid payment method.");
+                continue;
             }
-        }
-        final boolean paymentSuccess = customer.pay(amount, payment,
-                customer.getSelectedListing().getServiceOffered());
-        if (paymentSuccess) {
-            System.out.println("Payment successful!");
-        } else {
-            System.out.println("Payment failed.");
+            final boolean paymentSuccess = customer.pay(amount, payment,
+                    customer.getSelectedListing().getServiceOffered());
+            if (paymentSuccess) {
+                System.out.println("Payment successful!");
+                break;
+            } else {
+                System.out.println("Payment failed. Please enter an amount " +
+                        "greater than or equal to the service cost.");
+            }
         }
     }
 
