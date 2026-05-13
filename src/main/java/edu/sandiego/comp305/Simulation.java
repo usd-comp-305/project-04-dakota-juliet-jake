@@ -26,18 +26,18 @@ public class Simulation {
         barberServices.add(new Service("Shave", 20.0));
         barberServices.add(new Service("Haircut", 15.0));
         final Barber barber = new Barber("Jake", "9am-5pm",
-                "Barber", barberServices);
+                ServiceType.BARBER, barberServices);
 
         final ArrayList<Service> nailServices = new ArrayList<>();
         nailServices.add(new Service("Pedi", 50.0));
         nailServices.add(new Service("Mani", 30.0));
         final NailTech nailTech = new NailTech("Juliet", "9am-5pm",
-                "Nail Tech", nailServices);
+                ServiceType.NAIL_TECH, nailServices);
 
         final ArrayList<Service> stylistServices = new ArrayList<>();
         stylistServices.add(new Service("Full Dye", 150.0));
         final Stylist stylist = new Stylist("Dakota", "9am-5pm",
-                "Stylist", stylistServices);
+                ServiceType.STYLIST, stylistServices);
 
         final CustomerDisplayStrategy customerStrategy =
                 new CustomerDisplayStrategy();
