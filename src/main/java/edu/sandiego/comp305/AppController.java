@@ -37,28 +37,23 @@ public class AppController {
     }
 
     public void run() {
-        System.out.println("Welcome! Please enter your name:");
-        scanner.nextLine();
-        System.out.println("Enter your desired username:");
-        scanner.nextLine();
-        System.out.println("Enter your desired password:");
-        scanner.nextLine();
         System.out.println("Customer or Servicer? (C or S):");
         final String accountType = scanner.nextLine();
         if (accountType.equals("C")) {
             handleCustomerFlow();
-        } else {
+        } else if (accountType.equals("S")) {
             handleServicerFlow();
+        } else {
+            System.out.println("Invalid input. Please enter C or S.");
         }
     }
 
     public void handleCustomerFlow() {
-        System.out.println("Enter your address:");
-        scanner.nextLine();
         customerView.showServiceList(serviceList.getList());
         System.out.println("Enter the number of the listing you want:");
         final int listingIndex = Integer.parseInt(scanner.nextLine());
         customer.selectListing(serviceList, listingIndex);
+        servicer.takeCall(customer.getSelectedListing().getServiceOffered());
         handlePayment();
     }
 

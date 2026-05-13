@@ -53,9 +53,7 @@ class AppControllerTest {
         final ServicerAccount.Listing mockListing =
                 Mockito.mock(ServicerAccount.Listing.class);
         final Service mockService = Mockito.mock(Service.class);
-        final Scanner scanner = new Scanner(
-                "Dakota\nuser123\nPass1!\nC\n123 st\n0\n50.0\nVENMO" +
-                        "\nmyvenmo\n");
+        final Scanner scanner = new Scanner("C\n0\n50.0\nVENMO\nmyvenmo\n");
         final AppController controller = new AppController(mockCustomer,
                 mockServicer, mockCustomerView,
                 mockServicerView, mockServiceList, scanner);
@@ -80,8 +78,7 @@ class AppControllerTest {
         final CustomerView mockCustomerView = Mockito.mock(CustomerView.class);
         final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
         final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
-        final Scanner scanner = new Scanner("Dakota\nuser123\nPass1!\nS" +
-                "\nHaircut\n20.0\n");
+        final Scanner scanner = new Scanner("S\nHaircut\n20.0\n");
         final AppController controller = new AppController(mockCustomer,
                 mockServicer, mockCustomerView,
                 mockServicerView, mockServiceList, scanner);
@@ -160,7 +157,7 @@ class AppControllerTest {
         final ServicerAccount.Listing mockListing =
                 Mockito.mock(ServicerAccount.Listing.class);
         final Service mockService = Mockito.mock(Service.class);
-        final Scanner scanner = new Scanner("123 st\n0\n50.0\nCASH\n");
+        final Scanner scanner = new Scanner("0\n50.0\nCASH\n");
         final AppController controller = new AppController(mockCustomer,
                 mockServicer, mockCustomerView,
                 mockServicerView, mockServiceList, scanner);
