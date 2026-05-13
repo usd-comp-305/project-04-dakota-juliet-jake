@@ -21,7 +21,7 @@ public class AppController {
 
     public void run() {
 
-        view.display("Welcome! We would like to ask you some questions to get your account set up.");
+        view.display("Welcome to UberCuts! We would like to ask you some questions to get your account set up.");
 
         final String name = view.prompt("First, please enter your name:");
         final String username = view.prompt("Enter your desired username:");
@@ -60,7 +60,12 @@ public class AppController {
             }
         }
 
+        browseServiceList(customer);
+    }
+
+    public void browseServiceList(Customer customer) {
         view.displayListings(serviceList.getList());
+
         while (true) {
             final int listingIndex = Integer.parseInt(
                     view.prompt("Enter the number of the listing you want:")) - 1;
@@ -71,6 +76,7 @@ public class AppController {
                 view.display("Invalid selection. Please try again.");
             }
         }
+
         handlePayment(customer);
     }
 
@@ -233,7 +239,7 @@ public class AppController {
                         final String cardNumber = view.prompt("Enter your card number:");
                         payment = new CreditCardPayment(cardNumber);
                         try {
-                            ((CreditCardPayment) payment).processPayment(amountOwed);
+                            payment.processPayment(amountOwed);
                             validLength = true;
                         } catch (IllegalArgumentException e) {
                             view.display(e.getMessage());
@@ -246,7 +252,7 @@ public class AppController {
                         final String venmoHandle = view.prompt("Enter your Venmo handle");
                         payment = new VenmoPayment(venmoHandle);
                         try {
-                            ((VenmoPayment) payment).processPayment(amountOwed);
+                            payment.processPayment(amountOwed);
                             validHandle = true;
                         } catch (IllegalArgumentException e){
                             view.display(e.getMessage());
