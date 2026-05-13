@@ -1,6 +1,7 @@
 package edu.sandiego.comp305;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -14,6 +15,8 @@ public abstract class ServicerAccount extends Profile {
 
     private boolean isAvailable;
 
+    private HashMap<Customer,Service> schedule;
+
     private String generalServiceType;
 
     public ServicerAccount(final String name,
@@ -22,55 +25,86 @@ public abstract class ServicerAccount extends Profile {
                            final ArrayList<Service> servicesOffered) {
         super(name);
         this.availability = availability;
+        this.isAvailable = true;
         this.generalServiceType = generalServiceType;
         this.servicesOffered = new ArrayList<>(servicesOffered);
-        this.isAvailable = true;
         this.listings = new ArrayList<>();
+        this.schedule = new HashMap<Customer, Service>();
     }
 
     public void setServicesOffered(final ArrayList<Service> services){
+
         this.servicesOffered = new ArrayList<>(services);
     }
 
     public void setAvailability(final String availability){
+
         this.availability = availability;
     }
 
     public ArrayList<Service> getServicesOffered() {
+
         return new ArrayList<>(this.servicesOffered);
     }
 
     public String getGeneralServiceType() {
+
         return this.generalServiceType;
     }
 
     public String getAvailability() {
+
         return this.availability;
     }
 
     public boolean getIsAvailable() {
+
         return this.isAvailable;
     }
 
+    public HashMap<Customer, Service> getSchedule(){
+
+        return new HashMap<>(this.schedule);
+    }
+
     public ArrayList<Listing> getListings() {
+
         return new ArrayList<>(listings);
     }
 
     public void update(final Customer customer,
                        final Listing listing){
+        takeCall(customer, listing.listingService);
+    }
+
+
+    public void takeCall(final Customer customer, final Service service){
+
+        this.isAvailable = false;
+        this.schedule.put(customer, service);
+    }
+
+    public void postService(final Service newService) {
+        this.listings.add(new Listing(newService));
+    }
+
+    @Override
+    public void cancelCall() {
+        throw new UnsupportedOperationException(
+                "Must provide a customer to cancel a call");
+    }
+
+    public void cancelCall(final Customer customer){
+        if(!this.schedule.containsKey(customer)) {
+            throw new IllegalStateException("Customer has no active booking");
+        }
+        this.isAvailable = true;
+        this.schedule.remove(customer);
 
     }
 
-    public void takeCall(final Service service){
 
-    }
-
-    public void postService() {
-
-    }
-
-    public void cancelCall(){}
-
+    //helper class to make a service postable
     public class Listing {
         private final Service listingService;
 
@@ -83,7 +117,6 @@ public abstract class ServicerAccount extends Profile {
         }
 
         public void selectedByCustomer(final Customer customer) {
-            ServicerAccount.this.isAvailable = false;
             ServicerAccount.this.update(customer, this);
         }
 

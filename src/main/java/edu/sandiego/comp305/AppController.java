@@ -53,7 +53,8 @@ public class AppController {
         System.out.println("Enter the number of the listing you want:");
         final int listingIndex = Integer.parseInt(scanner.nextLine());
         customer.selectListing(serviceList, listingIndex);
-        servicer.takeCall(customer.getSelectedListing().getServiceOffered());
+        servicer.takeCall(customer, customer.getSelectedListing()
+                .getServiceOffered());
         handlePayment();
     }
 
