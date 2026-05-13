@@ -37,14 +37,20 @@ public class AppController {
     }
 
     public void run() {
-        System.out.println("Customer or Servicer? (C or S):");
-        final String accountType = scanner.nextLine();
-        if (accountType.toLowerCase().equals("C")) {
-            handleCustomerFlow();
-        } else if (accountType.toLowerCase().equals("S")) {
-            handleServicerFlow();
-        } else {
-            System.out.println("Invalid input. Please enter C or S.");
+        boolean isValid = false;
+        while (!isValid) {
+            System.out.println("Customer or Servicer? (C or S):");
+            final String accountType = scanner.nextLine();
+            if (accountType.toLowerCase().equals("c")) {
+                handleCustomerFlow();
+                isValid = true;
+            } else if (accountType.toLowerCase().equals("s")) {
+                handleServicerFlow();
+                isValid = true;
+            } else {
+                System.out.println("Invalid input. Please enter C or S.");
+                scanner.nextLine();
+            }
         }
     }
 
