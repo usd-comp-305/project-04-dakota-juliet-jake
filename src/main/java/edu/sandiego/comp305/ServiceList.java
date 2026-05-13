@@ -3,16 +3,25 @@ package edu.sandiego.comp305;
 import java.util.List;
 
 public class ServiceList {
+    List<ServicerAccount.Listing> listings;
 
-    List<Listing> getListing(){
-        return null;
+    ServiceList(final List<ServicerAccount.Listing> listings) {
+        this.listings = listings;
     }
 
-    List<Listing> filterByService(final String service){
-        return null;
+    ServicerAccount.Listing getListing(final int index){
+        return listings.get(index);
     }
 
-    List<Listing> filterByPrice(final String service, final double maxPrice){
-        return null;
+    List<ServicerAccount.Listing> getList(){
+        return listings;
+    }
+
+    List<ServicerAccount.Listing> filterByService(final String service){
+        return listings;
+    }
+
+    List<ServicerAccount.Listing> filterByPrice(final double maxPrice){
+        return listings;
     }
 }

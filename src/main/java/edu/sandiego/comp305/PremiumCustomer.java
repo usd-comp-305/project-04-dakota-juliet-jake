@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PremiumCustomer extends Customer{
-    List<Listing> filterByTime(final int time){
+
+    PremiumCustomer(final String name, final String address) {
+        super(name, address);
+    }
+
+    List<ServicerAccount.Listing> filterByTime(final int time){
         return new ArrayList<>();
     }
 }

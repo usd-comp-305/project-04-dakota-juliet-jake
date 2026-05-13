@@ -1,9 +1,14 @@
 package edu.sandiego.comp305;
 
+import java.util.ArrayList;
+
 public class Barber extends ServicerAccount{
 
-    public Barber(){
-
+    public Barber(final String name,
+                  final String availability,
+                  final String generalServiceType,
+                  final ArrayList<Service> servicesOffered){
+        super(name, availability, generalServiceType, servicesOffered);
     }
 
     public void shave(){
