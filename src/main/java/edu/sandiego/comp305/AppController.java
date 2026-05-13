@@ -37,27 +37,29 @@ public class AppController {
     }
 
     public void run() {
-        boolean isValid = false;
-        while (!isValid) {
-            System.out.println("Customer or Servicer? (C or S):");
-            final String accountType = scanner.nextLine();
-            if (accountType.toLowerCase().equals("c")) {
-                handleCustomerFlow();
-                isValid = true;
-            } else if (accountType.toLowerCase().equals("s")) {
-                handleServicerFlow();
-                isValid = true;
-            } else {
-                System.out.println("Invalid input.");
-            }
+        System.out.println("Customer or Servicer? (C or S):");
+        final String accountType = scanner.nextLine();
+        if (accountType.equals("C")) {
+            handleCustomerFlow();
+        } else if (accountType.equals("S")) {
+            handleServicerFlow();
+        } else {
+            System.out.println("Invalid input. Please enter C or S.");
         }
     }
 
     public void handleCustomerFlow() {
         customerView.showServiceList(serviceList.getList());
-        System.out.println("Enter the number of the listing you want:");
-        final int listingIndex = Integer.parseInt(scanner.nextLine()) - 1;
-        customer.selectListing(serviceList, listingIndex);
+        while (true) {
+            System.out.println("Enter the number of the listing you want:");
+            final int listingIndex = Integer.parseInt(scanner.nextLine()) - 1;
+            try {
+                customer.selectListing(serviceList, listingIndex);
+                break;
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Invalid selection. Please try again.");
+            }
+        }
         servicer.takeCall(customer,
                 customer.getSelectedListing().getServiceOffered());
         handlePayment();
