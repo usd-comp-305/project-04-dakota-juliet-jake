@@ -37,27 +37,29 @@ public class AppController {
     }
 
     public void run() {
-        boolean isValid = false;
-        while (!isValid) {
-            System.out.println("Customer or Servicer? (C or S):");
-            final String accountType = scanner.nextLine();
-            if (accountType.toLowerCase().equals("c")) {
-                handleCustomerFlow();
-                isValid = true;
-            } else if (accountType.toLowerCase().equals("s")) {
-                handleServicerFlow();
-                isValid = true;
-            } else {
-                System.out.println("Invalid input.");
-            }
+        System.out.println("Customer or Servicer? (C or S):");
+        final String accountType = scanner.nextLine();
+        if (accountType.equals("C")) {
+            handleCustomerFlow();
+        } else if (accountType.equals("S")) {
+            handleServicerFlow();
+        } else {
+            System.out.println("Invalid input. Please enter C or S.");
         }
     }
 
     public void handleCustomerFlow() {
         customerView.showServiceList(serviceList.getList());
-        System.out.println("Enter the number of the listing you want:");
-        final int listingIndex = Integer.parseInt(scanner.nextLine()) - 1;
-        customer.selectListing(serviceList, listingIndex);
+        while (true) {
+            System.out.println("Enter the number of the listing you want:");
+            final int listingIndex = Integer.parseInt(scanner.nextLine()) - 1;
+            try {
+                customer.selectListing(serviceList, listingIndex);
+                break;
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Invalid selection. Please try again.");
+            }
+        }
         servicer.takeCall(customer,
                 customer.getSelectedListing().getServiceOffered());
         handlePayment();
@@ -85,29 +87,19 @@ public class AppController {
     public void handlePayment() {
         System.out.println("Enter amount to pay:");
         final double amount = Double.parseDouble(scanner.nextLine());
-
-        PaymentMethod payment = null;
-        boolean isValid = false;
-        while (!isValid) {
-            System.out.println("Enter payment method (CREDIT/CASH/VENMO):");
-            final String paymentType = scanner.nextLine();
-
-            if (paymentType.toLowerCase().equals("cash")) {
-                payment = new CashPayment();
-                isValid = true;
-            } else if (paymentType.toLowerCase().equals("credit")) {
-                System.out.println("Enter your card number:");
-                final String cardNumber = scanner.nextLine();
-                payment = new CreditCardPayment(cardNumber);
-                isValid = true;
-            } else if (paymentType.toLowerCase().equals("venmo")) {
-                System.out.println("Enter your Venmo handle:");
-                final String venmoHandle = scanner.nextLine();
-                payment = new VenmoPayment(venmoHandle);
-                isValid = true;
-            } else {
-                System.out.println("Invalid input.");
-            }
+        System.out.println("Enter payment method (CREDIT/CASH/VENMO):");
+        final String paymentType = scanner.nextLine();
+        final PaymentMethod payment;
+        if (paymentType.equals("CASH")) {
+            payment = new CashPayment();
+        } else if (paymentType.equals("CREDIT")) {
+            System.out.println("Enter your card number:");
+            final String cardNumber = scanner.nextLine();
+            payment = new CreditCardPayment(cardNumber);
+        } else {
+            System.out.println("Enter your Venmo handle:");
+            final String venmoHandle = scanner.nextLine();
+            payment = new VenmoPayment(venmoHandle);
         }
         final boolean paymentSuccess = customer.pay(amount, payment,
                 customer.getSelectedListing().getServiceOffered());

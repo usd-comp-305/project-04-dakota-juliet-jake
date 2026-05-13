@@ -61,6 +61,7 @@ class AppControllerTest {
                 .thenReturn(mockListing);
         Mockito.when(mockListing.getServiceOffered())
                 .thenReturn(mockService);
+        Mockito.when(mockServiceList.getListing(0)).thenReturn(mockListing);
         controller.run();
         Mockito.verify(mockCustomer).selectListing(mockServiceList, 0);
         Mockito.verify(mockCustomer).pay(Mockito.anyDouble(),
@@ -165,6 +166,7 @@ class AppControllerTest {
                 .thenReturn(mockListing);
         Mockito.when(mockListing.getServiceOffered())
                 .thenReturn(mockService);
+        Mockito.when(mockServiceList.getListing(0)).thenReturn(mockListing);
         controller.handleCustomerFlow();
         Mockito.verify(mockCustomer).selectListing(mockServiceList, 0);
     }
