@@ -12,8 +12,7 @@ class AppControllerTest {
         final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
         final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
         final TerminalView mockTerminalView = Mockito.mock(TerminalView.class);
-        final AppController controller = new AppController(mockCustomerView,
-                mockServicerView, mockServiceList, mockTerminalView);
+        final AppController controller = new AppController(mockServiceList, mockTerminalView);
         controller.handleSearch(ServiceType.BARBER, 50.0);
         Mockito.verify(mockServiceList).filterByService(ServiceType.BARBER);
     }
@@ -28,8 +27,7 @@ class AppControllerTest {
                 Mockito.mock(ServicerAccount.Listing.class);
         final Service mockService = Mockito.mock(Service.class);
         final TerminalView mockTerminalView = Mockito.mock(TerminalView.class);
-        final AppController controller = new AppController(mockCustomerView,
-                mockServicerView, mockServiceList, mockTerminalView);
+        final AppController controller = new AppController(mockServiceList, mockTerminalView);
         Mockito.when(mockServiceList.getList())
                 .thenReturn(new java.util.ArrayList<>());
         Mockito.when(mockCustomer.getSelectedListing())
@@ -53,8 +51,7 @@ class AppControllerTest {
         final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
         final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
         final TerminalView mockTerminalView = Mockito.mock(TerminalView.class);
-        final AppController controller = new AppController(mockCustomerView,
-                mockServicerView, mockServiceList, mockTerminalView);
+        final AppController controller = new AppController(mockServiceList, mockTerminalView);
         controller.run();
         Mockito.verify(mockServicerView)
                 .showOfferedServices(Mockito.any());
@@ -70,8 +67,7 @@ class AppControllerTest {
                 Mockito.mock(ServicerAccount.Listing.class);
         final Service mockService = Mockito.mock(Service.class);
         final TerminalView mockTerminalView = Mockito.mock(TerminalView.class);
-        final AppController controller = new AppController(mockCustomerView,
-                mockServicerView, mockServiceList, mockTerminalView);
+        final AppController controller = new AppController(mockServiceList, mockTerminalView);
         Mockito.when(mockCustomer.getSelectedListing())
                 .thenReturn(mockListing);
         Mockito.when(mockListing.getServiceOffered())
@@ -93,8 +89,7 @@ class AppControllerTest {
         final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
         final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
         final TerminalView mockTerminalView = Mockito.mock(TerminalView.class);
-        final AppController controller = new AppController(mockCustomerView,
-                mockServicerView, mockServiceList, mockTerminalView);
+        final AppController controller = new AppController(mockServiceList, mockTerminalView);
         controller.handlePostListing(mockServicer);
         Mockito.verify(mockServicer).setServicesOffered(Mockito.any());
     }
@@ -109,8 +104,7 @@ class AppControllerTest {
                 Mockito.mock(ServicerAccount.Listing.class);
         final Service mockService = Mockito.mock(Service.class);
         final TerminalView mockTerminalView = Mockito.mock(TerminalView.class);
-        final AppController controller = new AppController(mockCustomerView,
-                mockServicerView, mockServiceList, mockTerminalView);
+        final AppController controller = new AppController(mockServiceList, mockTerminalView);
         Mockito.when(mockServiceList.getList())
                 .thenReturn(new java.util.ArrayList<>());
         Mockito.when(mockCustomer.getSelectedListing())
@@ -133,8 +127,7 @@ class AppControllerTest {
         final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
         final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
         final TerminalView mockTerminalView = Mockito.mock(TerminalView.class);
-        final AppController controller = new AppController(mockCustomerView,
-                mockServicerView, mockServiceList, mockTerminalView);
+        final AppController controller = new AppController(mockServiceList, mockTerminalView);
         Mockito.when(mockServicer.getServicesOffered())
                 .thenReturn(new java.util.ArrayList<>());
         controller.handleServicerFlow();

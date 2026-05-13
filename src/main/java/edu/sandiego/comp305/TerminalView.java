@@ -3,22 +3,25 @@ package edu.sandiego.comp305;
 import java.util.List;
 import java.util.Scanner;
 
-public class TerminalView {
+public class TerminalView implements View {
     private final Scanner scanner;
 
     public TerminalView() {
         this.scanner = new Scanner(System.in);
     }
 
+    @Override
     public String prompt(final String message) {
         System.out.println(message);
         return scanner.nextLine().trim();
     }
 
+    @Override
     public void display(final String message) {
         System.out.println(message);
     }
 
+    @Override
     public void displayListings(final List<ServicerAccount.Listing> listings) {
         for (int i = 0; i < listings.size(); i++) {
             ServicerAccount.Listing listing = listings.get(i);

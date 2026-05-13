@@ -43,7 +43,7 @@ public class Simulation {
         listings.add(stylist.new Listing(stylistServices.get(0)));
 
         final ServiceList serviceList = new ServiceList(listings);
-        final AppController controller = new AppController(customerView, servicerView, serviceList, terminalView);
+        final AppController controller = new AppController(serviceList, terminalView);
         controller.run();
     }
 }
