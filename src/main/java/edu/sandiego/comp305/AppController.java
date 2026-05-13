@@ -301,8 +301,6 @@ public class AppController {
             }
             break;
         }
-
-        runCustomerMenu(customer);
     }
 
     PaymentMethod buildPaymentMethod(final double amountOwed) {
@@ -357,7 +355,7 @@ public class AppController {
         }
     }
 
-    public void handlePostListing(final ServicerAccount servicer) {
+    void handlePostListing(final ServicerAccount servicer) {
         final String serviceName = view.prompt(
                 "Enter the name of the service you want to post:");
         final double price = Double.parseDouble(
