@@ -11,19 +11,32 @@ public class Barber extends ServicerAccount{
         super(name, availability, generalServiceType, servicesOffered);
     }
 
-    public void shave(){
-
+    @Override
+    public String performService(final Customer customer) {
+        final Service service = getBookedService(customer);
+        return switch (service.getName().toLowerCase()) {
+            case "shave" -> shave();
+            case "wax" -> wax();
+            case "buzz" -> buzz();
+            case "shear" -> shear();
+            default -> throw new IllegalArgumentException(
+                    "Unknown service: " + service.getName());
+        };
     }
 
-    public void wax(){
-
+    public String shave(){
+        return "\nShaving...";
     }
 
-    public void buzz(){
-
+    public String wax(){
+        return "\nWaxing...";
     }
 
-    public void shear(){
+    public String buzz(){
+        return "\nBuzzing...";
+    }
 
+    public String shear(){
+        return "\nShearing...";
     }
 }

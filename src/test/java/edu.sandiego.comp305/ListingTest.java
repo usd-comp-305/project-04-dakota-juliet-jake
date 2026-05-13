@@ -134,5 +134,10 @@ class ListingTest {
                                    final ArrayList<Service> servicesOffered) {
             super(name, availability, generalServiceType, servicesOffered);
         }
+
+        @Override
+        public String performService(final Customer customer) {
+            return "";
+        }
     }
 }

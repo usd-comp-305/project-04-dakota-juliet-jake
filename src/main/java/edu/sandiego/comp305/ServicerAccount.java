@@ -95,6 +95,15 @@ public abstract class ServicerAccount extends Profile {
 
     }
 
+    public abstract String performService(final Customer customer);
+
+    protected Service getBookedService(final Customer customer) {
+        if (!this.getSchedule().containsKey(customer)) {
+            throw new IllegalStateException(
+                    "No active booking for this customer");
+        }
+        return this.getSchedule().get(customer);
+    }
 
     public class Listing {
         private final String serviceName;
@@ -144,6 +153,10 @@ public abstract class ServicerAccount extends Profile {
 
         public Service getServiceOffered() {
             return listingService;
+        }
+
+        public String performService(final Customer customer) {
+            return ServicerAccount.this.performService(customer);
         }
     }
 }
