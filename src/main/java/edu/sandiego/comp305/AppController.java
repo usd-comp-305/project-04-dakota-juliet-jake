@@ -89,16 +89,18 @@ public class AppController {
         System.out.println("Enter payment method (CREDIT/CASH/VENMO):");
         final String paymentType = scanner.nextLine();
         final PaymentMethod payment;
-        if (paymentType.equals("CASH")) {
+        if (paymentType.toLowerCase().equals("cash")) {
             payment = new CashPayment();
-        } else if (paymentType.equals("CREDIT")) {
+        } else if (paymentType.toLowerCase().equals("credit")) {
             System.out.println("Enter your card number:");
             final String cardNumber = scanner.nextLine();
             payment = new CreditCardPayment(cardNumber);
-        } else {
+        } else if (paymentType.toLowerCase().equals("venmo")){
             System.out.println("Enter your Venmo handle:");
             final String venmoHandle = scanner.nextLine();
             payment = new VenmoPayment(venmoHandle);
+        } else {
+            System.out.println("Invalid input. Please enter CASH, CREDIT, or VENMO.");
         }
         final boolean paymentSuccess = customer.pay(amount, payment,
                 customer.getSelectedListing().getServiceOffered());
