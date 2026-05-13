@@ -3,6 +3,7 @@ package edu.sandiego.comp305;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class AppController {
 
@@ -23,46 +24,22 @@ public class AppController {
         view.display("Welcome to UberCuts! We would like to "
                 + "ask you some questions to get your account set up.");
 
-        String name = "";
-        String username = "";
-        String password = "";
-
-        Profile tempProfile = new Profile() {
+        final Profile tempProfile = new Profile() {
             @Override
-            public void cancelCall() {
-
-            }
+            public void cancelCall() {}
         };
 
-        while (true) {
-            try {
-                name = view.prompt("First, please enter your name:");
-                tempProfile.setName(name);
-                break;
-            } catch (IllegalArgumentException e) {
-                view.display(e.getMessage());
-            }
-        }
+        final String name = promptUntilValid(
+                "First, please enter your name:",
+                tempProfile::setName);
 
-        while (true) {
-            try {
-                username = view.prompt("Enter your desired username:");
-                tempProfile.setUsername(username);
-                break;
-            } catch (IllegalArgumentException e) {
-                view.display(e.getMessage());
-            }
-        }
+        final String username = promptUntilValid(
+                "Enter your desired username:",
+                tempProfile::setUsername);
 
-        while (true) {
-            try {
-                password = view.prompt("Create your password:");
-                tempProfile.setPassword(password);
-                break;
-            } catch (IllegalArgumentException e) {
-                view.display(e.getMessage());
-            }
-        }
+        final String password = promptUntilValid(
+                "Create your password:",
+                tempProfile::setPassword);
 
         String accountType = view.prompt(
                 "Great start! Now, would you like to create a "
@@ -83,6 +60,18 @@ public class AppController {
         }
     }
 
+    private String promptUntilValid(final String prompt,
+                                    final Consumer<String> setter) {
+        while (true) {
+            try {
+                final String input = view.prompt(prompt);
+                setter.accept(input);
+                return input;
+            } catch (IllegalArgumentException e) {
+                view.display(e.getMessage());
+            }
+        }
+    }
     private void handleCustomerFlow(final String name,
                                     final String username,
                                     final String password) {
