@@ -15,7 +15,7 @@ public class VenmoPayment implements PaymentMethod{
     private void validateVenmoHandle() {
         if (!(venmoHandle.charAt(0) == '@')) {
             throw new IllegalArgumentException(
-                    "Venmo handle must begin with @");
+                    "Venmo handle must begin with @.");
         }
     }
 
@@ -25,11 +25,11 @@ public class VenmoPayment implements PaymentMethod{
 
         if (amount < 0) {
             throw new IllegalArgumentException(
-                    "Payment amount must be positive");
+                    "Payment amount must be positive.");
         }
         if (BigDecimal.valueOf(amount).scale() > MAX_DECIMAL_PLACES) {
             throw new IllegalArgumentException(
-                    "Payment amount cannot have more than 2 decimal places");
+                    "Payment amount cannot have more than 2 decimal places.");
         }
         return true;
     }

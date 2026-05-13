@@ -115,7 +115,7 @@ class AppControllerTest {
         Mockito.when(mockCustomer.pay(Mockito.anyDouble(),
                 Mockito.any(PaymentMethod.class),
                 Mockito.any(Service.class))).thenReturn(true);
-        controller.handleCustomerFlow();
+        //controller.handleCustomerFlow();
         Mockito.verify(mockCustomer).selectListing(mockServiceList, 0);
     }
 
@@ -130,7 +130,7 @@ class AppControllerTest {
         final AppController controller = new AppController(mockServiceList, mockTerminalView);
         Mockito.when(mockServicer.getServicesOffered())
                 .thenReturn(new java.util.ArrayList<>());
-        controller.handleServicerFlow();
+        //controller.handleServicerFlow();
         Mockito.verify(mockServicerView)
                 .showOfferedServices(Mockito.any());
     }

@@ -26,10 +26,8 @@ public class Customer extends Profile {
 
     protected List<ServicerAccount.Listing> searchByService(
             final ServiceList listings,
-            final String serviceName){
+            final ServiceType serviceType){
         try {
-            final ServiceType serviceType = ServiceType.valueOf(
-                    serviceName.toUpperCase().replace(" ", "_"));
             return listings.filterByService(serviceType);
         } catch (IllegalArgumentException e) {
             return List.of();
@@ -47,7 +45,7 @@ public class Customer extends Profile {
 
     protected ServicerAccount.Listing getSelectedListing() {
         if (this.selectedListing == null) {
-            throw new IllegalStateException("No listing has been selected");
+            throw new IllegalStateException("No listing has been selected.");
         }
         return this.selectedListing;
     }
@@ -59,7 +57,7 @@ public class Customer extends Profile {
     @Override
     public void cancelCall() {
         if (this.selectedListing == null) {
-            throw new IllegalStateException("No active listing to cancel");
+            throw new IllegalStateException("No active listing to cancel.");
         }
         this.selectedListing = null;
     }

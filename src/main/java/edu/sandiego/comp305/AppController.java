@@ -29,7 +29,7 @@ public class AppController {
 
         String accountType = view.prompt(
                 "Great start! Now, would you like to create a Customer account or a " +
-                        "Servicer account? (Type C for Customer and S for Servicer):");
+                        "Servicer account? (C for Customer and S for Servicer):");
 
         while(true) {
             if (accountType.equalsIgnoreCase("C")) {
@@ -60,17 +60,17 @@ public class AppController {
             }
         }
 
-        browseServiceList(customer);
+        browseServiceList(serviceList, customer);
     }
 
-    public void browseServiceList(Customer customer) {
-        view.displayListings(serviceList.getList());
+    public void browseServiceList(ServiceList listings, Customer customer) {
+        view.displayListings(listings.getList());
 
         while (true) {
             final int listingIndex = Integer.parseInt(
                     view.prompt("Enter the number of the listing you want:")) - 1;
             try {
-                customer.selectListing(serviceList, listingIndex);
+                customer.selectListing(listings, listingIndex);
                 break;
             } catch (IndexOutOfBoundsException e) {
                 view.display("Invalid selection. Please try again.");
@@ -270,10 +270,19 @@ public class AppController {
 
             boolean validAmount = false;
             while (!validAmount) {
-                final double amount = Double.parseDouble(view.prompt("Please enter the amount " +
+                double amount = Double.parseDouble(view.prompt("Please enter the amount " +
                         "you would like to pay:"));
-                final boolean paymentSuccess = customer.pay(amount, payment,
-                        customer.getSelectedListing().getServiceOffered());
+                boolean validNumber = false;
+                boolean paymentSuccess = false;
+                while (!validNumber) {
+                    try {
+                        paymentSuccess = customer.pay(amount, payment,
+                                customer.getSelectedListing().getServiceOffered());
+                        validNumber = true;
+                    } catch (IllegalArgumentException e) {
+                        amount = Double.parseDouble(view.prompt(e.getMessage() + "Please try again."));
+                    }
+                }
                 if (paymentSuccess) {
                     view.display("Payment successful! Thank you, " +
                             "your payment has been accepted and your service " +
@@ -288,6 +297,8 @@ public class AppController {
             break;
 
         }
+
+        runCustomerMenu(customer);
     }
 
     public void handlePostListing(final ServicerAccount servicer) {
@@ -299,4 +310,54 @@ public class AppController {
         servicer.setServicesOffered(services);
     }
 
+    private void runCustomerMenu(final Customer customer) {
+        boolean running = true;
+        while (running) {
+            view.display("\nWhat would you like to do?");
+            view.display("1. View all current listings");
+            view.display("2. Filter listings by price");
+            view.display("3. Filter listings by service type");
+            view.display("4. Exit");
+
+            final String input = view.prompt("");
+            if (input.equals("1")) {
+                browseServiceList(serviceList, customer);
+            } else if (input.equals("2")) {
+                final ServiceList filteredPriceList = filterServiceListByPrice(customer);
+                browseServiceList(filteredPriceList, customer);
+            } else if (input.equals("3")) {
+                final ServiceList filteredServiceTypeList = filterServiceListByServiceType(customer);
+                browseServiceList(filteredServiceTypeList, customer);
+            } else if (input.equals("4")) {
+                view.display("Goodbye, " + customer.getName() + "!");
+                running = false;
+            } else {
+                view.display("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    private ServiceList filterServiceListByPrice(Customer customer) {
+        while (true) {
+            try {
+                final double maxPrice = Double.parseDouble(view.prompt("Enter the maximum price you would accept:"));
+                return new ServiceList(customer.searchByPrice(serviceList, maxPrice));
+            } catch (NumberFormatException e) {
+                view.display("Invalid price format. Please try again.");
+            }
+        }
+    }
+
+    private ServiceList filterServiceListByServiceType(Customer customer) {
+        while (true) {
+            try {
+                final String serviceName = view.prompt("Enter the type of service you are looking for:");
+                final ServiceType serviceType = ServiceType.valueOf(
+                        serviceName.toUpperCase().replace(" ", "_"));
+                return new ServiceList(customer.searchByService(serviceList, serviceType));
+            } catch (IllegalArgumentException e) {
+                view.display("Invalid Service Type. Please try again.");
+            }
+        }
+    }
 }

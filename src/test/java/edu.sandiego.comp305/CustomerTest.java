@@ -124,7 +124,7 @@ class CustomerTest {
     @Test
     void searchByServiceReturnsCorrectFilteredList() {
         final List<ServicerAccount.Listing> filteredList =
-                customer.searchByService(mockServiceList, "Barber");
+                customer.searchByService(mockServiceList, ServiceType.BARBER);
         final List<ServicerAccount.Listing> expectedFilteredList =
                 List.of(mockBarberListing);
 
@@ -134,7 +134,7 @@ class CustomerTest {
     @Test
     void searchByServiceReturnsEmptyListWhenNoMatches() {
         final List<ServicerAccount.Listing> filteredList =
-                customer.searchByService(mockServiceList, "Nail Tech");
+                customer.searchByService(mockServiceList, ServiceType.NAIL_TECH);
         final List<ServicerAccount.Listing> expectedFilteredList = List.of();
 
         assertEquals(expectedFilteredList, filteredList);
@@ -153,7 +153,7 @@ class CustomerTest {
     @Test
     void searchByPriceReturnsEmptyListWhenNoMatches() {
         final List<ServicerAccount.Listing> filteredList =
-                customer.searchByService(mockServiceList, "Nail Tech");
+                customer.searchByService(mockServiceList, ServiceType.NAIL_TECH);
         final List<ServicerAccount.Listing> expectedFilteredList = List.of();
 
         assertEquals(expectedFilteredList, filteredList);
