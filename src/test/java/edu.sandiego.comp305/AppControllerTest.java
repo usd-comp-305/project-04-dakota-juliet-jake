@@ -119,8 +119,9 @@ class AppControllerTest {
                 .thenReturn("Juliet"); // second attempt succeeds
 
         final Consumer<String> strictSetter = value -> {
-            if (value.isEmpty())
+            if (value.isEmpty()) {
                 throw new IllegalArgumentException("Name cannot be empty");
+            }
         };
 
         final String result = controller.promptUntilValid(
@@ -142,8 +143,9 @@ class AppControllerTest {
                 .thenReturn("Juliet");
 
         final Consumer<String> strictSetter = value -> {
-            if (value.isEmpty())
+            if (value.isEmpty()) {
                 throw new IllegalArgumentException("Name cannot be empty");
+            }
         };
 
         controller.promptUntilValid("Enter name:", strictSetter);
@@ -164,8 +166,9 @@ class AppControllerTest {
                 .thenReturn("Juliet");
 
         final Consumer<String> strictSetter = value -> {
-            if (value.isEmpty())
+            if (value.isEmpty()) {
                 throw new IllegalArgumentException("Name cannot be empty");
+            }
         };
 
         final String result = controller.promptUntilValid(
