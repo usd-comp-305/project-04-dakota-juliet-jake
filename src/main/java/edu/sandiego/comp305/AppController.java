@@ -91,9 +91,9 @@ public class AppController {
     }
 
     public void handlePayment() {
+        System.out.println("Enter amount to pay:");
+        final double amount = Double.parseDouble(scanner.nextLine());
         while (true) {
-            System.out.println("Enter amount to pay:");
-            final double amount = Double.parseDouble(scanner.nextLine());
             System.out.println("Enter payment method (CREDIT/CASH/VENMO):");
             final String paymentType = scanner.nextLine();
             PaymentMethod payment = null;
