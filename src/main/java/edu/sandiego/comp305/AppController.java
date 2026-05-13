@@ -48,8 +48,7 @@ public class AppController {
                 handleServicerFlow();
                 isValid = true;
             } else {
-                System.out.println("Invalid input. Please enter C or S.");
-                scanner.nextLine();
+                System.out.println("Invalid input.");
             }
         }
     }
@@ -92,7 +91,7 @@ public class AppController {
         while (!isValid) {
             System.out.println("Enter payment method (CREDIT/CASH/VENMO):");
             final String paymentType = scanner.nextLine();
-            
+
             if (paymentType.toLowerCase().equals("cash")) {
                 payment = new CashPayment();
                 isValid = true;
@@ -107,8 +106,7 @@ public class AppController {
                 payment = new VenmoPayment(venmoHandle);
                 isValid = true;
             } else {
-                System.out.println("Invalid input. Please enter CASH, CREDIT, or VENMO.");
-                scanner.nextLine();
+                System.out.println("Invalid input.");
             }
         }
         final boolean paymentSuccess = customer.pay(amount, payment,
