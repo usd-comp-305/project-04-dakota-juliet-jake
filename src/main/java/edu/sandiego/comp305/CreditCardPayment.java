@@ -1,9 +1,12 @@
 package edu.sandiego.comp305;
 
-public class CreditCardPayment implements PaymentMethod{
-    private String cardNumber;
+import java.math.BigDecimal;
 
-    private static final double CENT_PRECISION = 100.0;
+public class CreditCardPayment implements PaymentMethod{
+
+    private static final int MAX_DECIMAL_PLACES = 2;
+
+    private String cardNumber;
 
     public CreditCardPayment(final String cardNumber) {
         this.cardNumber = cardNumber;
@@ -27,7 +30,7 @@ public class CreditCardPayment implements PaymentMethod{
     private void checkCardAllNumbers() {
         formatCardNumber();
         for (int i = 0; i < cardNumber.length(); i++) {
-            char cardDigit = cardNumber.charAt(i);
+            final char cardDigit = cardNumber.charAt(i);
             if (!Character.isDigit(cardDigit)) {
                 throw new IllegalArgumentException(
                         "Card number must only be numbers");
@@ -47,7 +50,7 @@ public class CreditCardPayment implements PaymentMethod{
             throw new IllegalArgumentException(
                     "Payment amount must be positive");
         }
-        if (Math.round(amount * CENT_PRECISION) != amount * CENT_PRECISION) {
+        if (BigDecimal.valueOf(amount).scale() > MAX_DECIMAL_PLACES) {
             throw new IllegalArgumentException(
                     "Payment amount cannot have more than 2 decimal places");
         }

@@ -1,8 +1,10 @@
 package edu.sandiego.comp305;
 
+import java.math.BigDecimal;
+
 public class CashPayment implements PaymentMethod{
 
-    private static final double CENT_PRECISION = 100.0;
+    private static final int MAX_DECIMAL_PLACES = 2;
 
     @Override
     public boolean processPayment(final double amount) {
@@ -10,7 +12,7 @@ public class CashPayment implements PaymentMethod{
             throw new IllegalArgumentException(
                     "Payment amount must be positive");
         }
-        if (Math.round(amount * CENT_PRECISION) != amount * CENT_PRECISION) {
+        if (BigDecimal.valueOf(amount).scale() > MAX_DECIMAL_PLACES) {
             throw new IllegalArgumentException(
                     "Payment amount cannot have more than 2 decimal places");
         }

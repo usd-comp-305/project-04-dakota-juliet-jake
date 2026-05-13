@@ -1,9 +1,12 @@
 package edu.sandiego.comp305;
 
-public class VenmoPayment implements PaymentMethod{
-    private final String venmoHandle;
+import java.math.BigDecimal;
 
-    private static final double CENT_PRECISION = 100.0;
+public class VenmoPayment implements PaymentMethod{
+
+    private static final int MAX_DECIMAL_PLACES = 2;
+
+    private final String venmoHandle;
 
     public VenmoPayment(final String venmoHandle) {
         this.venmoHandle = venmoHandle;
@@ -24,7 +27,7 @@ public class VenmoPayment implements PaymentMethod{
             throw new IllegalArgumentException(
                     "Payment amount must be positive");
         }
-        if (Math.round(amount * CENT_PRECISION) != amount * CENT_PRECISION) {
+        if (BigDecimal.valueOf(amount).scale() > MAX_DECIMAL_PLACES) {
             throw new IllegalArgumentException(
                     "Payment amount cannot have more than 2 decimal places");
         }
