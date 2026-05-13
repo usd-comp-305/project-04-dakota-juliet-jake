@@ -132,11 +132,19 @@ class AppControllerTest {
     void testHandlePaymentSuccessWithCash() {
         final Service mockService = buildService("Shave", 20.0);
         final ServicerAccount.Listing mockListing =
-                buildListing("Jake", mockService, ServiceType.BARBER);
-        final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
-        Mockito.when(mockServiceList.getList()).thenReturn(new ArrayList<>());
-        final Customer mockCustomer = Mockito.mock(Customer.class);
-        Mockito.when(mockCustomer.getSelectedListing()).thenReturn(mockListing);
+                Mockito.mock(ServicerAccount.Listing.class);
+        final Service mockService = Mockito.mock(Service.class);
+        final Scanner scanner = new Scanner("C\n1\nVENMO\n@myvenmo\n50.0\n");
+        final AppController controller = new AppController(mockCustomer,
+                mockServicer, mockCustomerView,
+                mockServicerView, mockServiceList, scanner);
+        Mockito.when(mockServiceList.getList())
+                .thenReturn(new java.util.ArrayList<>());
+        Mockito.when(mockCustomer.getSelectedListing())
+                .thenReturn(mockListing);
+        Mockito.when(mockListing.getServiceOffered())
+                .thenReturn(mockService);
+        Mockito.when(mockServiceList.getListing(0)).thenReturn(mockListing);
         Mockito.when(mockCustomer.pay(Mockito.anyDouble(),
                 Mockito.any(PaymentMethod.class),
                 Mockito.any(Service.class))).thenReturn(true);
@@ -175,11 +183,16 @@ class AppControllerTest {
     void testHandlePaymentSuccessWithVenmo() {
         final Service mockService = buildService("Shave", 20.0);
         final ServicerAccount.Listing mockListing =
-                buildListing("Jake", mockService, ServiceType.BARBER);
-        final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
-        Mockito.when(mockServiceList.getList()).thenReturn(new ArrayList<>());
-        final Customer mockCustomer = Mockito.mock(Customer.class);
-        Mockito.when(mockCustomer.getSelectedListing()).thenReturn(mockListing);
+                Mockito.mock(ServicerAccount.Listing.class);
+        final Service mockService = Mockito.mock(Service.class);
+        final Scanner scanner = new Scanner("CASH\n50.0\n");
+        final AppController controller = new AppController(mockCustomer,
+                mockServicer, mockCustomerView,
+                mockServicerView, mockServiceList, scanner);
+        Mockito.when(mockCustomer.getSelectedListing())
+                .thenReturn(mockListing);
+        Mockito.when(mockListing.getServiceOffered())
+                .thenReturn(mockService);
         Mockito.when(mockCustomer.pay(Mockito.anyDouble(),
                 Mockito.any(PaymentMethod.class),
                 Mockito.any(Service.class))).thenReturn(true);
@@ -334,8 +347,11 @@ class AppControllerTest {
     void testViewListingsDisplaysMatchingListings() {
         final ServicerAccount.Listing mockListing =
                 Mockito.mock(ServicerAccount.Listing.class);
-        Mockito.when(mockListing.getProviderName()).thenReturn("Jake");
-        final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
+        final Service mockService = Mockito.mock(Service.class);
+        final Scanner scanner = new Scanner("1\nCASH\n50.0\n");
+        final AppController controller = new AppController(mockCustomer,
+                mockServicer, mockCustomerView,
+                mockServicerView, mockServiceList, scanner);
         Mockito.when(mockServiceList.getList())
                 .thenReturn(new ArrayList<>(List.of(mockListing)));
         final TerminalView mockView = Mockito.mock(TerminalView.class);

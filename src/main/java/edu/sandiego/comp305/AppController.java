@@ -354,6 +354,8 @@ public class AppController {
             } catch (IllegalArgumentException e) {
                 view.display(e.getMessage());
             }
+            break;
+
         }
     }
 
