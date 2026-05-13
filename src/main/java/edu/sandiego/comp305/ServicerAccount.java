@@ -15,13 +15,13 @@ public abstract class ServicerAccount extends Profile {
 
     private boolean isAvailable;
 
-    private HashMap<Customer,Service> schedule;
+    private ServiceType generalServiceType;
 
-    private String generalServiceType;
+    private HashMap<Customer,Service> schedule;
 
     public ServicerAccount(final String name,
                            final String availability,
-                           final String generalServiceType,
+                           final ServiceType generalServiceType,
                            final ArrayList<Service> servicesOffered) {
         super(name);
         this.availability = availability;
@@ -33,42 +33,34 @@ public abstract class ServicerAccount extends Profile {
     }
 
     public void setServicesOffered(final ArrayList<Service> services){
-
         this.servicesOffered = new ArrayList<>(services);
     }
 
     public void setAvailability(final String availability){
-
         this.availability = availability;
     }
 
     public ArrayList<Service> getServicesOffered() {
-
         return new ArrayList<>(this.servicesOffered);
     }
 
-    public String getGeneralServiceType() {
-
+    public ServiceType getGeneralServiceType() {
         return this.generalServiceType;
     }
 
     public String getAvailability() {
-
         return this.availability;
     }
 
     public boolean getIsAvailable() {
-
         return this.isAvailable;
     }
 
     public HashMap<Customer, Service> getSchedule(){
-
         return new HashMap<>(this.schedule);
     }
 
     public ArrayList<Listing> getListings() {
-
         return new ArrayList<>(listings);
     }
 
@@ -104,19 +96,25 @@ public abstract class ServicerAccount extends Profile {
     }
 
 
-    //helper class to make a service postable
     public class Listing {
+        private final String serviceName;
+
         private final Service listingService;
+
+        private final double servicePrice;
 
         @SuppressFBWarnings(value = "EI2",
                 justification = "this$0 is an implicit outer class " +
                         "reference required by the inner class design")
         public Listing(final Service listingService) {
             this.listingService = listingService;
+            this.serviceName = listingService.getName();
+            this.servicePrice = listingService.getPrice();
             ServicerAccount.this.isAvailable = true;
         }
 
         public void selectedByCustomer(final Customer customer) {
+            ServicerAccount.this.isAvailable = false;
             ServicerAccount.this.update(customer, this);
         }
 
@@ -124,11 +122,11 @@ public abstract class ServicerAccount extends Profile {
             return ServicerAccount.this.getName();
         }
 
-        public Service getServiceOffered() {
-            return this.listingService;
+        public String getServiceName() {
+            return this.serviceName;
         }
 
-        public String getGeneralServiceType() {
+        public ServiceType getGeneralServiceType() {
             return ServicerAccount.this.getGeneralServiceType();
         }
 
@@ -138,6 +136,14 @@ public abstract class ServicerAccount extends Profile {
 
         public boolean getIsAvailable() {
             return ServicerAccount.this.getIsAvailable();
+        }
+
+        public double getPrice() {
+            return servicePrice;
+        }
+
+        public Service getServiceOffered() {
+            return listingService;
         }
     }
 }

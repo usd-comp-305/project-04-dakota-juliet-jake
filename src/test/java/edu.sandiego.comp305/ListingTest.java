@@ -44,7 +44,7 @@ class ListingTest {
 
     void createSpyServicer() {
         spyServicer = spy(new TestServicerAccount(
-                "Dakota","9am-5pm", "Barber", servicesOffered));
+                "Dakota","9am-5pm", ServiceType.BARBER, servicesOffered));
     }
 
     void createShaveListing() {
@@ -113,12 +113,12 @@ class ListingTest {
 
     @Test
     void listingHasCorrectGeneralServiceType() {
-        assertEquals("Barber", shaveListing.getGeneralServiceType());
+        assertEquals(ServiceType.BARBER, shaveListing.getGeneralServiceType());
     }
 
     @Test
     void listingHasCorrectService() {
-        assertEquals(shaveService, shaveListing.getServiceOffered());
+        assertEquals(shaveService.getName(), shaveListing.getServiceName());
     }
 
     @Test
@@ -130,7 +130,7 @@ class ListingTest {
     static class TestServicerAccount extends ServicerAccount {
         public TestServicerAccount(final String name,
                                    final String availability,
-                                   final String generalServiceType,
+                                   final ServiceType generalServiceType,
                                    final ArrayList<Service> servicesOffered) {
             super(name, availability, generalServiceType, servicesOffered);
         }

@@ -6,7 +6,7 @@ public class Barber extends ServicerAccount{
 
     public Barber(final String name,
                   final String availability,
-                  final String generalServiceType,
+                  final ServiceType generalServiceType,
                   final ArrayList<Service> servicesOffered){
         super(name, availability, generalServiceType, servicesOffered);
     }

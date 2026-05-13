@@ -26,7 +26,8 @@ class CustomerTest {
         final Service barberService = new Service("Shave", 20.0);
 
         mockBarberListing = mock(ServicerAccount.Listing.class);
-        when(mockBarberListing.getServiceOffered()).thenReturn(barberService);
+        when(mockBarberListing.getServiceName()).
+                thenReturn(barberService.getName());
         when(mockBarberListing.getIsAvailable()).thenReturn(true);
         when(mockBarberListing.getProviderName()).thenReturn("Jake");
 
@@ -37,8 +38,8 @@ class CustomerTest {
         final Service stylistService = new Service("Full Dye", 150.0);
 
         mockStylistListing = mock(ServicerAccount.Listing.class);
-        when(mockStylistListing.getServiceOffered())
-                .thenReturn(stylistService);
+        when(mockStylistListing.getServiceName())
+                .thenReturn(stylistService.getName());
         when(mockStylistListing.getIsAvailable()).thenReturn(true);
         when(mockStylistListing.getProviderName()).thenReturn("Dakota");
 
@@ -51,9 +52,9 @@ class CustomerTest {
         when(mockServiceList.getListing(1)).thenReturn(mockStylistListing);
         when(mockServiceList.getList()).thenReturn(new ArrayList<>(
                 List.of(mockBarberListing, mockStylistListing)));
-        when(mockServiceList.filterByService("Barber"))
+        when(mockServiceList.filterByService(ServiceType.BARBER))
                 .thenReturn(List.of(mockBarberListing));
-        when(mockServiceList.filterByService("Nail Tech"))
+        when(mockServiceList.filterByService(ServiceType.NAIL_TECH))
                 .thenReturn(List.of());
         when(mockServiceList.filterByPrice(50.0))
                 .thenReturn(List.of(mockBarberListing));

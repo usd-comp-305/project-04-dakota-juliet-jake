@@ -20,7 +20,7 @@ public class ServicerAccountTest {
 
     private TestServicer servicer = new TestServicer("Juliet",
             "Monday, Wednesday, Friday",
-            "Barber", servicesOffered);
+            ServiceType.BARBER, servicesOffered);
 
     @Test
     public void takeCallSetAvailabilityToFalse() {
@@ -109,7 +109,7 @@ public class ServicerAccountTest {
     static class TestServicer extends ServicerAccount {
         public TestServicer(final String name,
                             final String availability,
-                            final String generalServiceType,
+                            final ServiceType generalServiceType,
                             final ArrayList<Service> servicesOffered){
             super(name, availability, generalServiceType, servicesOffered);
         }
