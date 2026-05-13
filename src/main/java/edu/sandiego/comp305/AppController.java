@@ -41,10 +41,10 @@ public class AppController {
         while (!isValid) {
             System.out.println("Customer or Servicer? (C or S):");
             final String accountType = scanner.nextLine();
-            if (accountType.toLowerCase().equals("C")) {
+            if (accountType.toUpperCase().equals("C")) {
                 handleCustomerFlow();
                 isValid = true;
-            } else if (accountType.toLowerCase().equals("S")) {
+            } else if (accountType.toUpperCase().equals("S")) {
                 handleServicerFlow();
                 isValid = true;
             } else {
@@ -96,23 +96,30 @@ public class AppController {
             final double amount = Double.parseDouble(scanner.nextLine());
             System.out.println("Enter payment method (CREDIT/CASH/VENMO):");
             final String paymentType = scanner.nextLine();
-            final PaymentMethod payment;
-            final PaymentType type = PaymentType.valueOf(paymentType
-                    .toUpperCase());
-            if (type == PaymentType.CASH) {
-                payment = new CashPayment();
-            } else if (type == PaymentType.CREDIT) {
-                System.out.println("Enter your card number:");
-                final String cardNumber = scanner.nextLine();
-                payment = new CreditCardPayment(cardNumber);
-            } else if (type == PaymentType.VENMO) {
-                System.out.println("Enter your Venmo handle:");
-                final String venmoHandle = scanner.nextLine();
-                payment = new VenmoPayment(venmoHandle);
-            } else {
+            PaymentMethod payment = null;
+            final PaymentType type;
+            try {
+                type = PaymentType.valueOf(paymentType
+                        .toUpperCase());
+                if (type == PaymentType.CASH) {
+                    payment = new CashPayment();
+                } else if (type == PaymentType.CREDIT) {
+                    System.out.println("Enter your card number:");
+                    final String cardNumber = scanner.nextLine();
+                    payment = new CreditCardPayment(cardNumber);
+                } else if (type == PaymentType.VENMO) {
+                    System.out.println("Enter your Venmo handle:");
+                    final String venmoHandle = scanner.nextLine();
+                    payment = new VenmoPayment(venmoHandle);
+                } else {
+                    System.out.println("Please try again.");
+                    continue;
+                }
+            } catch (IllegalArgumentException e) {
                 System.out.println("Invalid payment method.");
                 continue;
             }
+
             final boolean paymentSuccess = customer.pay(amount, payment,
                     customer.getSelectedListing().getServiceOffered());
             if (paymentSuccess) {
