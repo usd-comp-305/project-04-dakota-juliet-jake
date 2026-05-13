@@ -108,7 +108,9 @@ public class AppController {
             final boolean paymentSuccess = customer.pay(amount, payment,
                     customer.getSelectedListing().getServiceOffered());
             if (paymentSuccess) {
-                System.out.println("Payment successful!");
+                System.out.println("Payment successful! Thank you, " +
+                        "your payment has been accepted and your service " +
+                        "has been scheduled.");
                 break;
             } else {
                 System.out.println("Payment failed. Please enter an amount " +
