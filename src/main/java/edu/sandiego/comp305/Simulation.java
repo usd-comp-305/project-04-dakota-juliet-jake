@@ -4,38 +4,56 @@ import java.util.ArrayList;
 
 public class Simulation {
 
-    private Simulation() {
+    public static void main(final String[] args) {
+        final ServiceList serviceList = createServiceList();
+        final TerminalView terminalView = new TerminalView();
+        final AppController controller = new AppController(serviceList, terminalView);
+        controller.run();
     }
 
-    public static void main(final String[] args) {
+    private static ServiceList createServiceList() {
+        final ArrayList<ServicerAccount.Listing> listings = new ArrayList<>();
+        listings.addAll(createBarberListings());
+        listings.addAll(createNailTechListings());
+        listings.addAll(createStylistListings());
+        return new ServiceList(listings);
+    }
 
-        final ArrayList<Service> barberServices = new ArrayList<>();
-        barberServices.add(new Service("Shave", 20.0));
-        barberServices.add(new Service("Haircut", 15.0));
+    private static ArrayList<ServicerAccount.Listing> createBarberListings() {
+        final ArrayList<Service> services = new ArrayList<>();
+        services.add(new Service("Shave", 20.0));
+        services.add(new Service("Haircut", 15.0));
         final Barber barber = new Barber("Jake", "9am-5pm",
-                ServiceType.BARBER, barberServices);
+                ServiceType.BARBER, services);
+        final ArrayList<ServicerAccount.Listing> listings = new ArrayList<>();
+        for (final Service service : services) {
+            listings.add(barber.new Listing(service));
+        }
+        return listings;
+    }
 
-        final ArrayList<Service> nailServices = new ArrayList<>();
-        nailServices.add(new Service("Pedi", 50.0));
-        nailServices.add(new Service("Mani", 30.0));
+    private static ArrayList<ServicerAccount.Listing> createNailTechListings() {
+        final ArrayList<Service> services = new ArrayList<>();
+        services.add(new Service("Pedi", 50.0));
+        services.add(new Service("Mani", 30.0));
         final NailTech nailTech = new NailTech("Juliet", "9am-5pm",
-                ServiceType.NAIL_TECH, nailServices);
+                ServiceType.NAIL_TECH, services);
+        final ArrayList<ServicerAccount.Listing> listings = new ArrayList<>();
+        for (final Service service : services) {
+            listings.add(nailTech.new Listing(service));
+        }
+        return listings;
+    }
 
-        final ArrayList<Service> stylistServices = new ArrayList<>();
-        stylistServices.add(new Service("Full Dye", 150.0));
+    private static ArrayList<ServicerAccount.Listing> createStylistListings() {
+        final ArrayList<Service> services = new ArrayList<>();
+        services.add(new Service("Full Dye", 150.0));
         final Stylist stylist = new Stylist("Dakota", "9am-5pm",
-                ServiceType.STYLIST, stylistServices);
-
-        final ArrayList<ServicerAccount.Listing> listings =
-                new ArrayList<>();
-        listings.add(barber.new Listing(barberServices.get(0)));
-        listings.add(nailTech.new Listing(nailServices.get(0)));
-        listings.add(stylist.new Listing(stylistServices.get(0)));
-
-        final ServiceList serviceList = new ServiceList(listings);
-        final TerminalView terminalView = new TerminalView();
-        final AppController controller =
-                new AppController(serviceList, terminalView);
-        controller.run();
+                ServiceType.STYLIST, services);
+        final ArrayList<ServicerAccount.Listing> listings = new ArrayList<>();
+        for (final Service service : services) {
+            listings.add(stylist.new Listing(service));
+        }
+        return listings;
     }
 }
