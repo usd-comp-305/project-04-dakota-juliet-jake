@@ -20,7 +20,7 @@ public class CreditCardPayment implements PaymentMethod{
         cardNumber = cardNumber.replaceAll("\\s", "");
     }
 
-    private void checkCardLength() {
+    public void checkCardLength() {
         if (cardNumber.length() != 16) {
             throw new IllegalArgumentException(
                     "Card number must be 16 digits");

@@ -37,15 +37,21 @@ public class AppController {
     }
 
     public void run() {
-        System.out.println("Customer or Servicer? (C or S):");
-        final String accountType = scanner.nextLine();
-        if (accountType.equals("C")) {
-            handleCustomerFlow();
-        } else if (accountType.equals("S")) {
-            handleServicerFlow();
-        } else {
-            System.out.println("Invalid input. Please enter C or S.");
+        boolean isValid = false;
+        while (!isValid) {
+            System.out.println("Customer or Servicer? (C or S):");
+            final String accountType = scanner.nextLine();
+            if (accountType.toUpperCase().equals("C")) {
+                handleCustomerFlow();
+                isValid = true;
+            } else if (accountType.toUpperCase().equals("S")) {
+                handleServicerFlow();
+                isValid = true;
+            } else {
+                System.out.println("Invalid input.");
+            }
         }
+
     }
 
     public void handleCustomerFlow() {
@@ -85,37 +91,77 @@ public class AppController {
     }
 
     public void handlePayment() {
+        final double amountOwed = customer.getSelectedListing()
+                .getServiceOffered().getPrice();
+        System.out.println("You owe $" + amountOwed +
+                ".");
         while (true) {
-            System.out.println("Enter amount to pay:");
-            final double amount = Double.parseDouble(scanner.nextLine());
             System.out.println("Enter payment method (CREDIT/CASH/VENMO):");
             final String paymentType = scanner.nextLine();
-            final PaymentMethod payment;
-            final PaymentType type = PaymentType.valueOf(paymentType
-                    .toUpperCase());
-            if (type == PaymentType.CASH) {
-                payment = new CashPayment();
-            } else if (type == PaymentType.CREDIT) {
-                System.out.println("Enter your card number:");
-                final String cardNumber = scanner.nextLine();
-                payment = new CreditCardPayment(cardNumber);
-            } else if (type == PaymentType.VENMO) {
-                System.out.println("Enter your Venmo handle:");
-                final String venmoHandle = scanner.nextLine();
-                payment = new VenmoPayment(venmoHandle);
-            } else {
+            PaymentMethod payment = null;
+            final PaymentType type;
+            try {
+                type = PaymentType.valueOf(paymentType
+                        .toUpperCase());
+                if (type == PaymentType.CASH) {
+                    payment = new CashPayment();
+                } else if (type == PaymentType.CREDIT) {
+                    boolean validLength = false;
+                    while (!validLength) {
+                        System.out.println("Enter your card number:");
+                        final String cardNumber = scanner.nextLine();
+                        payment = new CreditCardPayment(cardNumber);
+                        try {
+                            ((CreditCardPayment) payment).checkCardLength();
+                            validLength = true;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+
+                } else if (type == PaymentType.VENMO) {
+                    boolean validHandle = false;
+                    while (!validHandle) {
+                        System.out.println("Enter your Venmo handle:");
+                        final String venmoHandle = scanner.nextLine();
+                        payment = new VenmoPayment(venmoHandle);
+                        try {
+                            ((VenmoPayment) payment).validateVenmoHandle();
+                            validHandle = true;
+                        } catch (IllegalArgumentException e){
+                            System.out.println(e.getMessage());
+                        }
+                    }
+
+                } else {
+                    System.out.println("Please try again.");
+                    continue;
+                }
+            } catch (IllegalArgumentException e) {
                 System.out.println("Invalid payment method.");
                 continue;
             }
-            final boolean paymentSuccess = customer.pay(amount, payment,
-                    customer.getSelectedListing().getServiceOffered());
-            if (paymentSuccess) {
-                System.out.println("Payment successful!");
-                break;
-            } else {
-                System.out.println("Payment failed. Please enter an amount " +
-                        "greater than or equal to the service cost.");
+
+            boolean validAmount = false;
+            while (!validAmount) {
+                System.out.println("Please enter the amount " +
+                        "you would like to pay:");
+                final double amount = Double.parseDouble(scanner.nextLine());
+                final boolean paymentSuccess = customer.pay(amount, payment,
+                        customer.getSelectedListing().getServiceOffered());
+                if (paymentSuccess) {
+                    System.out.println("Payment successful! Thank you, " +
+                            "your payment has been accepted and your service " +
+                            "has been scheduled.");
+                    validAmount = true;
+                } else {
+                    System.out.println("Payment failed. Please enter an " +
+                            "amount greater than or equal to " +
+                            "the service cost.");
+                }
             }
+            break;
+
         }
     }
 
