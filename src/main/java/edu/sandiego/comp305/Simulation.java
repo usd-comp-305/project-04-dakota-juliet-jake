@@ -4,10 +4,15 @@ import java.util.ArrayList;
 
 public class Simulation {
 
+    private Simulation () {
+
+    }
+
     public static void main(final String[] args) {
         final ServiceList serviceList = createServiceList();
         final TerminalView terminalView = new TerminalView();
-        final AppController controller = new AppController(serviceList, terminalView);
+        final AppController controller = new AppController(serviceList,
+                terminalView);
         controller.run();
     }
 
