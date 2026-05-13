@@ -21,7 +21,8 @@ public class AppController {
 
     public void run() {
 
-        view.display("Welcome to UberCuts! We would like to ask you some questions to get your account set up.");
+        view.display("Welcome to UberCuts! We would like to " +
+                "ask you some questions to get your account set up.");
 
         final String name = view.prompt("First, please enter your name:");
         final String username = view.prompt("Enter your desired username:");
@@ -60,7 +61,7 @@ public class AppController {
             }
         }
 
-        browseServiceList(serviceList, customer);
+        runCustomerMenu(customer);
     }
 
     public void browseServiceList(ServiceList listings, Customer customer) {
@@ -76,6 +77,8 @@ public class AppController {
                 view.display("Invalid selection. Please try again.");
             }
         }
+
+        view.display("You selected " + customer.selectedListing.getProviderName() + "! Good choice.");
 
         handlePayment(customer);
     }
