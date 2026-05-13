@@ -86,21 +86,30 @@ public class AppController {
     public void handlePayment() {
         System.out.println("Enter amount to pay:");
         final double amount = Double.parseDouble(scanner.nextLine());
-        System.out.println("Enter payment method (CREDIT/CASH/VENMO):");
-        final String paymentType = scanner.nextLine();
-        final PaymentMethod payment;
-        if (paymentType.toLowerCase().equals("cash")) {
-            payment = new CashPayment();
-        } else if (paymentType.toLowerCase().equals("credit")) {
-            System.out.println("Enter your card number:");
-            final String cardNumber = scanner.nextLine();
-            payment = new CreditCardPayment(cardNumber);
-        } else if (paymentType.toLowerCase().equals("venmo")){
-            System.out.println("Enter your Venmo handle:");
-            final String venmoHandle = scanner.nextLine();
-            payment = new VenmoPayment(venmoHandle);
-        } else {
-            System.out.println("Invalid input. Please enter CASH, CREDIT, or VENMO.");
+
+        PaymentMethod payment = null;
+        boolean isValid = false;
+        while (!isValid) {
+            System.out.println("Enter payment method (CREDIT/CASH/VENMO):");
+            final String paymentType = scanner.nextLine();
+            
+            if (paymentType.toLowerCase().equals("cash")) {
+                payment = new CashPayment();
+                isValid = true;
+            } else if (paymentType.toLowerCase().equals("credit")) {
+                System.out.println("Enter your card number:");
+                final String cardNumber = scanner.nextLine();
+                payment = new CreditCardPayment(cardNumber);
+                isValid = true;
+            } else if (paymentType.toLowerCase().equals("venmo")) {
+                System.out.println("Enter your Venmo handle:");
+                final String venmoHandle = scanner.nextLine();
+                payment = new VenmoPayment(venmoHandle);
+                isValid = true;
+            } else {
+                System.out.println("Invalid input. Please enter CASH, CREDIT, or VENMO.");
+                scanner.nextLine();
+            }
         }
         final boolean paymentSuccess = customer.pay(amount, payment,
                 customer.getSelectedListing().getServiceOffered());
