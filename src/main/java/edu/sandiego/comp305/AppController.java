@@ -37,21 +37,11 @@ public class AppController {
     }
 
     public void run() {
-        boolean isValid = false;
-        while (!isValid) {
-            System.out.println("Customer or Servicer? (C or S):");
-            final String accountType = scanner.nextLine();
-            if (accountType.toUpperCase().equals("C")) {
-                handleCustomerFlow();
-                isValid = true;
-            } else if (accountType.toUpperCase().equals("S")) {
-                handleServicerFlow();
-                isValid = true;
-            } else {
-                System.out.println("Invalid input.");
-            }
+        if (customer != null) {
+            handleCustomerFlow();
+        } else if (servicer != null) {
+            handleServicerFlow();
         }
-
     }
 
     public void handleCustomerFlow() {
@@ -72,9 +62,15 @@ public class AppController {
     }
 
     public void handleServicerFlow() {
+        System.out.println("Your current offered services:");
         servicerView.showOfferedServices(servicer.getServicesOffered());
+        System.out.println("Your availability: ");
         servicerView.showSchedule(servicer.getAvailability());
-        handlePostListing(servicer);
+        System.out.println("Would you like to post a new listing? (Y or N):");
+        final String response = scanner.nextLine();
+        if (response.toUpperCase().equals("Y")) {
+            handlePostListing(servicer);
+        }
     }
 
     public void handleServiceSelection(final Service service,
