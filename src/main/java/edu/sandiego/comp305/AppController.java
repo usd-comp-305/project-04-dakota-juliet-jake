@@ -144,7 +144,8 @@ public class AppController {
 
             boolean validAmount = false;
             while (!validAmount) {
-                System.out.println("Please enter the amount you would like to pay:");
+                System.out.println("Please enter the amount " +
+                        "you would like to pay:");
                 final double amount = Double.parseDouble(scanner.nextLine());
                 final boolean paymentSuccess = customer.pay(amount, payment,
                         customer.getSelectedListing().getServiceOffered());
@@ -154,8 +155,9 @@ public class AppController {
                             "has been scheduled.");
                     validAmount = true;
                 } else {
-                    System.out.println("Payment failed. Please enter an amount " +
-                            "greater than or equal to the service cost.");
+                    System.out.println("Payment failed. Please enter an " +
+                            "amount greater than or equal to " +
+                            "the service cost.");
                 }
             }
             break;
