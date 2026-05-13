@@ -19,15 +19,29 @@ public class CustomerView {
     }
 
     public void showServiceList(final List<ServicerAccount.Listing> listings) {
+        int index = 1;
         for (ServicerAccount.Listing listing : listings) {
-            System.out.println(listing.getProviderName());
+            System.out.printf("%d. %-15s | %-12s | %s ($%.2f)%n",
+                    index,
+                    listing.getProviderName(),
+                    listing.getGeneralServiceType(),
+                    listing.getServiceName(),
+                    listing.getPrice());
+            index++;
         }
         render();
     }
 
     public void showSearchResults(final List<ServicerAccount.Listing> results) {
+        int index = 1;
         for (ServicerAccount.Listing listing : results) {
-            System.out.println(listing.getProviderName());
+            System.out.printf("%d. %-15s | %-12s | %s ($%.2f)%n",
+                    index,
+                    listing.getProviderName(),
+                    listing.getGeneralServiceType(),
+                    listing.getServiceName(),
+                    listing.getPrice());
+            index++;
         }
         render();
     }
