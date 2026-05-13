@@ -27,7 +27,6 @@ public class Simulation {
     private static ArrayList<ServicerAccount.Listing> createBarberListings() {
         final ArrayList<Service> services = new ArrayList<>();
         services.add(new Service("Shave", 20.0));
-        services.add(new Service("Haircut", 15.0));
         final Barber barber = new Barber("Jake", "9am-5pm",
                 ServiceType.BARBER, services);
         final ArrayList<ServicerAccount.Listing> listings = new ArrayList<>();
