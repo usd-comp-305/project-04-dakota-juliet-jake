@@ -16,9 +16,11 @@ public class ServicerDisplayStrategy implements DisplayStrategy {
 
     @Override
     public void display() {
+        System.out.println("Offered Services:");
         for (Service service : offeredServices) {
             System.out.println(service.getName());
         }
+        System.out.println("Offered Calender:");
         for (Service service : scheduledServices) {
             System.out.println(service.getName());
         }
