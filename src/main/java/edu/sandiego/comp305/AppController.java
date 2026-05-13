@@ -53,7 +53,8 @@ public class AppController {
         System.out.println("Enter the number of the listing you want:");
         final int listingIndex = Integer.parseInt(scanner.nextLine());
         customer.selectListing(serviceList, listingIndex);
-        servicer.takeCall(customer.getSelectedListing().getServiceOffered());
+        servicer.takeCall(customer,
+                customer.getSelectedListing().getServiceOffered());
         handlePayment();
     }
 
@@ -69,9 +70,10 @@ public class AppController {
         listing.selectedByCustomer(customer);
     }
 
-    public void handleSearch(final Service service, final double maxPrice) {
+    public void handleSearch(final ServiceType serviceType,
+                             final double maxPrice) {
         final List<ServicerAccount.Listing> results =
-                serviceList.filterByService(service.getName());
+                serviceList.filterByService(serviceType);
         customerView.showSearchResults(results);
     }
 

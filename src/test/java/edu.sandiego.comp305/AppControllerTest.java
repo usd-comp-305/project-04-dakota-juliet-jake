@@ -36,10 +36,8 @@ class AppControllerTest {
         final AppController controller = new AppController(mockCustomer,
                 mockServicer, mockCustomerView,
                 mockServicerView, mockServiceList, scanner);
-        final Service mockService = Mockito.mock(Service.class);
-        Mockito.when(mockService.getName()).thenReturn("Haircut");
-        controller.handleSearch(mockService, 50.0);
-        Mockito.verify(mockServiceList).filterByService("Haircut");
+        controller.handleSearch(ServiceType.BARBER, 50.0);
+        Mockito.verify(mockServiceList).filterByService(ServiceType.BARBER);
     }
 
     @Test

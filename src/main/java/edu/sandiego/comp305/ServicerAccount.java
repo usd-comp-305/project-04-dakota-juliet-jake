@@ -141,5 +141,9 @@ public abstract class ServicerAccount extends Profile {
         public double getPrice() {
             return servicePrice;
         }
+
+        public Service getServiceOffered() {
+            return listingService;
+        }
     }
 }
