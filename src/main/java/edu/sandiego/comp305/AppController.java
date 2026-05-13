@@ -316,9 +316,8 @@ public class AppController {
                     view.display("Payment successful! Thank you, "
                             + "your payment has been accepted and "
                             + "your service is on the way.");
-                    final ServicerAccount servicer = customer
-                            .getSelectedListing().getServicer();
-                    view.display(servicer.performService(customer));
+                    view.display(customer.getSelectedListing()
+                            .performService(customer));
                     validAmount = true;
                 } else {
                     view.display("Payment failed. Please enter an "

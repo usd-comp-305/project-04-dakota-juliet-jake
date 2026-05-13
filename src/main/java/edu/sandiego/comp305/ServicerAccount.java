@@ -127,10 +127,6 @@ public abstract class ServicerAccount extends Profile {
             ServicerAccount.this.update(customer, this);
         }
 
-        public ServicerAccount getServicer() {
-            return ServicerAccount.this;
-        }
-
         public String getProviderName(){
             return ServicerAccount.this.getName();
         }
@@ -157,6 +153,10 @@ public abstract class ServicerAccount extends Profile {
 
         public Service getServiceOffered() {
             return listingService;
+        }
+
+        public String performService(final Customer customer) {
+            return ServicerAccount.this.performService(customer);
         }
     }
 }
