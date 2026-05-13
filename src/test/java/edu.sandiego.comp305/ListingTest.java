@@ -136,7 +136,7 @@ class ListingTest {
         }
 
         @Override
-        public String performService(Customer customer) {
+        public String performService(final Customer customer) {
             return "";
         }
     }
