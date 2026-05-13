@@ -91,7 +91,10 @@ public class AppController {
     }
 
     public void handlePayment() {
-        System.out.println("Enter amount to pay:");
+        final double amountOwed = customer.getSelectedListing()
+                .getServiceOffered().getPrice();
+        System.out.println("You owe $" + amountOwed +
+                ". Please enter the amount you would like to pay:");
         final double amount = Double.parseDouble(scanner.nextLine());
         while (true) {
             System.out.println("Enter payment method (CREDIT/CASH/VENMO):");
