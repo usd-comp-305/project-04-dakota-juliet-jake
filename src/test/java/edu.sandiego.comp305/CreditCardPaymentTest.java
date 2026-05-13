@@ -12,7 +12,7 @@ class CreditCardPaymentTest {
         final CreditCardPayment payment =
                 new CreditCardPayment("1111 2222 3333 4444");
 
-        payment.formatCardNumber();
+        payment.removeCardNumberSpaces();
 
         assertEquals(expectedCardNum, payment.getCardNumber());
     }

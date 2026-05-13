@@ -16,7 +16,7 @@ public class CreditCardPayment implements PaymentMethod{
         return cardNumber;
     }
 
-    void formatCardNumber() {
+    void removeCardNumberSpaces() {
         cardNumber = cardNumber.replaceAll("\\s", "");
     }
 
@@ -28,7 +28,7 @@ public class CreditCardPayment implements PaymentMethod{
     }
 
     private void checkCardAllNumbers() {
-        formatCardNumber();
+        removeCardNumberSpaces();
         for (int i = 0; i < cardNumber.length(); i++) {
             final char cardDigit = cardNumber.charAt(i);
             if (!Character.isDigit(cardDigit)) {
@@ -40,7 +40,7 @@ public class CreditCardPayment implements PaymentMethod{
 
     @Override
     public boolean processPayment(final double amount){
-        formatCardNumber();
+        removeCardNumberSpaces();
 
         checkCardLength();
 
