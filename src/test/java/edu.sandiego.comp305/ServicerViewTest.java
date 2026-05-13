@@ -36,7 +36,7 @@ class ServicerViewTest {
         final List<Service> services = new ArrayList<>();
         services.add(mockService);
         view.showOfferedServices(services);
-        Mockito.verify(mockStrategy).display();
+        Mockito.verify(mockService).getName();
     }
 
     @Test

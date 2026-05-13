@@ -19,7 +19,10 @@ public class ServicerView {
     }
 
     public void showOfferedServices(final List<Service> services) {
-        strategy.display();
+
+        for (Service service : services) {
+            System.out.println(service.getName());
+        }
     }
 
     public void showSchedule(final String schedule) {
