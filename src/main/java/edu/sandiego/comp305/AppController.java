@@ -23,11 +23,46 @@ public class AppController {
         view.display("Welcome to UberCuts! We would like to "
                 + "ask you some questions to get your account set up.");
 
-        final String name = view.prompt(
-                "First, please enter your name:");
-        final String username = view.prompt(
-                "Enter your desired username:");
-        final String password = view.prompt("Create your password");
+        String name = "";
+        String username = "";
+        String password = "";
+
+        Profile tempProfile = new Profile() {
+            @Override
+            public void cancelCall() {
+
+            }
+        };
+
+        while (true) {
+            try {
+                name = view.prompt("First, please enter your name:");
+                tempProfile.setName(name);
+                break;
+            } catch (IllegalArgumentException e) {
+                view.display(e.getMessage());
+            }
+        }
+
+        while (true) {
+            try {
+                username = view.prompt("Enter your desired username:");
+                tempProfile.setUsername(username);
+                break;
+            } catch (IllegalArgumentException e) {
+                view.display(e.getMessage());
+            }
+        }
+
+        while (true) {
+            try {
+                password = view.prompt("Create your password:");
+                tempProfile.setPassword(password);
+                break;
+            } catch (IllegalArgumentException e) {
+                view.display(e.getMessage());
+            }
+        }
 
         String accountType = view.prompt(
                 "Great start! Now, would you like to create a "
