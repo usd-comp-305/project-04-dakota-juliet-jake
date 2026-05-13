@@ -45,7 +45,7 @@ public class AppController {
         }
     }
 
-    public void handleCustomerFlow(final String name, final String username, String password) {
+    private void handleCustomerFlow(final String name, final String username, String password) {
         final String address = view.prompt(
                 "You have selected Customer! Please enter your address so that when " +
                 "you book an appointment, our servicers know how to reach you:");
@@ -64,7 +64,7 @@ public class AppController {
         runCustomerMenu(customer);
     }
 
-    public void browseServiceList(ServiceList listings, Customer customer) {
+    private void browseServiceList(ServiceList listings, Customer customer) {
         view.displayListings(listings.getList());
 
         while (true) {
@@ -78,12 +78,12 @@ public class AppController {
             }
         }
 
-        view.display("You selected " + customer.selectedListing.getProviderName() + "! Good choice.");
+        view.display("You selected " + customer.getSelectedListing().getProviderName() + "! Good choice.");
 
         handlePayment(customer);
     }
 
-    public void handleServicerFlow(String name, String username, String password) {
+    private void handleServicerFlow(String name, String username, String password) {
         final String serviceTypeInput = view.prompt(
                 "You have selected Servicer! What type of service do you provide? " +
                         "(BARBER, NAIL_TECH, STYLIST):");
@@ -148,7 +148,7 @@ public class AppController {
         };
     }
 
-    private void runServicerMenu(final ServicerAccount servicer) {
+    void runServicerMenu(final ServicerAccount servicer) {
         boolean running = true;
         while (running) {
             view.display("\nWhat would you like to do?");
@@ -173,13 +173,10 @@ public class AppController {
         }
     }
 
-    private void postListing(final ServicerAccount servicer) {
-        view.display("Your services:");
+    void postListing(final ServicerAccount servicer) {
         final ArrayList<Service> services = servicer.getServicesOffered();
-        for (int i = 0; i < services.size(); i++) {
-            view.display((i + 1) + ". " + services.get(i).getName() +
-                    " ($" + services.get(i).getPrice() + ")");
-        }
+
+        view.displayServices(servicer, services);
 
         final String input = view.prompt("Select a service to post a listing for:");
         try {
@@ -193,7 +190,7 @@ public class AppController {
         }
     }
 
-    private void viewListings(final ServicerAccount servicer) {
+    void viewListings(final ServicerAccount servicer) {
         final List<ServicerAccount.Listing> servicerListings = serviceList.getList()
                 .stream()
                 .filter(l -> l.getProviderName().equals(servicer.getName()))
@@ -208,69 +205,27 @@ public class AppController {
         view.displayListings(servicerListings);
     }
 
-    private void updateAvailability(final ServicerAccount servicer) {
+    void updateAvailability(final ServicerAccount servicer) {
         final String availability = view.prompt(
                 "Enter your new availability (e.g. 9am-5pm):");
         servicer.setAvailability(availability);
         view.display("Availability updated to " + availability + "!");
     }
 
-    public void handleSearch(final ServiceType serviceType,
+    void handleSearch(final ServiceType serviceType,
                              final double maxPrice) {
         final List<ServicerAccount.Listing> results =
                 serviceList.filterByService(serviceType);
         view.displayListings(results);
     }
 
-    public void handlePayment(Customer customer) {
+    void handlePayment(Customer customer) {
         final double amountOwed = customer.getSelectedListing()
                 .getServiceOffered().getPrice();
         view.display("You owe $" + amountOwed +
                 ".");
         while (true) {
-            final String paymentType = view.prompt("Enter payment method (CREDIT/CASH/VENMO):");
-            PaymentMethod payment = null;
-            final PaymentType type;
-            try {
-                type = PaymentType.valueOf(paymentType
-                        .toUpperCase());
-                if (type == PaymentType.CASH) {
-                    payment = new CashPayment();
-                } else if (type == PaymentType.CREDIT) {
-                    boolean validLength = false;
-                    while (!validLength) {
-                        final String cardNumber = view.prompt("Enter your card number:");
-                        payment = new CreditCardPayment(cardNumber);
-                        try {
-                            payment.processPayment(amountOwed);
-                            validLength = true;
-                        } catch (IllegalArgumentException e) {
-                            view.display(e.getMessage());
-                        }
-                    }
-
-                } else if (type == PaymentType.VENMO) {
-                    boolean validHandle = false;
-                    while (!validHandle) {
-                        final String venmoHandle = view.prompt("Enter your Venmo handle");
-                        payment = new VenmoPayment(venmoHandle);
-                        try {
-                            payment.processPayment(amountOwed);
-                            validHandle = true;
-                        } catch (IllegalArgumentException e){
-                            view.display(e.getMessage());
-                        }
-                    }
-
-                } else {
-                    view.display("Please try again.");
-                    continue;
-                }
-            } catch (IllegalArgumentException e) {
-                view.display("Invalid payment method.");
-                continue;
-            }
-
+            PaymentMethod payment = buildPaymentMethod(amountOwed);
             boolean validAmount = false;
             while (!validAmount) {
                 double amount = Double.parseDouble(view.prompt("Please enter the amount " +
@@ -302,6 +257,59 @@ public class AppController {
         }
 
         runCustomerMenu(customer);
+    }
+
+    PaymentMethod buildPaymentMethod(double amountOwed) {
+        while (true) {
+            final String paymentType = view.prompt("Enter payment method (CREDIT/CASH/VENMO):");
+            final PaymentType type;
+            try {
+                type = PaymentType.valueOf(paymentType
+                        .toUpperCase());
+                if (type == PaymentType.CASH) {
+                    return new CashPayment();
+                } else if (type == PaymentType.CREDIT) {
+                    return buildCreditPayment(amountOwed);
+
+                } else if (type == PaymentType.VENMO) {
+                    return buildVenmoPayment(amountOwed);
+
+                } else {
+                    view.display("Please try again.");
+                    continue;
+                }
+            } catch (IllegalArgumentException e) {
+                view.display("Invalid payment method.");
+                continue;
+            }
+        }
+
+    }
+
+    PaymentMethod buildCreditPayment(double amountOwed) {
+        while (true) {
+            final String cardNumber = view.prompt("Enter your card number:");
+            PaymentMethod payment = new CreditCardPayment(cardNumber);
+            try {
+                payment.processPayment(amountOwed);
+                return payment;
+            } catch (IllegalArgumentException e) {
+                view.display(e.getMessage());
+            }
+        }
+    }
+
+    PaymentMethod buildVenmoPayment(double amountOwed) {
+        while (true) {
+            final String venmoHandle = view.prompt("Enter your Venmo handle");
+            PaymentMethod payment = new VenmoPayment(venmoHandle);
+            try {
+                payment.processPayment(amountOwed);
+                return payment;
+            } catch (IllegalArgumentException e) {
+                view.display(e.getMessage());
+            }
+        }
     }
 
     public void handlePostListing(final ServicerAccount servicer) {

@@ -3,9 +3,9 @@ package edu.sandiego.comp305;
 import java.util.List;
 
 public class Customer extends Profile {
-    protected String address;
+    private String address;
 
-    protected ServicerAccount.Listing selectedListing;
+    private ServicerAccount.Listing selectedListing;
 
     public Customer(final String name, final String address) {
         super(name);
@@ -17,6 +17,9 @@ public class Customer extends Profile {
         selectedListing.selectedByCustomer(this);
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     protected List<ServicerAccount.Listing> searchByPrice(
             final ServiceList listings,
