@@ -106,9 +106,19 @@ public class AppController {
                 if (type == PaymentType.CASH) {
                     payment = new CashPayment();
                 } else if (type == PaymentType.CREDIT) {
-                    System.out.println("Enter your card number:");
-                    final String cardNumber = scanner.nextLine();
-                    payment = new CreditCardPayment(cardNumber);
+                    boolean validLength = false;
+                    while (!validLength) {
+                        System.out.println("Enter your card number:");
+                        final String cardNumber = scanner.nextLine();
+                        payment = new CreditCardPayment(cardNumber);
+                        try {
+                            ((CreditCardPayment) payment).checkCardLength();
+                            validLength = true;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+
                 } else if (type == PaymentType.VENMO) {
                     boolean validHandle = false;
                     while (!validHandle) {
@@ -148,6 +158,7 @@ public class AppController {
                             "greater than or equal to the service cost.");
                 }
             }
+            break;
 
         }
     }
