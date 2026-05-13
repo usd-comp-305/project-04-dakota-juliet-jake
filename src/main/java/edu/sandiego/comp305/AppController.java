@@ -39,9 +39,9 @@ public class AppController {
     public void run() {
         System.out.println("Customer or Servicer? (C or S):");
         final String accountType = scanner.nextLine();
-        if (accountType.equals("C")) {
+        if (accountType.toLowerCase().equals("C")) {
             handleCustomerFlow();
-        } else if (accountType.equals("S")) {
+        } else if (accountType.toLowerCase().equals("S")) {
             handleServicerFlow();
         } else {
             System.out.println("Invalid input. Please enter C or S.");
