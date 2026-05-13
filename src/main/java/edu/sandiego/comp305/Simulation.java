@@ -26,24 +26,16 @@ public class Simulation {
         final Stylist stylist = new Stylist("Dakota", "9am-5pm",
                 ServiceType.STYLIST, stylistServices);
 
-        final CustomerDisplayStrategy customerStrategy =
-                new CustomerDisplayStrategy();
-        final ServicerDisplayStrategy servicerStrategy =
-                new ServicerDisplayStrategy();
-        final CustomerView customerView =
-                new CustomerView(customerStrategy);
-        final ServicerView servicerView =
-                new ServicerView(servicerStrategy);
-        final TerminalView terminalView =
-                new TerminalView();
-
-        final ArrayList<ServicerAccount.Listing> listings = new ArrayList<>();
+        final ArrayList<ServicerAccount.Listing> listings =
+                new ArrayList<>();
         listings.add(barber.new Listing(barberServices.get(0)));
         listings.add(nailTech.new Listing(nailServices.get(0)));
         listings.add(stylist.new Listing(stylistServices.get(0)));
 
         final ServiceList serviceList = new ServiceList(listings);
-        final AppController controller = new AppController(serviceList, terminalView);
+        final TerminalView terminalView = new TerminalView();
+        final AppController controller =
+                new AppController(serviceList, terminalView);
         controller.run();
     }
 }

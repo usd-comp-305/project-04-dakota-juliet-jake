@@ -3,6 +3,7 @@ package edu.sandiego.comp305;
 import java.util.List;
 
 public class Customer extends Profile {
+
     private String address;
 
     private ServicerAccount.Listing selectedListing;
@@ -12,24 +13,25 @@ public class Customer extends Profile {
         this.address = address;
     }
 
-    protected void selectListing(final ServiceList listings, final int index) {
+    protected void selectListing(final ServiceList listings,
+                                 final int index) {
         selectedListing = listings.getListing(index);
         selectedListing.selectedByCustomer(this);
     }
 
-    public void setAddress(String address) {
+    public void setAddress(final String address) {
         this.address = address;
     }
 
     protected List<ServicerAccount.Listing> searchByPrice(
             final ServiceList listings,
-            final double maxPrice){
+            final double maxPrice) {
         return listings.filterByPrice(maxPrice);
     }
 
     protected List<ServicerAccount.Listing> searchByService(
             final ServiceList listings,
-            final ServiceType serviceType){
+            final ServiceType serviceType) {
         try {
             return listings.filterByService(serviceType);
         } catch (IllegalArgumentException e) {
@@ -39,7 +41,7 @@ public class Customer extends Profile {
 
     public boolean pay(final double amount,
                        final PaymentMethod paymentMethod,
-                       final Service service){
+                       final Service service) {
         if (amount >= service.getPrice()) {
             return paymentMethod.processPayment(amount);
         }
@@ -48,7 +50,8 @@ public class Customer extends Profile {
 
     protected ServicerAccount.Listing getSelectedListing() {
         if (this.selectedListing == null) {
-            throw new IllegalStateException("No listing has been selected.");
+            throw new IllegalStateException(
+                    "No listing has been selected.");
         }
         return this.selectedListing;
     }
@@ -60,7 +63,8 @@ public class Customer extends Profile {
     @Override
     public void cancelCall() {
         if (this.selectedListing == null) {
-            throw new IllegalStateException("No active listing to cancel.");
+            throw new IllegalStateException(
+                    "No active listing to cancel.");
         }
         this.selectedListing = null;
     }

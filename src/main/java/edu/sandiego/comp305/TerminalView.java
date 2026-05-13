@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TerminalView implements View {
+
     private final Scanner scanner;
 
     public TerminalView() {
-        this.scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in,
+                java.nio.charset.StandardCharsets.UTF_8);
     }
 
     @Override
@@ -23,9 +25,10 @@ public class TerminalView implements View {
     }
 
     @Override
-    public void displayListings(final List<ServicerAccount.Listing> listings) {
+    public void displayListings(
+            final List<ServicerAccount.Listing> listings) {
         for (int i = 0; i < listings.size(); i++) {
-            ServicerAccount.Listing listing = listings.get(i);
+            final ServicerAccount.Listing listing = listings.get(i);
             System.out.printf("%d. %-15s | %-12s | %s ($%.2f)%n",
                     i + 1,
                     listing.getProviderName(),
@@ -36,11 +39,13 @@ public class TerminalView implements View {
     }
 
     @Override
-    public void displayServices(final ServicerAccount servicer, final ArrayList<Service> services) {
+    public void displayServices(final ServicerAccount servicer,
+                                final ArrayList<Service> services) {
         this.display("Your services:");
         for (int i = 0; i < services.size(); i++) {
-            this.display((i + 1) + ". " + services.get(i).getName() +
-                    " ($" + services.get(i).getPrice() + ")");
+            this.display((i + 1) + ". "
+                    + services.get(i).getName()
+                    + " ($" + services.get(i).getPrice() + ")");
         }
     }
 }
