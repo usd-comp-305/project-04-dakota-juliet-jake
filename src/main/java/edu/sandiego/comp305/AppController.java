@@ -90,7 +90,7 @@ public class AppController {
                 break;
             } catch (IllegalArgumentException e) {
                 currentPassword = view.prompt(
-                        e.getMessage() + "Please re-enter it:");
+                        e.getMessage() + "Please re-enter password:");
             }
         }
 
@@ -116,7 +116,6 @@ public class AppController {
         view.display("You selected "
                 + customer.getSelectedListing().getProviderName()
                 + "! Good choice.");
-
         handlePayment(customer);
     }
 
@@ -316,7 +315,10 @@ public class AppController {
                 if (paymentSuccess) {
                     view.display("Payment successful! Thank you, "
                             + "your payment has been accepted and "
-                            + "your service has been scheduled.");
+                            + "your service is on the way.");
+                    final ServicerAccount servicer = customer
+                            .getSelectedListing().getServicer();
+                    view.display(servicer.performService(customer));
                     validAmount = true;
                 } else {
                     view.display("Payment failed. Please enter an "

@@ -11,19 +11,36 @@ public class NailTech extends ServicerAccount {
         super(name, availability, generalServiceType, servicesOffered);
     }
 
-    public void pedi() {
-
+    @Override
+    public String performService(final Customer customer) {
+        if (!this.getSchedule().containsKey(customer)) {
+            throw new IllegalStateException(
+                    "No active booking for this customer");
+        }
+        final Service service = this.getSchedule().get(customer);
+        return switch (service.getName().toLowerCase()) {
+            case "pedi" -> pedi();
+            case "mani" -> mani();
+            case "gel polish" -> gelPolish();
+            case "regular polish" -> regularPolish();
+            default -> throw new IllegalArgumentException(
+                    "Unknown service: " + service.getName());
+        };
     }
 
-    public void mani(){
-
+    public String pedi() {
+        return "\nServicing pedicure...";
     }
 
-    public void gelPolish() {
-
+    public String mani(){
+        return "\nServicing manicure...";
     }
 
-    public void regularPolish() {
+    public String gelPolish() {
+        return "\nAdding gel polish...";
+    }
 
+    public String regularPolish() {
+        return "\nAdding regular polish...";
     }
 }
