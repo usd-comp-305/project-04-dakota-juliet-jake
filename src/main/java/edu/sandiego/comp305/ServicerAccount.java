@@ -1,6 +1,7 @@
 package edu.sandiego.comp305;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -16,16 +17,19 @@ public abstract class ServicerAccount extends Profile {
 
     private ServiceType generalServiceType;
 
+    private HashMap<Customer,Service> schedule;
+
     public ServicerAccount(final String name,
                            final String availability,
                            final ServiceType generalServiceType,
                            final ArrayList<Service> servicesOffered) {
         super(name);
         this.availability = availability;
+        this.isAvailable = true;
         this.generalServiceType = generalServiceType;
         this.servicesOffered = new ArrayList<>(servicesOffered);
-        this.isAvailable = true;
         this.listings = new ArrayList<>();
+        this.schedule = new HashMap<Customer, Service>();
     }
 
     public void setServicesOffered(final ArrayList<Service> services){
@@ -52,27 +56,50 @@ public abstract class ServicerAccount extends Profile {
         return this.isAvailable;
     }
 
+    public HashMap<Customer, Service> getSchedule(){
+        return new HashMap<>(this.schedule);
+    }
+
     public ArrayList<Listing> getListings() {
         return new ArrayList<>(listings);
     }
 
     public void update(final Customer customer,
                        final Listing listing){
+        takeCall(customer, listing.listingService);
+    }
+
+
+    public void takeCall(final Customer customer, final Service service){
+
+        this.isAvailable = false;
+        this.schedule.put(customer, service);
+    }
+
+    public void postService(final Service newService) {
+        this.listings.add(new Listing(newService));
+    }
+
+    @Override
+    public void cancelCall() {
+        throw new UnsupportedOperationException(
+                "Must provide a customer to cancel a call");
+    }
+
+    public void cancelCall(final Customer customer){
+        if(!this.schedule.containsKey(customer)) {
+            throw new IllegalStateException("Customer has no active booking");
+        }
+        this.isAvailable = true;
+        this.schedule.remove(customer);
 
     }
 
-    public void takeCall(final Service service){
-
-    }
-
-    public void postService() {
-
-    }
-
-    public void cancelCall(){}
 
     public class Listing {
         private final String serviceName;
+
+        private final Service listingService;
 
         private final double servicePrice;
 
@@ -80,6 +107,7 @@ public abstract class ServicerAccount extends Profile {
                 justification = "this$0 is an implicit outer class " +
                         "reference required by the inner class design")
         public Listing(final Service listingService) {
+            this.listingService = listingService;
             this.serviceName = listingService.getName();
             this.servicePrice = listingService.getPrice();
             ServicerAccount.this.isAvailable = true;
