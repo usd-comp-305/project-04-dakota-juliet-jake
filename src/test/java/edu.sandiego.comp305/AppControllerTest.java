@@ -51,7 +51,7 @@ class AppControllerTest {
         final ServicerAccount.Listing mockListing =
                 Mockito.mock(ServicerAccount.Listing.class);
         final Service mockService = Mockito.mock(Service.class);
-        final Scanner scanner = new Scanner("C\n1\nVENMO\n@myvenmo\n50.0\n");
+        final Scanner scanner = new Scanner("1\nCASH\n50.0\n");
         final AppController controller = new AppController(mockCustomer,
                 mockServicer, mockCustomerView,
                 mockServicerView, mockServiceList, scanner);
@@ -74,19 +74,23 @@ class AppControllerTest {
 
     @Test
     void testRunServicer() {
-        final Customer mockCustomer = Mockito.mock(Customer.class);
         final ServicerAccount mockServicer =
                 Mockito.mock(ServicerAccount.class);
         final CustomerView mockCustomerView = Mockito.mock(CustomerView.class);
         final ServicerView mockServicerView = Mockito.mock(ServicerView.class);
         final ServiceList mockServiceList = Mockito.mock(ServiceList.class);
-        final Scanner scanner = new Scanner("S\nHaircut\n20.0\n");
-        final AppController controller = new AppController(mockCustomer,
+        final Scanner scanner = new Scanner("N\n");
+        final AppController controller = new AppController(null,  // null customer
                 mockServicer, mockCustomerView,
                 mockServicerView, mockServiceList, scanner);
+        Mockito.when(mockServicer.getServicesOffered())
+                .thenReturn(new java.util.ArrayList<>());
+        Mockito.when(mockServicer.getAvailability())
+                .thenReturn("9am-5pm");
+        Mockito.when(mockServicer.getSchedule())
+                .thenReturn(new java.util.HashMap<>());
         controller.run();
-        Mockito.verify(mockServicerView)
-                .showOfferedServices(Mockito.any());
+        Mockito.verify(mockServicerView).render();
     }
 
     @Test
