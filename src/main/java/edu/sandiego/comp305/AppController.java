@@ -3,6 +3,7 @@ package edu.sandiego.comp305;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class AppController {
 
@@ -23,11 +24,22 @@ public class AppController {
         view.display("Welcome to UberCuts! We would like to "
                 + "ask you some questions to get your account set up.");
 
-        final String name = view.prompt(
-                "First, please enter your name:");
-        final String username = view.prompt(
-                "Enter your desired username:");
-        final String password = view.prompt("Create your password");
+        final Profile tempProfile = new Profile() {
+            @Override
+            public void cancelCall() {}
+        };
+
+        final String name = promptUntilValid(
+                "First, please enter your name:",
+                tempProfile::setName);
+
+        final String username = promptUntilValid(
+                "Enter your desired username:",
+                tempProfile::setUsername);
+
+        final String password = promptUntilValid(
+                "Create your password:",
+                tempProfile::setPassword);
 
         String accountType = view.prompt(
                 "Great start! Now, would you like to create a "
@@ -44,6 +56,19 @@ public class AppController {
             } else {
                 accountType = view.prompt(
                         "Invalid selection. Please select C or S.");
+            }
+        }
+    }
+
+    String promptUntilValid(final String prompt,
+                                    final Consumer<String> setter) {
+        while (true) {
+            try {
+                final String input = view.prompt(prompt);
+                setter.accept(input);
+                return input;
+            } catch (IllegalArgumentException e) {
+                view.display(e.getMessage());
             }
         }
     }

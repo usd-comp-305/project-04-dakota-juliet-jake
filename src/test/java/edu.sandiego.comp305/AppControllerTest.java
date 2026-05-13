@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -86,6 +88,95 @@ class AppControllerTest {
                 new AppController(mockServiceList, mockView);
         controller.run();
         Mockito.verify(mockView, atLeastOnce()).prompt(Mockito.anyString());
+    }
+
+    @Test
+    void promptUntilValidFirstAttemptValid() {
+        final TerminalView mockView = mock(TerminalView.class);
+
+        final ServiceList mockServiceList = mock(ServiceList.class);
+        final AppController controller =
+                new AppController(mockServiceList, mockView);
+
+        when(mockView.prompt("Enter name:")).thenReturn("Juliet");
+        final Consumer<String> noOpSetter = value -> {};
+
+        final String result = controller.promptUntilValid(
+                "Enter name:", noOpSetter);
+
+        assertEquals("Juliet", result);
+    }
+
+    @Test
+    void promptUntilValidSecondAttemptValid() {
+        final TerminalView mockView = mock(TerminalView.class);
+        final ServiceList mockServiceList = mock(ServiceList.class);
+        final AppController controller =
+                new AppController(mockServiceList, mockView);
+
+        when(mockView.prompt("Enter name:"))
+                .thenReturn("")     // first attempt fails
+                .thenReturn("Juliet"); // second attempt succeeds
+
+        final Consumer<String> strictSetter = value -> {
+            if (value.isEmpty()) {
+                throw new IllegalArgumentException("Name cannot be empty");
+            }
+        };
+
+        final String result = controller.promptUntilValid(
+                "Enter name:", strictSetter);
+
+        assertEquals("Juliet", result);
+        verify(mockView, times(2)).prompt("Enter name:");
+    }
+
+    @Test
+    void promptUntilValidTestErrorDisplay() {
+        final TerminalView mockView = mock(TerminalView.class);
+        final ServiceList mockServiceList = mock(ServiceList.class);
+        final AppController controller =
+                new AppController(mockServiceList, mockView);
+
+        when(mockView.prompt("Enter name:"))
+                .thenReturn("")
+                .thenReturn("Juliet");
+
+        final Consumer<String> strictSetter = value -> {
+            if (value.isEmpty()) {
+                throw new IllegalArgumentException("Name cannot be empty");
+            }
+        };
+
+        controller.promptUntilValid("Enter name:", strictSetter);
+
+        verify(mockView).display("Name cannot be empty");
+    }
+
+    @Test
+    void promptUntilValidMultipleReprompts() {
+        final TerminalView mockView = mock(TerminalView.class);
+        final ServiceList mockServiceList = mock(ServiceList.class);
+        final AppController controller =
+                new AppController(mockServiceList, mockView);
+
+        when(mockView.prompt("Enter name:"))
+                .thenReturn("")
+                .thenReturn("")
+                .thenReturn("Juliet");
+
+        final Consumer<String> strictSetter = value -> {
+            if (value.isEmpty()) {
+                throw new IllegalArgumentException("Name cannot be empty");
+            }
+        };
+
+        final String result = controller.promptUntilValid(
+                "Enter name:", strictSetter);
+
+        assertEquals("Juliet", result);
+        verify(mockView, times(3)).prompt("Enter name:");
+        verify(mockView, times(2)).display("Name cannot be empty");
     }
 
     @Test
