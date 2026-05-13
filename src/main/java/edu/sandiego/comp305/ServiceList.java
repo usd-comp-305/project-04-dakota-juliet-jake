@@ -42,4 +42,8 @@ public class ServiceList {
         }
         return filteredList;
     }
+
+    public void addListing(final ServicerAccount.Listing listing) {
+        listings.add(listing);
+    }
 }

@@ -1,7 +1,6 @@
 package edu.sandiego.comp305;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Simulation {
 
@@ -9,18 +8,6 @@ public class Simulation {
     }
 
     public static void main(final String[] args) {
-        final Scanner scanner = new Scanner(System.in,
-                java.nio.charset.StandardCharsets.UTF_8);
-        System.out.println("Welcome! Please enter your name:");
-        final String name = scanner.nextLine();
-        System.out.println("Enter your desired username:");
-        scanner.nextLine();
-        System.out.println("Enter your desired password:");
-        scanner.nextLine();
-        System.out.println("Enter your address:");
-        final String address = scanner.nextLine();
-
-        final Customer customer = new Customer(name, address);
 
         final ArrayList<Service> barberServices = new ArrayList<>();
         barberServices.add(new Service("Shave", 20.0));
@@ -47,6 +34,8 @@ public class Simulation {
                 new CustomerView(customerStrategy);
         final ServicerView servicerView =
                 new ServicerView(servicerStrategy);
+        final TerminalView terminalView =
+                new TerminalView();
 
         final ArrayList<ServicerAccount.Listing> listings = new ArrayList<>();
         listings.add(barber.new Listing(barberServices.get(0)));
@@ -54,8 +43,7 @@ public class Simulation {
         listings.add(stylist.new Listing(stylistServices.get(0)));
 
         final ServiceList serviceList = new ServiceList(listings);
-        final AppController controller = new AppController(customer,
-                barber, customerView, servicerView, serviceList, scanner);
+        final AppController controller = new AppController(customerView, servicerView, serviceList, terminalView);
         controller.run();
     }
 }
