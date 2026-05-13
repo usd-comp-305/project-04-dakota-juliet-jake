@@ -72,6 +72,7 @@ public class AppController {
             }
         }
     }
+
     private void handleCustomerFlow(final String name,
                                     final String username,
                                     final String password) {
