@@ -111,9 +111,19 @@ public class AppController {
                     final String cardNumber = scanner.nextLine();
                     payment = new CreditCardPayment(cardNumber);
                 } else if (type == PaymentType.VENMO) {
-                    System.out.println("Enter your Venmo handle:");
-                    final String venmoHandle = scanner.nextLine();
-                    payment = new VenmoPayment(venmoHandle);
+                    boolean validHandle = false;
+                    while (!validHandle) {
+                        System.out.println("Enter your Venmo handle:");
+                        final String venmoHandle = scanner.nextLine();
+                        payment = new VenmoPayment(venmoHandle);
+                        try {
+                            ((VenmoPayment) payment).validateVenmoHandle();
+                            validHandle = true;
+                        } catch (IllegalArgumentException e){
+                            System.out.println(e.getMessage());
+                        }
+                    }
+
                 } else {
                     System.out.println("Please try again.");
                     continue;
