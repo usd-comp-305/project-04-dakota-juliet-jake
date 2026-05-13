@@ -51,7 +51,7 @@ public class AppController {
     public void handleCustomerFlow() {
         customerView.showServiceList(serviceList.getList());
         System.out.println("Enter the number of the listing you want:");
-        final int listingIndex = Integer.parseInt(scanner.nextLine());
+        final int listingIndex = Integer.parseInt(scanner.nextLine()) - 1;
         customer.selectListing(serviceList, listingIndex);
         servicer.takeCall(customer,
                 customer.getSelectedListing().getServiceOffered());
