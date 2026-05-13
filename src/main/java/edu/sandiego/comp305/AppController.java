@@ -94,8 +94,7 @@ public class AppController {
         final double amountOwed = customer.getSelectedListing()
                 .getServiceOffered().getPrice();
         System.out.println("You owe $" + amountOwed +
-                ". Please enter the amount you would like to pay:");
-        final double amount = Double.parseDouble(scanner.nextLine());
+                ".");
         while (true) {
             System.out.println("Enter payment method (CREDIT/CASH/VENMO):");
             final String paymentType = scanner.nextLine();
@@ -133,17 +132,23 @@ public class AppController {
                 continue;
             }
 
-            final boolean paymentSuccess = customer.pay(amount, payment,
-                    customer.getSelectedListing().getServiceOffered());
-            if (paymentSuccess) {
-                System.out.println("Payment successful! Thank you, " +
-                        "your payment has been accepted and your service " +
-                        "has been scheduled.");
-                break;
-            } else {
-                System.out.println("Payment failed. Please enter an amount " +
-                        "greater than or equal to the service cost.");
+            boolean validAmount = false;
+            while (!validAmount) {
+                System.out.println("Please enter the amount you would like to pay:");
+                final double amount = Double.parseDouble(scanner.nextLine());
+                final boolean paymentSuccess = customer.pay(amount, payment,
+                        customer.getSelectedListing().getServiceOffered());
+                if (paymentSuccess) {
+                    System.out.println("Payment successful! Thank you, " +
+                            "your payment has been accepted and your service " +
+                            "has been scheduled.");
+                    validAmount = true;
+                } else {
+                    System.out.println("Payment failed. Please enter an amount " +
+                            "greater than or equal to the service cost.");
+                }
             }
+
         }
     }
 
