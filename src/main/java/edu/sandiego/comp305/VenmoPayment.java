@@ -12,7 +12,7 @@ public class VenmoPayment implements PaymentMethod{
         this.venmoHandle = venmoHandle;
     }
 
-    public void validateVenmoHandle() {
+    private void validateVenmoHandle() {
         if (!(venmoHandle.charAt(0) == '@')) {
             throw new IllegalArgumentException(
                     "Venmo handle must begin with @.");

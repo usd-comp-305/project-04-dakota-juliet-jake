@@ -332,18 +332,19 @@ public class AppController {
     PaymentMethod buildPaymentMethod(final double amountOwed) {
         while (true) {
             final String paymentType = view.prompt(
-                    "Enter payment method (CREDIT/CASH/VENMO):");
+                    "Enter payment method (CREDIT/CASH/VENMO):").toUpperCase();
             try {
-                final PaymentType type = PaymentType.valueOf(
-                        paymentType.toUpperCase());
-                if (type == PaymentType.CASH) {
-                    return new CashPayment();
-                } else if (type == PaymentType.CREDIT) {
-                    return buildCreditPayment(amountOwed);
-                } else if (type == PaymentType.VENMO) {
-                    return buildVenmoPayment(amountOwed);
-                } else {
-                    view.display("Please try again.");
+                switch (paymentType) {
+                    case "CASH" -> {
+                        return new CashPayment();
+                    }
+                    case "CREDIT" -> {
+                        return buildCreditPayment(amountOwed);
+                    }
+                    case "VENMO" -> {
+                        return buildVenmoPayment(amountOwed);
+                    }
+                    default -> view.display("Please try again.");
                 }
             } catch (IllegalArgumentException e) {
                 view.display("Invalid payment method.");
