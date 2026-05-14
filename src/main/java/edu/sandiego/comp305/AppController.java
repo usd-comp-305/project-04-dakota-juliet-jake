@@ -38,7 +38,8 @@ public class AppController {
                 tempProfile::setUsername);
 
         final String password = promptUntilValid(
-                "Create your password:",
+                "Create your password (must contain 1 uppercase, " +
+                        "lowercase, number, and special character):",
                 tempProfile::setPassword);
 
         String accountType = view.prompt(
