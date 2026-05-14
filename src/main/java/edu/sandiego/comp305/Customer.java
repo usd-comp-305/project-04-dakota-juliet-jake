@@ -23,13 +23,13 @@ public class Customer extends Profile {
         this.address = address;
     }
 
-    protected List<ServicerAccount.Listing> searchByPrice(
+    public List<ServicerAccount.Listing> searchByPrice(
             final ServiceList listings,
             final double maxPrice) {
         return listings.filterByPrice(maxPrice);
     }
 
-    protected List<ServicerAccount.Listing> searchByService(
+    public List<ServicerAccount.Listing> searchByService(
             final ServiceList listings,
             final ServiceType serviceType) {
         try {

@@ -1,7 +1,6 @@
 package edu.sandiego.comp305;
 
 public abstract class Profile {
-
     private String name;
 
     private String username;
@@ -20,14 +19,12 @@ public abstract class Profile {
     }
 
     public Profile(final String name){
-
         this.name = name;
         this.ratingTotal = 0;
         this.ratingCount = 0;
     }
 
     public void setName(final String name){
-
         if (name.isEmpty()) {
             throw new IllegalArgumentException("No name entered");
         }
@@ -35,7 +32,6 @@ public abstract class Profile {
     }
 
     public void setUsername(final String username){
-
         if (username.isEmpty()){
             throw new IllegalArgumentException("No username entered");
         }
@@ -43,16 +39,11 @@ public abstract class Profile {
     }
 
     public void setPassword(final String password){
-
-        //password must contain 1 uppercase, lowercase,
-        //number, special character
         validatePassword(password);
         this.password = password;
-
     }
 
     private static void validatePassword(final String password){
-
         if (password.isEmpty()){
             throw new IllegalArgumentException("No password entered");
         } else if (!password.matches(".*[A-Z].*")) {
@@ -71,7 +62,6 @@ public abstract class Profile {
     }
 
     public void adjustRating(final double newRating){
-
         if (newRating < 0.0 || newRating > 5.0){
             throw new IllegalArgumentException("Rating must be " +
                     "between 0 and 5");

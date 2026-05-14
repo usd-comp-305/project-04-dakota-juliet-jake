@@ -28,19 +28,19 @@ public class Stylist extends ServicerAccount {
         };
     }
 
-    public String fullDye(){
+    private String fullDye(){
         return "\nDying hair...";
     }
 
-    public String perm(){
+    private String perm(){
         return "\nPerming...";
     }
 
-    public String highlights(){
+    private String highlights(){
         return "\nAdding highlights...";
     }
 
-    public String blowout(){
+    private String blowout(){
         return "\nBlowing out hair...";
     }
 

@@ -24,19 +24,19 @@ public class Barber extends ServicerAccount{
         };
     }
 
-    public String shave(){
+    private String shave(){
         return "\nShaving...";
     }
 
-    public String wax(){
+    private String wax(){
         return "\nWaxing...";
     }
 
-    public String buzz(){
+    private String buzz(){
         return "\nBuzzing...";
     }
 
-    public String shear(){
+    private String shear(){
         return "\nShearing...";
     }
 }

@@ -28,19 +28,19 @@ public class NailTech extends ServicerAccount {
         };
     }
 
-    public String pedi() {
+    private String pedi() {
         return "\nServicing pedicure...";
     }
 
-    public String mani(){
+    private String mani(){
         return "\nServicing manicure...";
     }
 
-    public String gelPolish() {
+    private String gelPolish() {
         return "\nAdding gel polish...";
     }
 
-    public String regularPolish() {
+    private String regularPolish() {
         return "\nAdding regular polish...";
     }
 }

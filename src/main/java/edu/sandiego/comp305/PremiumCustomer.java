@@ -9,7 +9,7 @@ public class PremiumCustomer extends Customer{
         super(name, address);
     }
 
-    List<ServicerAccount.Listing> filterByTime(final int time){
+    public List<ServicerAccount.Listing> filterByTime(final int time){
         return new ArrayList<>();
     }
 }

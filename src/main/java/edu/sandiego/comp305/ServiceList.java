@@ -46,12 +46,4 @@ public class ServiceList {
     public void addListing(final ServicerAccount.Listing listing) {
         listings.add(listing);
     }
-
-    public ServiceList filteredByPrice(final double maxPrice) {
-        return new ServiceList(filterByPrice(maxPrice));
-    }
-
-    public ServiceList filteredByService(final ServiceType serviceType) {
-        return new ServiceList(filterByService(serviceType));
-    }
 }
