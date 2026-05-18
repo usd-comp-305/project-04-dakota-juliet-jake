@@ -27,7 +27,6 @@ If you would like to run the tests, test files can be found in src/test/java/edu
 
 
 ## Project Design
-
 - MVC Pattern: AppController.java, TerminalView.java, Model classes
 - Strategy Pattern: PaymentedMethod interface, View interface
 
@@ -44,3 +43,10 @@ In our MVC Pattern, the Model and View do not communicate, and the Controller st
   * **JUnit**: test runner
   * **Mockito**: test doubles (mocks, stubs)
 
+
+## Known Limitations
+- Mock application, no real multi-user support
+- No database storing user information for multiple sessions
+- All interaction is done in a terminal, which can be improved upon, and our View interface allows for extension for the future here
+- No real payment processing, it just grabs fake information and doesn't verify if the information is correct apart from basic character checks
+- Payment interaction is very loose and just checks that you paid the minimum, but doesn't cap you on how much you can spend
